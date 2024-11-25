@@ -31,6 +31,7 @@ INSERT INTO cards (id, name, cost) VALUES (26, 'Töpferei', 6);
 
 -- TABELLE CARD_TYPES
 INSERT INTO card_types (card_id, types) VALUES (1, 'REACTION');
+INSERT INTO card_types (card_id, types) VALUES (1, 'ACTION');
 INSERT INTO card_types (card_id, types) VALUES (2, 'ACTION');
 INSERT INTO card_types (card_id, types) VALUES (3, 'ACTION');
 INSERT INTO card_types (card_id, types) VALUES (4, 'ACTION');

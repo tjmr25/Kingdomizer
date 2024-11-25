@@ -42,8 +42,6 @@ export class Content extends LitElement {
           gap: 1rem; 
         }
 
-        
-
         .card-placeholder {
           background-color: var(--color-light);
           border: 1px solid var(--color-lighter); /* Umriss der Karte */
@@ -61,7 +59,7 @@ export class Content extends LitElement {
         button {
           padding: 0.75rem 1.5rem; 
           background-color: var(--color-medium); 
-          color: var(--color-light); 
+          color: white; 
           border: none; 
           border-radius: 0.5rem; 
           font-size: 1rem; 

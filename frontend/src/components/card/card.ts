@@ -44,13 +44,12 @@ export class Card extends LitElement {
         .circle {
             width: 30px; /* Breite des Kreises */
             height: 30px; /* Höhe des Kreises */
-            background-color: var(--color-light); 
-            border: 1px solid var(--color-lighter);
+            background-color: #e6c619; 
             border-radius: 50%; /* Macht den Kreis rund */
             display: flex;
             justify-content: center; /* Horizontal zentrieren */
             align-items: center; /* Vertikal zentrieren */
-            font-size: 1rem; /* Schriftgröße */
+            font-size: 1.125rem; /* Schriftgröße */
             font-weight: bold; /* Fettdruck */
             color: var(--color-dark); 
             margin-top: 0%

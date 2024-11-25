@@ -4,12 +4,8 @@ import com.kingdomizer.entity.Card;
 import com.kingdomizer.repository.CardRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Comparator;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class CardService {
@@ -21,21 +17,30 @@ public class CardService {
     }
 
     public List<Map<String, Object>> generateKingdom() {
+        // Hole alle Karten aus der Datenbank
         List<Card> allCards = cardRepository.findAll();
+
+        // Mische die Karten
         Collections.shuffle(allCards);
+
+        // Wähle 10 zufällige Karten aus
         List<Card> selectedCards = allCards.stream()
                 .limit(10)
-                .sorted(Comparator.comparing(Card::getCost).thenComparing(Card::getName))
-                .toList();
-    
-        List<Map<String, Object>> kingdom = new ArrayList<>();
-        for (Card card : selectedCards) {
-            Map<String, Object> cardDetail = new LinkedHashMap<>();
-            cardDetail.put("name", card.getName());
-            cardDetail.put("cost", card.getCost());
-            kingdom.add(cardDetail);
-        }
-    
-        return kingdom;
+                .sorted(Comparator.comparing(Card::getCost)
+                .thenComparing(Card::getName))
+                .collect(Collectors.toList());
+
+        // Mappe jede Karte in ein Map-Objekt mit id, name, cost und types
+        return selectedCards.stream()
+                .map(card -> {
+                    Map<String, Object> cardMap = new LinkedHashMap<>();
+                    cardMap.put("name", card.getName());
+                    cardMap.put("cost", card.getCost());
+                    cardMap.put("types", card.getTypes().stream()
+                            .map(Enum::name)
+                            .toArray(String[]::new)); // Konvertiere zu String-Array
+                    return cardMap;
+                })
+                .collect(Collectors.toList());
     }
 }
