@@ -6,16 +6,23 @@ import "../content/content";
 export class App extends LitElement {
   static styles = css`
     :host {
+      font-size: 16px;
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-      font-family: Arial, sans-serif;
-      margin: 0rem;
+      font-family: Roboto, sans-serif;
+      background-color: white;
+
+      --color-dark: #333;      /* Dunkelste Farbe */
+      --color-darker: #666;    /* Etwas heller als dark */
+      --color-medium: #aaa;    /* Mittlere Graustufe */
+      --color-lighter: #ccc;   /* Etwas dunkler als light */
+      --color-light: #eee;     /* Hellste Farbe */
     }
     main {
       flex: 1;
-      padding: 1rem;
     }
+
   `;
 
   render() {

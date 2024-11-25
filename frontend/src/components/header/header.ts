@@ -3,11 +3,15 @@ import { html, css, LitElement } from "lit";
 export class Header extends LitElement {
   static styles = css`
     header {
-      background-color: #d7bce8;
-      color: white;
-      padding: 0.5rem;
-      text-align: center;
-      font-size: 1.2rem;
+      height: 10vh; 
+      max-height: 80px; 
+      background-color: var(--color-light);
+      color: var(--color-dark);
+      display: flex;
+      align-items: center; 
+      justify-content: center; 
+      font-size: 1.25rem; 
+      text-transform: uppercase;       
     }
   `;
 
