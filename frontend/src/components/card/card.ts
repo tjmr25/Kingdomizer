@@ -1,19 +1,27 @@
 import { html, css, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 
+const typeTranslations: Record<string, string> = {
+    ACTION: "Aktion",
+    REACTION: "Reaktion",
+    VICTORY: "Punkte",
+    ATTACK: "Angriff",
+};
+
 export class Card extends LitElement {
     @property() name: string = '';
     @property() cost: number = -1;
+    @property() types: string = '';
 
     static styles = css`
         @keyframes fadeIn {
             from {
-            opacity: 0; /* Unsichtbar */
-            transform: translateY(20px); /* Start leicht nach unten verschoben */
+            opacity: 0; 
+            transform: translateY(20px);
             }
             to {
-            opacity: 1; /* Voll sichtbar */
-            transform: translateY(0); /* Zur Originalposition */
+            opacity: 1; 
+            transform: translateY(0); 
             }
         }
 
@@ -42,29 +50,50 @@ export class Card extends LitElement {
         }
 
         .circle {
-            width: 30px; /* Breite des Kreises */
-            height: 30px; /* Höhe des Kreises */
+            width: 30px; 
+            height: 30px; 
             background-color: #e6c619; 
-            border-radius: 50%; /* Macht den Kreis rund */
+            border-radius: 50%; 
             display: flex;
-            justify-content: center; /* Horizontal zentrieren */
-            align-items: center; /* Vertikal zentrieren */
-            font-size: 1.125rem; /* Schriftgröße */
-            font-weight: bold; /* Fettdruck */
+            justify-content: center; 
+            align-items: center; 
+            font-size: 1.125rem; 
+            font-weight: bold; 
             color: var(--color-dark); 
             margin-top: 0%
         }
 
-        .cardtype {
+        .cardtypes{
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .type {
             background-color: var(--color-light);
             padding: 0.25rem;
             border-radius: 0.25rem;
             font-size: 0.75rem;
             margin-bottom: 5%;
         }
+
+        .type.reaction {
+            background-color: #c7ddf2;
+        }
+        .type.victory {
+            background-color: #aee899;
+        }
+        .type.attack {
+            background-color: #ffb1a7;
+        }
+        
     `;
 
     render() {
+        const typesArray = this.types ? this.types.split(", ") : [];
+
         return html`
           <div class="card">
             <div class="card-name">
@@ -73,8 +102,10 @@ export class Card extends LitElement {
             <div class="circle">
                 ${this.cost}
             </div>
-            <div class="cardtype">
-                Aktion
+            <div class="cardtypes">
+                    ${typesArray.map(
+                        (type) => html`<span class="type ${type.toLowerCase()}">${typeTranslations[type]}</span>`
+                    )}
             </div>
           </div>
         `;

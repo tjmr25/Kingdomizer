@@ -6,11 +6,10 @@ import "../card/card";
 interface Card {
   name: string;
   cost: number;
+  types: string[];
 }
 
 export class Content extends LitElement {
-  
-  
     @property({ type: Array }) cards: Card[] = [];
 
     static styles = css`
@@ -18,7 +17,8 @@ export class Content extends LitElement {
           flex: 1; /* Nimmt den verbleibenden Platz ein */
           width: 60%; 
           max-width: 75rem; 
-          margin: 6rem auto 0 auto; 
+          min-width: 60rem;
+          margin: 6rem auto 6rem auto; 
           padding: 2rem; 
           background-color: var(--color-light); 
           box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.1); 
@@ -59,7 +59,7 @@ export class Content extends LitElement {
         button {
           padding: 0.75rem 1.5rem; 
           background-color: var(--color-medium); 
-          color: white; 
+          color: white3; 
           border: none; 
           border-radius: 0.5rem; 
           font-size: 1rem; 
@@ -108,7 +108,7 @@ export class Content extends LitElement {
                 .fill(null)
                 .map(() => html`<div class="card-placeholder"></div>`)
             : this.cards.map(
-                (card) => html`<app-card name="${card.name}" cost="${card.cost}"></app-card>`
+                (card) => html`<app-card name="${card.name}" cost="${card.cost}" types="${card.types.join(", ")}"></app-card>`
               )}
           </div>
         </div>
