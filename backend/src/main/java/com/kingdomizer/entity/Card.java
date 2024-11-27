@@ -22,6 +22,10 @@ public class Card {
     @Enumerated(EnumType.STRING)
     private Set<CardType> types;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Expansion expansion;
+
 
     public Long getId() {
         return id;
@@ -53,6 +57,14 @@ public class Card {
 
     public void setTypes(Set<CardType> types) {
         this.types = types;
+    }
+ 
+    public Expansion getExpansion() {
+        return expansion;
+    }
+
+    public void setExpansion(Expansion expansion) {
+        this.expansion = expansion;
     }
 
 }

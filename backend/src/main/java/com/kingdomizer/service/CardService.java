@@ -16,15 +16,15 @@ public class CardService {
         this.cardRepository = cardRepository;
     }
 
-    public List<Map<String, Object>> generateKingdom() {
+    public List<Map<String, Object>> generateKingdom(List<String> expansions) {
         // Hole alle Karten aus der Datenbank
-        List<Card> allCards = cardRepository.findAll();
+        List<Card> filteredCards = cardRepository.findByExpansionIn(expansions);
 
         // Mische die Karten
-        Collections.shuffle(allCards);
+        Collections.shuffle(filteredCards);
 
         // Wähle 10 zufällige Karten aus
-        List<Card> selectedCards = allCards.stream()
+        List<Card> selectedCards = filteredCards.stream()
                 .limit(10)
                 .sorted(Comparator.comparing(Card::getCost)
                 .thenComparing(Card::getName))

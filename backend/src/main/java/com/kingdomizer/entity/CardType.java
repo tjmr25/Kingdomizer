@@ -4,5 +4,7 @@ public enum CardType {
     ACTION,      
     REACTION,
     ATTACK,
-    VICTORY     
+    VICTORY,
+    TREASURE,
+    DURATION     
 }

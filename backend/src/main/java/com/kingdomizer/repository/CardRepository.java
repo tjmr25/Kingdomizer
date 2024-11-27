@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface CardRepository extends JpaRepository<Card, Long> {
     
-    @Query(value = "SELECT c FROM Card c ORDER BY RAND() LIMIT 10")
-    List<Card> findRandom10();
+    //Filtert alle Karten, die in der übergebenen Liste enthalten sind
+    List<Card> findByExpansionIn(List<String> expansions);
 }

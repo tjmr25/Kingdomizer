@@ -6,12 +6,15 @@ const typeTranslations: Record<string, string> = {
     REACTION: "Reaktion",
     VICTORY: "Punkte",
     ATTACK: "Angriff",
+    DURATION: "Dauer",
+    TREASURE: "Geld",
 };
 
 export class Card extends LitElement {
     @property() name: string = '';
     @property() cost: number = -1;
     @property() types: string = '';
+    
 
     static styles = css`
         @keyframes fadeIn {
@@ -77,16 +80,20 @@ export class Card extends LitElement {
             border-radius: 0.25rem;
             font-size: 0.75rem;
             margin-bottom: 5%;
+
         }
 
         .type.reaction {
-            background-color: #c7ddf2;
+            background-color: #cbebff;
         }
         .type.victory {
-            background-color: #aee899;
+            background-color: #beeca5;
         }
-        .type.attack {
-            background-color: #ffb1a7;
+        .type.treasure {
+            background-color: khaki;
+        }
+        .type.duration {
+            background-color: #ffb89c;
         }
         
     `;

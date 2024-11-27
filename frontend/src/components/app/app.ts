@@ -18,6 +18,12 @@ export class App extends LitElement {
       --color-medium: #aaa;    /* Mittlere Graustufe */
       --color-lighter: #ccc;   /* Etwas dunkler als light */
       --color-light: #eee;     /* Hellste Farbe */
+
+      --color-blue: #475c6c;
+      --color-grey: #8a8583;
+      --color-brown: #cd8b62;
+      --color-lightbeige: #f7efd3;
+      --color-darkbeige: #eed7a1;
     }
     main {
       flex: 1;
