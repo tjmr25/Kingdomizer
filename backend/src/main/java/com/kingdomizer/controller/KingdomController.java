@@ -1,6 +1,7 @@
 package com.kingdomizer.controller;
 
-import com.kingdomizer.service.CardService;
+import com.kingdomizer.service.KingdomService;
+import com.kingdomizer.entity.Kingdom;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,17 +10,17 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/kingdom")
 public class KingdomController {
     
-    private final CardService cardService;
+    private final KingdomService kingdomService;
 
     // Konstruktor für Dependency Injection
-    public KingdomController(CardService cardService) {
-        this.cardService = cardService;
+    public KingdomController(KingdomService kingdomService) {
+        this.kingdomService = kingdomService;
     }
 
-    @PostMapping("/kingdom")
+    @PostMapping("/generate")
     public ResponseEntity<List<Map<String, Object>>> generateKingdom(@RequestBody Map<String, Boolean> expansionStates) {
         // Filtere die aktivierten Erweiterungen
         List<String> expansions = expansionStates.entrySet().stream()
@@ -27,9 +28,20 @@ public class KingdomController {
                 .map(Map.Entry::getKey)     // Hole die Schlüssel (Erweiterungsnamen)
                 .toList();
 
-        // Generiere das Königreich basierend auf den Erweiterungen
-        List<Map<String, Object>> kingdom = cardService.generateKingdom(expansions);
+        List<Map<String, Object>> kingdom = kingdomService.generateKingdom(expansions);
 
-        // Sende die Antwort zurück
         return ResponseEntity.ok(kingdom);
-    }}
+    }
+
+    @PostMapping("/save")
+    public ResponseEntity<Kingdom> saveKingdom(@RequestBody Kingdom kingdom) {
+        Kingdom savedKingdom = kingdomService.saveKingdom(kingdom);
+        return ResponseEntity.ok(savedKingdom);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Kingdom>> getAllKingdoms() {
+        List<Kingdom> kingdoms = kingdomService.getAllKingdoms();
+        return ResponseEntity.ok(kingdoms);
+    }
+}
