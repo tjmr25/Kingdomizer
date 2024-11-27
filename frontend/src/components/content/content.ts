@@ -49,7 +49,7 @@ export class Content extends LitElement {
           align-items: center; /* Vertikal zentriert */
           transition: transform 0.2s ease-in-out;
           color: var(--color-dark);
-          border: 1px solid var(--color-blue)
+          border: 1px solid var(--color-gold)
         }
 
         .expansion:active {
@@ -70,20 +70,29 @@ export class Content extends LitElement {
           display: flex; 
           justify-content: flex-start; 
           align-items: center; 
-          margin-bottom: 1rem; 
+          margin-bottom: 1rem;
+          gap: 1rem; 
         }
         
         button {
           padding: 0.75rem 1.5rem; 
           background-color: var(--color-blue); 
           box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.1); 
-          color: var(--color-light); 
+          color: white; 
           border: none; 
           border-radius: 8px; 
           font-size: 1rem; 
           font-weight: bold; 
           cursor: pointer; 
           transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out; 
+        }
+        
+        .save-button {
+          background-color: var(--color-gold);
+        }
+
+        .save-button:hover {
+          background-color: #d8c49a;
         }
 
         button:hover {
@@ -157,7 +166,8 @@ export class Content extends LitElement {
           <div class="kingdom-display">
 
             <div class="button-container">
-              <button @click="${this.fetchCards}">Königreich generieren</button>
+              <button @click="${this.fetchCards}">Neues Königreich</button>
+              <button class="save-button" @click="${this.fetchCards}">Speichern</button>
             </div>
   
             <div class="divider"></div>
