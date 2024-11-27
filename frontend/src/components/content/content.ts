@@ -27,9 +27,7 @@ export class Content extends LitElement {
           max-width: 75rem; 
           min-width: 60rem;
           margin: 6rem auto 6rem auto; 
-          padding: 2rem; 
-          background-color: var(--color-light); 
-          box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.1); 
+          padding: 2rem;  
         }
 
         .kindom-display {
@@ -40,7 +38,7 @@ export class Content extends LitElement {
           padding-left: 2rem;
           display: flex;
           flex-direction: column;
-          gap: 0.25rem;
+          gap: 0.5rem;
         }
         
         .expansion {
@@ -50,8 +48,8 @@ export class Content extends LitElement {
           justify-content: space-between; /* Text links, Checkbox rechts */
           align-items: center; /* Vertikal zentriert */
           transition: transform 0.2s ease-in-out;
-          box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.1); 
           color: var(--color-dark);
+          border: 1px solid var(--color-blue)
         }
 
         .expansion:active {
@@ -77,9 +75,9 @@ export class Content extends LitElement {
         
         button {
           padding: 0.75rem 1.5rem; 
-          background-color: var(--color-lighter); 
+          background-color: var(--color-blue); 
           box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.1); 
-          color: white; 
+          color: var(--color-light); 
           border: none; 
           border-radius: 8px; 
           font-size: 1rem; 
@@ -89,7 +87,7 @@ export class Content extends LitElement {
         }
 
         button:hover {
-          background-color: var(--color-medium); /* Hintergrundfarbe dunkler beim Hover */
+          background-color: #7c8d9b; /* Hintergrundfarbe dunkler beim Hover */
         }
 
         button:active {
@@ -122,7 +120,7 @@ export class Content extends LitElement {
         }
 
         .checkbox {
-          accent-color: var(--color-darker);
+          accent-color: var(--color-blue);
         }
 
         .checkbox:hover {

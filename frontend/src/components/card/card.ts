@@ -64,6 +64,7 @@ export class Card extends LitElement {
             font-weight: bold; 
             color: var(--color-dark); 
             margin-top: 0%
+            box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3); 
         }
 
         .cardtypes{

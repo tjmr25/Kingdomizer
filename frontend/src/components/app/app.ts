@@ -24,6 +24,7 @@ export class App extends LitElement {
       --color-brown: #cd8b62;
       --color-lightbeige: #f7efd3;
       --color-darkbeige: #eed7a1;
+      --color-lightgold: #f5ead0
     }
     main {
       flex: 1;

@@ -5,8 +5,8 @@ export class Header extends LitElement {
     header {
       height: 10vh; 
       max-height: 80px; 
-      background-color: var(--color-light);
-      color: var(--color-dark);
+      background-color: var(--color-blue);
+      color: var(--color-light);
       display: flex;
       align-items: center; 
       justify-content: center; 
