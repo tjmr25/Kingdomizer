@@ -18,9 +18,11 @@ public class Kingdom {
     @ElementCollection
     @CollectionTable(name = "kingdom_cards", joinColumns = @JoinColumn(name = "kingdom_id"))
     @Column(name = "card_id")
-    private List<Long> cardIds;
+    private List<Long> cardIds; // IDs der Karten in der Datenbank
 
-    // Konstruktoren
+    @Transient
+    private List<Card> cards; // Kartenobjekte für die API-Antwort
+
     public Kingdom() {
         this.createdAt = LocalDateTime.now();
     }
@@ -54,4 +56,13 @@ public class Kingdom {
     public void setCardIds(List<Long> cardIds) {
         this.cardIds = cardIds;
     }
+
+    public List<Card> getCards() {
+        return cards;
+    }
+
+    public void setCards(List<Card> cards) {
+        this.cards = cards;
+    }
 }
+

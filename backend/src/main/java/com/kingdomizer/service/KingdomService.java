@@ -50,6 +50,16 @@ public class KingdomService {
     }
 
     public List<Kingdom> getAllKingdoms() {
-        return kingdomRepository.findAll();
+        // Hole alle Kingdoms
+        List<Kingdom> kingdoms = kingdomRepository.findAll();
+
+        // Ersetze cardIds durch Card-Objekte
+        for (Kingdom kingdom : kingdoms) {
+            // IDs in Karten umwandeln
+            List<Card> cards = cardRepository.findAllById(kingdom.getCardIds());
+            kingdom.setCards(cards);
+        }
+
+        return kingdoms;
     }
 }

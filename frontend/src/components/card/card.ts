@@ -55,7 +55,7 @@ export class Card extends LitElement {
         .circle {
             width: 30px; 
             height: 30px; 
-            background-color: #e6c619; 
+            background-color: var(--color-gold); 
             border-radius: 50%; 
             display: flex;
             justify-content: center; 

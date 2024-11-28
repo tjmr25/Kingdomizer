@@ -3,7 +3,8 @@ import { property } from "lit/decorators.js";
 
 import "../card/card";
 
-interface Card {
+export interface Card {
+  id: string;
   name: string;
   cost: number;
   expansion: string;
@@ -26,7 +27,7 @@ export class Content extends LitElement {
           width: 75%; 
           max-width: 75rem; 
           min-width: 60rem;
-          margin: 6rem auto 6rem auto; 
+          margin: 4rem auto 6rem auto; 
           padding: 2rem;  
         }
 
@@ -140,7 +141,7 @@ export class Content extends LitElement {
 
     async fetchCards(): Promise<void> {
       try {
-        const response = await fetch("http://localhost:8080/api/kingdom", {
+        const response = await fetch("http://localhost:8080/api/kingdom/generate", {
           method: "POST", 
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(this.expansionStates),
@@ -151,8 +152,31 @@ export class Content extends LitElement {
 
         this.cards = [];
         this.cards = await response.json();
+        console.log("Zufalls-Königreich erfolgreich generiert")
       } catch (error) {
         console.error("Fehler beim Abrufen der Karten:", error);
+      }
+    }
+
+    async saveKingdom(): Promise<void> {
+      try {
+        const cardIds = this.cards.map((card) => card.id);
+          const body = JSON.stringify({ cardIds });
+  
+        const response = await fetch("http://localhost:8080/api/kingdom/save", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body,
+        });
+        if (!response.ok) {
+          throw new Error(`Fehler: ${response.statusText}`);
+        }
+  
+        console.log("Kingdom erfolgreich gespeichert:", await response.json());
+      } catch (error) {
+        console.error("Fehler beim Speichern des Kingdoms:", error);
       }
     }
 
@@ -167,7 +191,7 @@ export class Content extends LitElement {
 
             <div class="button-container">
               <button @click="${this.fetchCards}">Neues Königreich</button>
-              <button class="save-button" @click="${this.fetchCards}">Speichern</button>
+              <button class="save-button" @click="${this.saveKingdom}">Speichern</button>
             </div>
   
             <div class="divider"></div>
@@ -226,3 +250,5 @@ export class Content extends LitElement {
 }
 
 customElements.define("app-content", Content);
+
+

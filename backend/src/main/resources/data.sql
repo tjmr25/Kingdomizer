@@ -1,30 +1,30 @@
 -- ZUFÄLLIGE KÖNIGREICHE
 
 -- Königreich 1
-INSERT INTO kingdoms (id, created_at) VALUES (1, '2024-11-27 2:00:00');
-INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (1, 1);
-INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (1, 2);
-INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (1, 3);
-INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (1, 4);
-INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (1, 27);
-INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (1, 28);
-INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (1, 54);
-INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (1, 56);
-INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (1, 65);
-INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (1, 70);
+INSERT INTO kingdoms (id, created_at) VALUES (10001, '2024-11-27 2:00:00');
+INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (10001, 1);
+INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (10001, 2);
+INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (10001, 3);
+INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (10001, 4);
+INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (10001, 27);
+INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (10001, 28);
+INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (10001, 54);
+INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (10001, 56);
+INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (10001, 65);
+INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (10001, 70);
 
 -- Königreich 2
-INSERT INTO kingdoms (id, created_at) VALUES (2, '2024-11-27 3:00:00');
-INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (2, 5);
-INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (2, 6);
-INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (2, 7);
-INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (2, 29);
-INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (2, 30);
-INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (2, 35);
-INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (2, 58);
-INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (2, 60);
-INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (2, 71);
-INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (2, 74);
+INSERT INTO kingdoms (id, created_at) VALUES (10002, '2024-11-27 3:00:00');
+INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (10002, 4);
+INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (10002, 6);
+INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (10002, 7);
+INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (10002, 29);
+INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (10002, 30);
+INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (10002, 35);
+INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (10002, 58);
+INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (10002, 60);
+INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (10002, 71);
+INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (10002, 74);
 
 
 -- BASISSPIEL 2.EDITION
