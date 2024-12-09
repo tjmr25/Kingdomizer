@@ -4,6 +4,7 @@ import com.kingdomizer.entity.Card;
 import com.kingdomizer.repository.CardRepository;
 import com.kingdomizer.repository.KingdomRepository;
 import com.kingdomizer.entity.Kingdom;
+import com.kingdomizer.entity.Expansion;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -25,10 +26,11 @@ public class KingdomService {
         Collections.shuffle(filteredCards);
 
         List<Card> selectedCards = filteredCards.stream()
-                .limit(10)
-                .sorted(Comparator.comparing(Card::getCost)
-                .thenComparing(Card::getName))
-                .collect(Collectors.toList());
+            .limit(10)
+            .sorted(Comparator.comparing(Card::getExpansion) // Nach Erweiterung sortieren
+            .thenComparing(Card::getCost) // Nach Kosten sortieren
+            .thenComparing(Card::getName)) // Falls gleiche Kosten: Nach Name sortieren
+            .collect(Collectors.toList());
 
         // Mappe jede Karte in ein Map-Objekt mit id, name, cost und types
         return selectedCards.stream()
@@ -37,6 +39,7 @@ public class KingdomService {
                     cardMap.put("id", card.getId());
                     cardMap.put("name", card.getName());
                     cardMap.put("cost", card.getCost());
+                    cardMap.put("expansion", card.getExpansion().name());
                     cardMap.put("types", card.getTypes().stream()
                             .map(Enum::name)
                             .toArray(String[]::new)); // Konvertiere zu String-Array

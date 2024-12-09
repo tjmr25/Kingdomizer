@@ -10,10 +10,17 @@ const typeTranslations: Record<string, string> = {
     TREASURE: "Geld",
 };
 
+const expansionTranslations: Record<string, string> = {
+    BASE_2ND: "Basisspiel II",
+    PROSPERITY_2ND: "Blütezeit II",
+    SEASIDE_2ND: "Seaside II",
+};
+
 export class Card extends LitElement {
     @property() name: string = '';
     @property() cost: number = -1;
     @property() types: string = '';
+    @property() expansion: string = '';
     
 
     static styles = css`
@@ -49,7 +56,7 @@ export class Card extends LitElement {
         }
         
         .card-name {
-            margin-top: 15%;
+            margin-top: 1.5rem;
         }
 
         .circle {
@@ -63,8 +70,15 @@ export class Card extends LitElement {
             font-size: 1.125rem; 
             font-weight: bold; 
             color: var(--color-dark); 
-            margin-top: 0%
+            margin-top: 0.75rem;
+            margin-bottom: 0.75rem;
             box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3); 
+        }
+
+        .card-expansion {
+            font-size: 0.75rem;
+            color: var(--color-medium);
+            
         }
 
         .cardtypes{
@@ -101,12 +115,14 @@ export class Card extends LitElement {
 
     render() {
         const typesArray = this.types ? this.types.split(", ") : [];
+        const translatedExpansion = expansionTranslations[this.expansion] || this.expansion;
 
         return html`
           <div class="card">
             <div class="card-name">
                 <span style="font-weight: bold">${this.name}</span>
             </div>
+            <div class="card-expansion">${translatedExpansion}</div>
             <div class="circle">
                 ${this.cost}
             </div>

@@ -202,7 +202,8 @@ export class Content extends LitElement {
                   .fill(null)
                   .map(() => html`<div class="card-placeholder"></div>`)
               : this.cards.map(
-                  (card) => html`<app-card name="${card.name}" cost="${card.cost}" types="${card.types.join(", ")}"></app-card>`
+                  (card) => html`<app-card name="${card.name}" cost="${card.cost}" 
+                  types="${card.types.join(", ")}" expansion="${card.expansion}"></app-card>`
                 )}
             </div>
 
