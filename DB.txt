@@ -1,0 +1,57 @@
+Datenbankschema:
+
+Tabelle: CARDS
+ID | NAME | KOSTEN | EXPANSION | PLUS_ACTION? | PLUS_MULTIPLE_ACTION? | PLUS_BUY? | PLUS_MULTIPLE_DRAW? | TRASH? 
+
+Tabelle: EXTRA_CARDS
+ID | NAME | KOSTEN | EXPANSION
+
+Tabelle: EVENTS
+ID | NAME | KOSTEN | EXPANSION | LINKED
+
+Tabelle: LANDMARKS (Landmarken, Empires)
+ID | NAME | LINKED
+
+Tabelle: GAMEPARTS (Plagen, Segen, Token, Marker etc.)
+ID | NAME | EXPANSION
+
+Tabelle: TRAITS (Merkmale, Plünderer)
+ID | NAME | LINKED
+
+Tabelle: PROJECTS (Projekte, Renaissance)
+ID | NAME | LINKED
+
+Tabelle: ALLY (Verbündete)
+ID | NAME
+
+Tabelle: PROPHECIES
+ID | NAME
+
+----
+
+Tabelle: KINGDOM
+ID | CREATED_AT
+
+Tabelle: KINGDOM_CARDS
+KINGDOM_ID | CARD_ID
+
+
+
+
+
+
+
+Zusatzinfos:
+
+Blütezeit:      Platin/Kolonie      Victory Token
+Seaside:        Insel/Eingeborenendorf/Piratenschiff(Seaside I)
+
+
+
+
+
+
+
+RESSOURCES
+
+GLOBAL

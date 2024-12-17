@@ -2,11 +2,12 @@ package com.kingdomizer.entity;
 
 import jakarta.persistence.*;
 import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "cards")
 public class Card {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,6 +18,11 @@ public class Card {
     @Column(nullable = false)
     private int cost;
 
+    @ElementCollection(fetch = FetchType.EAGER) // Separate Tabelle für die Abhängigkeiten
+    @CollectionTable(name = "card_dependencies", joinColumns = @JoinColumn(name = "card_id"))
+    @Column(name = "dependent_card_id")
+    private List<Long> dependencies; // IDs der abhängigen Karten
+
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "card_types", joinColumns = @JoinColumn(name = "card_id"))
     @Enumerated(EnumType.STRING)
@@ -26,7 +32,7 @@ public class Card {
     @Column(nullable = false)
     private Expansion expansion;
 
-
+    // Getter und Setter
     public Long getId() {
         return id;
     }
@@ -58,7 +64,7 @@ public class Card {
     public void setTypes(Set<CardType> types) {
         this.types = types;
     }
- 
+
     public Expansion getExpansion() {
         return expansion;
     }
@@ -67,4 +73,11 @@ public class Card {
         this.expansion = expansion;
     }
 
+    public List<Long> getDependencies() {
+        return dependencies;
+    }
+
+    public void setDependencies(List<Long> dependencies) {
+        this.dependencies = dependencies;
+    }
 }

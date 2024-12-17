@@ -26,6 +26,8 @@ INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (10002, 60);
 INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (10002, 71);
 INSERT INTO kingdom_cards (kingdom_id, card_id) VALUES (10002, 74);
 
+-- TABELLE: DEPENDENCIES
+
 
 -- BASISSPIEL 2.EDITION
 
@@ -56,6 +58,7 @@ INSERT INTO cards (id, name, cost, expansion) VALUES (23, 'Mine', 5, 'BASE_2ND')
 INSERT INTO cards (id, name, cost, expansion) VALUES (24, 'Ratsversammlung', 5, 'BASE_2ND');
 INSERT INTO cards (id, name, cost, expansion) VALUES (25, 'Torwächterin', 5, 'BASE_2ND');
 INSERT INTO cards (id, name, cost, expansion) VALUES (26, 'Töpferei', 6, 'BASE_2ND');
+
 
 -- TABELLE CARD_TYPES
 INSERT INTO card_types (card_id, types) VALUES (1, 'REACTION');
@@ -90,6 +93,8 @@ INSERT INTO card_types (card_id, types) VALUES (24, 'ACTION');
 INSERT INTO card_types (card_id, types) VALUES (25, 'ACTION');
 INSERT INTO card_types (card_id, types) VALUES (26, 'ACTION');
 
+
+-- TABELLE: DEPENDENCIES
 
 
 -- BLÜTEZEIT 2.EDITION
@@ -236,3 +241,6 @@ INSERT INTO card_types (card_id, types) VALUES (77, 'ACTION');
 INSERT INTO card_types (card_id, types) VALUES (77, 'DURATION');
 INSERT INTO card_types (card_id, types) VALUES (78, 'ACTION');
 INSERT INTO card_types (card_id, types) VALUES (78, 'DURATION');
+
+
+
