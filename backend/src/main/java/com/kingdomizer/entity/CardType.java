@@ -6,5 +6,6 @@ public enum CardType {
     ATTACK,
     VICTORY,
     TREASURE,
-    DURATION     
+    DURATION,
+    COMMAND     
 }
