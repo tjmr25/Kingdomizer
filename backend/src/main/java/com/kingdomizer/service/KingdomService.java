@@ -4,6 +4,7 @@ import com.kingdomizer.entity.Resource;
 import com.kingdomizer.entity.ResourceCategory;
 import com.kingdomizer.entity.Expansion;
 import com.kingdomizer.repository.ResourceRepository;
+import com.kingdomizer.dto.CardDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -22,31 +23,39 @@ public class KingdomService {
         this.resourceRepository = resourceRepository;
     }
 
-    public List<Long> generateKingdom(Map<String, Boolean> expansionStates) {
-        // Filtere die aktivierten Erweiterungen und konvertiere in Enums
+    public List<CardDTO> generateKingdom(Map<String, Boolean> expansionStates) {
+        // 1. Filtere die aktivierten Erweiterungen und konvertiere in Enums
         List<Expansion> selectedExpansions = expansionStates.entrySet().stream()
                 .filter(Map.Entry::getValue) // Nur aktivierte Erweiterungen
                 .map(entry -> Expansion.valueOf(entry.getKey().toUpperCase())) // String zu Enum konvertieren
                 .collect(Collectors.toList());
     
-        // Ressourcen filtern nach Erweiterungen und ResourceCategory
+        // 2. Ressourcen filtern nach Erweiterungen und ResourceCategory
         List<Resource> filteredCards = resourceRepository.findByExpansionInAndResourceCategory(
                 selectedExpansions, 
                 ResourceCategory.CARD
         );
     
-        // Karten mischen
+        // 3. Karten mischen
         Collections.shuffle(filteredCards);
     
-        // 10 Karten auswählen
+        // 4. 10 Karten auswählen und sortieren
         return filteredCards.stream()
                 .limit(10)
-                .sorted(Comparator.comparing(Resource::getExpansion, Comparator.naturalOrder()) // Nach natürlicher Enum-Reihenfolge sortieren
-                                .thenComparing(Resource::getExpansionEdition)  
-                                .thenComparing(Resource::getCost)   // Nach Kosten sortieren
-                                .thenComparing(Resource::getName)) // Nach Name sortieren
-                .map(Resource::getId) // IDs extrahieren
+                .sorted(Comparator.comparing(Resource::getExpansion, Comparator.naturalOrder()) // Nach natürlicher Enum-Reihenfolge von Expansion
+                                  .thenComparing(Resource::getExpansionEdition, Comparator.naturalOrder()) // Nach ExpansionEdition sortieren
+                                  .thenComparing(Resource::getCost)   // Nach Kosten sortieren
+                                  .thenComparing(Resource::getName)) // Nach Name sortieren
+                .map(resource -> new CardDTO( // Mapping zur DTO-Klasse
+                    resource.getId(),
+                    resource.getName(),
+                    resource.getExpansion(),
+                    resource.getExpansionEdition(),
+                    resource.getCost(),
+                    resource.getCardTypes().stream().toList(),
+                    resource.getDependencies().stream().toList()
+                ))
                 .collect(Collectors.toList());
     }
-    
+        
 }

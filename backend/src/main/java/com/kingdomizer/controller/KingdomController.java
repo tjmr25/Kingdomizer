@@ -1,6 +1,7 @@
 package com.kingdomizer.controller;
 
 import com.kingdomizer.service.KingdomService;
+import com.kingdomizer.dto.CardDTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class KingdomController {
     }
 
     @PostMapping("/generate")
-    public List<Long> generateKingdom(@RequestBody Map<String, Boolean> expansionStates) {
+    public List<CardDTO> generateKingdom(@RequestBody Map<String, Boolean> expansionStates) {
         return kingdomService.generateKingdom(expansionStates);
     }
 }
