@@ -1,64 +1,52 @@
 package com.kingdomizer.service;
 
-import com.kingdomizer.repository.KingdomRepository;
-import com.kingdomizer.entity.Kingdom;
+import com.kingdomizer.entity.Resource;
+import com.kingdomizer.entity.ResourceCategory;
 import com.kingdomizer.entity.Expansion;
+import com.kingdomizer.repository.ResourceRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
+import java.util.Map;
 
 @Service
 public class KingdomService {
 
-    private final KingdomRepository kingdomRepository;
+    private final ResourceRepository resourceRepository;
 
-    public KingdomService(KingdomRepository kingdomRepository) {
-        this.kingdomRepository = kingdomRepository;
+    // Konstruktor für Dependency Injection
+    public KingdomService(ResourceRepository resourceRepository) {
+        this.resourceRepository = resourceRepository;
     }
 
-    // public List<Map<String, Object>> generateKingdom(List<String> expansions) {
-    //     List<Card> filteredCards = cardRepository.findByExpansionIn(expansions);
-    //     Collections.shuffle(filteredCards);
-
-    //     List<Card> selectedCards = filteredCards.stream()
-    //         .limit(10)
-    //         .sorted(Comparator.comparing(Card::getExpansion) // Nach Erweiterung sortieren
-    //         .thenComparing(Card::getCost) // Nach Kosten sortieren
-    //         .thenComparing(Card::getName)) // Falls gleiche Kosten: Nach Name sortieren
-    //         .collect(Collectors.toList());
-
-    //     // Mappe jede Karte in ein Map-Objekt mit id, name, cost und types
-    //     return selectedCards.stream()
-    //             .map(card -> {
-    //                 Map<String, Object> cardMap = new LinkedHashMap<>();
-    //                 cardMap.put("id", card.getId());
-    //                 cardMap.put("name", card.getName());
-    //                 cardMap.put("cost", card.getCost());
-    //                 cardMap.put("expansion", card.getExpansion().name());
-    //                 cardMap.put("types", card.getTypes().stream()
-    //                         .map(Enum::name)
-    //                         .toArray(String[]::new)); // Konvertiere zu String-Array
-    //                 return cardMap;
-    //             })
-    //             .collect(Collectors.toList());
-    // }
-
-    // public Kingdom saveKingdom(Kingdom kingdom) {
-    //     return kingdomRepository.save(kingdom);
-    // }
-
-    // public List<Kingdom> getAllKingdoms() {
-    //     // Hole alle Kingdoms
-    //     List<Kingdom> kingdoms = kingdomRepository.findAll();
-
-    //     // Ersetze cardIds durch Card-Objekte
-    //     for (Kingdom kingdom : kingdoms) {
-    //         // IDs in Karten umwandeln
-    //         List<Card> cards = cardRepository.findAllById(kingdom.getCardIds());
-    //         kingdom.setCards(cards);
-    //     }
-
-    //     return kingdoms;
-    // }
+    public List<Long> generateKingdom(Map<String, Boolean> expansionStates) {
+        // Filtere die aktivierten Erweiterungen und konvertiere in Enums
+        List<Expansion> selectedExpansions = expansionStates.entrySet().stream()
+                .filter(Map.Entry::getValue) // Nur aktivierte Erweiterungen
+                .map(entry -> Expansion.valueOf(entry.getKey().toUpperCase())) // String zu Enum konvertieren
+                .collect(Collectors.toList());
+    
+        // Ressourcen filtern nach Erweiterungen und ResourceCategory
+        List<Resource> filteredCards = resourceRepository.findByExpansionInAndResourceCategory(
+                selectedExpansions, 
+                ResourceCategory.CARD
+        );
+    
+        // Karten mischen
+        Collections.shuffle(filteredCards);
+    
+        // 10 Karten auswählen
+        return filteredCards.stream()
+                .limit(10)
+                .sorted(Comparator.comparing(Resource::getExpansion, Comparator.naturalOrder()) // Nach natürlicher Enum-Reihenfolge sortieren
+                                .thenComparing(Resource::getExpansionEdition)  
+                                .thenComparing(Resource::getCost)   // Nach Kosten sortieren
+                                .thenComparing(Resource::getName)) // Nach Name sortieren
+                .map(Resource::getId) // IDs extrahieren
+                .collect(Collectors.toList());
+    }
+    
 }
