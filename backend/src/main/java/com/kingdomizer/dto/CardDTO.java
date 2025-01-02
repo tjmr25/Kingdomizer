@@ -1,7 +1,6 @@
 package com.kingdomizer.dto;
 
 import com.kingdomizer.entity.Expansion;
-import com.kingdomizer.entity.ExpansionEdition;
 import com.kingdomizer.entity.CardType;
 
 import java.util.List;
@@ -10,17 +9,15 @@ public class CardDTO {
     private Long id;
     private String name;
     private Expansion expansion;
-    private ExpansionEdition expansionEdition;
     private Integer cost;
     private List<CardType> cardTypes; // Liste für die Typen
     private List<Long> dependencies; // Neue Liste für die Abhängigkeiten (IDs)
 
     // Konstruktor
-    public CardDTO(Long id, String name, Expansion expansion, ExpansionEdition expansionEdition, Integer cost, List<CardType> cardTypes, List<Long> dependencies) {
+    public CardDTO(Long id, String name, Expansion expansion, Integer cost, List<CardType> cardTypes, List<Long> dependencies) {
         this.id = id;
         this.name = name;
         this.expansion = expansion;
-        this.expansionEdition = expansionEdition;
         this.cost = cost;
         this.cardTypes = cardTypes;
         this.dependencies = dependencies;
@@ -49,14 +46,6 @@ public class CardDTO {
 
     public void setExpansion(Expansion expansion) {
         this.expansion = expansion;
-    }
-
-    public ExpansionEdition getExpansionEdition() {
-        return expansionEdition;
-    }
-
-    public void setExpansionEdition(ExpansionEdition expansionEdition) {
-        this.expansionEdition = expansionEdition;
     }
 
     public Integer getCost() {

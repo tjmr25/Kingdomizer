@@ -1,20 +1,13 @@
 import { html, css, LitElement } from "lit";
+import { footerStyles } from "./footer.styles";
 
 export class Footer extends LitElement {
-  static styles = css`
-    footer {
-      background-color: var(--color-blue); /* Hintergrundfarbe */
-      color: white; /* Schriftfarbe */
-      padding: 0.5rem;
-      text-align: center;
-      font-size: 0.875rem;
-    }
-  `;
+  static styles = footerStyles;
 
   render() {
     return html`
       <footer>
-        © 2024 Kingdomizer - All rights reserved.
+        © 2025 Kingdomizer - All rights reserved.
       </footer>
     `;
   }

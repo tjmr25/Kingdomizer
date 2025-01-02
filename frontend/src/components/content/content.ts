@@ -1,5 +1,6 @@
 import { html, css, LitElement } from "lit";
 import { property } from "lit/decorators.js";
+import { contentStyles } from "./content.styles";
 
 import "../card/card";
 
@@ -8,138 +9,32 @@ export interface Card {
   name: string;
   cost: number;
   expansion: string;
-  types: string[];
+  cardTypes: string[];
 }
+
+export const oldExpansions = ["BASE_1ST", "PROSPERITY_1ST", "SEASIDE_1ST"];
 
 export class Content extends LitElement {
     @property({ type: Array }) cards: Card[] = [];
+    @property({ type: Boolean }) isAccordionOpen = false;
     @property({ type: Object }) expansionStates = {
-      BASE_2ND: true,
-      PROSPERITY_2ND: true,
-      SEASIDE_2ND: true,
-    };
+        BASE: true,
+        BASE_1ST: false,
+        BASE_2ND: true,
+        PROSPERITY: true,
+        PROSPERITY_1ST: false,
+        PROSPERITY_2ND: true,
+        SEASIDE: true,
+        SEASIDE_1ST: false,
+        SEASIDE_2ND: true,
+        PLUNDER: true
+    }
 
-    static styles = css`
-        .main-content {
-          flex: 1; /* Nimmt den verbleibenden Platz ein */
-          display: grid;
-          grid-template-columns: 80% 20%;
-          width: 75%; 
-          max-width: 75rem; 
-          min-width: 60rem;
-          margin: 4rem auto 6rem auto; 
-          padding: 2rem;  
-        }
-
-        .kindom-display {
-          
-        }
-        
-        .expansion-sidebar {
-          padding-left: 2rem;
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-        }
-        
-        .expansion {
-          background-color: white;
-          border-radius: 8px;
-          display: flex; /* Aktiviert Flexbox */
-          justify-content: space-between; /* Text links, Checkbox rechts */
-          align-items: center; /* Vertikal zentriert */
-          transition: transform 0.2s ease-in-out;
-          color: var(--color-dark);
-          border: 1px solid var(--color-gold)
-        }
-
-        .expansion:active {
-          transform: scale(0.95); /* Leichtes Drücken */
-        }
-
-        .expansion-label {
-          display: flex;
-          padding: 0.75rem 0.75rem;
-          justify-content: space-between;
-          align-items: center;
-          width: 100%; /* Damit das Label den gesamten Bereich einnimmt */
-          cursor: pointer; /* Zeigt an, dass das gesamte Element klickbar ist */
-          font-size: 0.875rem;
-        }
-
-        .button-container {
-          display: flex; 
-          justify-content: flex-start; 
-          align-items: center; 
-          margin-bottom: 1rem;
-          gap: 1rem; 
-        }
-        
-        button {
-          padding: 0.75rem 1.5rem; 
-          background-color: var(--color-blue); 
-          box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.1); 
-          color: white; 
-          border: none; 
-          border-radius: 8px; 
-          font-size: 1rem; 
-          font-weight: bold; 
-          cursor: pointer; 
-          transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out; 
-        }
-        
-        .save-button {
-          background-color: var(--color-gold);
-        }
-
-        .save-button:hover {
-          background-color: #d8c49a;
-        }
-
-        button:hover {
-          background-color: #7c8d9b; /* Hintergrundfarbe dunkler beim Hover */
-        }
-
-        button:active {
-          transform: scale(0.95); /* Leichtes "Drücken"-Gefühl beim Klicken */
-        }
-
-        .divider {
-          border-top: 1px solid var(--color-medium); 
-          margin: 2rem 0 2rem; 
-        }
-
-        .cards {
-          display: grid;
-          grid-template-columns: repeat(5, 1fr); 
-          gap: 1rem; 
-        }
-
-        .card-placeholder {
-          background-color: var(--color-light);
-          border: 1px solid var(--color-lighter); /* Umriss der Karte */
-          border-radius: 0.5rem;
-          height: 150px; 
-          box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3); 
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: var(--color-darker);
-          font-size: 1rem;
-          text-transform: uppercase;
-        }
-
-        .checkbox {
-          accent-color: var(--color-blue);
-        }
-
-        .checkbox:hover {
-          cursor: pointer;
-        }
-
-    `;
+    static styles = contentStyles;
 
     async fetchCards(): Promise<void> {
+      
+      
       try {
         const response = await fetch("http://localhost:8080/api/kingdom/generate", {
           method: "POST", 
@@ -152,12 +47,17 @@ export class Content extends LitElement {
 
         this.cards = [];
         this.cards = await response.json();
-        console.log("Zufalls-Königreich erfolgreich generiert")
+
       } catch (error) {
         console.error("Fehler beim Abrufen der Karten:", error);
       }
     }
 
+    async saveKingdom() {
+      alert("(Noch nicht implementiert) Königreich gespeichert!");
+    }
+
+    /*
     async saveKingdom(): Promise<void> {
       try {
         const cardIds = this.cards.map((card) => card.id);
@@ -179,11 +79,37 @@ export class Content extends LitElement {
         console.error("Fehler beim Speichern des Kingdoms:", error);
       }
     }
+    */
 
     updateExpansionState(expansion: string, checked: boolean) {
       this.expansionStates = { ...this.expansionStates, [expansion]: checked };
+    
+      if (expansion === 'BASE_1ST' || expansion === 'BASE_2ND') {
+        const isBase1stSelected = this.expansionStates['BASE_1ST'];
+        const isBase2ndSelected = this.expansionStates['BASE_2ND'];
+    
+        this.expansionStates['BASE'] = isBase1stSelected || isBase2ndSelected;
+      }
+    
+      if (expansion === 'SEASIDE_1ST' || expansion === 'SEASIDE_2ND') {
+        const isSeaside1stSelected = this.expansionStates['SEASIDE_1ST'];
+        const isSeaside2ndSelected = this.expansionStates['SEASIDE_2ND'];
+    
+        this.expansionStates['SEASIDE'] = isSeaside1stSelected || isSeaside2ndSelected;
+      }
+    
+      if (expansion === 'PROSPERITY_1ST' || expansion === 'PROSPERITY_2ND') {
+        const isProsperity1stSelected = this.expansionStates['PROSPERITY_1ST'];
+        const isProsperity2ndSelected = this.expansionStates['PROSPERITY_2ND'];
+    
+        this.expansionStates['PROSPERITY'] = isProsperity1stSelected || isProsperity2ndSelected;
+      }
     }
 
+    toggleAccordion() {
+      this.isAccordionOpen = !this.isAccordionOpen;
+    }
+    
     render() {
       return html`
         <div class="main-content">
@@ -191,7 +117,7 @@ export class Content extends LitElement {
 
             <div class="button-container">
               <button @click="${this.fetchCards}">Neues Königreich</button>
-              <button class="save-button" @click="${this.saveKingdom}">Speichern</button>
+              <button class="save-button" @click="${this.saveKingdom}">Speichern</button> 
             </div>
   
             <div class="divider"></div>
@@ -203,7 +129,7 @@ export class Content extends LitElement {
                   .map(() => html`<div class="card-placeholder"></div>`)
               : this.cards.map(
                   (card) => html`<app-card name="${card.name}" cost="${card.cost}" 
-                  types="${card.types.join(", ")}" expansion="${card.expansion}"></app-card>`
+                  types="${card.cardTypes.join(", ")}" expansion="${card.expansion}"></app-card>`
                 )}
             </div>
 
@@ -220,6 +146,7 @@ export class Content extends LitElement {
                 </label>
               </div>
 
+              
               <div class="expansion">
                 <label class="expansion-label">
                   Blütezeit (2.Edition)
@@ -227,10 +154,11 @@ export class Content extends LitElement {
                     this.updateExpansionState(
                       'PROSPERITY_2ND',
                       (e.target as HTMLInputElement).checked
-                  )}"/>
+                    )}"/>
                 </label>
               </div>
-
+              
+              
               <div class="expansion">
                 <label class="expansion-label">
                   Seaside (2.Edition)
@@ -238,17 +166,78 @@ export class Content extends LitElement {
                     this.updateExpansionState(
                       'SEASIDE_2ND',
                       (e.target as HTMLInputElement).checked
-                  )}"/>
+                    )}"/>
                 </label>
               </div>
               
-          </div>
-          
-        </div>
-      `;
-    }
+              
+              <div class="expansion">
+                <label class="expansion-label">
+                  Plünderer
+                  <input class="checkbox" type="checkbox" checked @change="${(e: Event) =>
+                    this.updateExpansionState(
+                      'PLUNDER',
+                      (e.target as HTMLInputElement).checked
+                    )}"/>
+                </label>
+              </div>
+              
+              <div class="accordion">
 
-}
+                <div class="accordion-header" @click="${this.toggleAccordion}">
+                  ${this.isAccordionOpen 
+                    ? html`Frühere Editionen<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="icon">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                        </svg>`
+                    : html`Frühere Editionen<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="icon">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>`}
+                </div>
+                
+                <div class=""></div>
+                
+                <div class="accordion-content ${this.isAccordionOpen ? 'open' : ''}">
+                  
+                  <div class="expansion old">
+                    <label class="expansion-label">
+                      Basisspiel (1.Edition)
+                      <input class="checkbox" type="checkbox" unchecked @change="${(e: Event) =>
+                        this.updateExpansionState(
+                          'BASE_1ST',
+                          (e.target as HTMLInputElement).checked
+                      )}"/>
+                    </label>
+                  </div>
+
+                  <div class="expansion old">
+                    <label class="expansion-label">
+                      Blütezeit (1.Edition)
+                      <input class="checkbox" type="checkbox" unchecked @change="${(e: Event) =>
+                        this.updateExpansionState(
+                          'PROSPERITY_1ST',
+                          (e.target as HTMLInputElement).checked
+                      )}"/>
+                    </label>
+                  </div>
+                  
+                  <div class="expansion old">
+                    <label class="expansion-label">
+                      Seaside (1.Edition)
+                      <input class="checkbox" type="checkbox" unchecked @change="${(e: Event) =>
+                        this.updateExpansionState(
+                          'SEASIDE_1ST',
+                          (e.target as HTMLInputElement).checked
+                        )}"/>
+                    </label>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+            `;
+    }
+    
+  }
 
 customElements.define("app-content", Content);
 

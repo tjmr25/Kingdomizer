@@ -18,6 +18,11 @@ public class KingdomController {
         this.kingdomService = kingdomService;
     }
 
+    /**
+     * Generates a kingdom based on selected expansions.
+     * @param expansionStates a map of expansions with their active state (true/false)
+     * @return a list of cards in the generated kingdom
+     */
     @PostMapping("/generate")
     public List<CardDTO> generateKingdom(@RequestBody Map<String, Boolean> expansionStates) {
         return kingdomService.generateKingdom(expansionStates);

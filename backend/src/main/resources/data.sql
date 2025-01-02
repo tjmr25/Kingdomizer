@@ -7,26 +7,26 @@
 -- BASISSPIEL
 
 -- Tabelle: RESOURCES
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (10001, 'Burggraben', 'CARD', 'BASE', 'EVERY', 2, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (10002, 'Keller', 'CARD', 'BASE', 'EVERY', 2, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (10003, 'Kapelle', 'CARD', 'BASE', 'EVERY', 2, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (10004, 'Dorf', 'CARD', 'BASE', 'EVERY', 3, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (10005, 'Werkstatt', 'CARD', 'BASE', 'EVERY', 3, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (10006, 'Bürokrat', 'CARD', 'BASE', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (10007, 'Geldverleiher', 'CARD', 'BASE', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (10008, 'Miliz', 'CARD', 'BASE', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (10009, 'Schmiede', 'CARD', 'BASE', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (10010, 'Thronsaal', 'CARD', 'BASE', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (10011, 'Umbau', 'CARD', 'BASE', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (10012, 'Bibliothek', 'CARD', 'BASE', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (10013, 'Hexe', 'CARD', 'BASE', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (10014, 'Jahrmarkt', 'CARD', 'BASE', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (10015, 'Laboratorium', 'CARD', 'BASE', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (10016, 'Markt', 'CARD', 'BASE', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (10017, 'Mine', 'CARD', 'BASE', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (10018, 'Ratsversammlung', 'CARD', 'BASE', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (10019, 'Gärten', 'CARD', 'BASE', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (10020, 'Fluch', 'EXTRA_CARD', 'BASE', 'EVERY', 0, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (10001, 'Burggraben', 'CARD', 'BASE', 2, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (10002, 'Keller', 'CARD', 'BASE', 2, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (10003, 'Kapelle', 'CARD', 'BASE', 2, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (10004, 'Dorf', 'CARD', 'BASE', 3, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (10005, 'Werkstatt', 'CARD', 'BASE', 3, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (10006, 'Bürokrat', 'CARD', 'BASE', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (10007, 'Geldverleiher', 'CARD', 'BASE', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (10008, 'Miliz', 'CARD', 'BASE', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (10009, 'Schmiede', 'CARD', 'BASE', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (10010, 'Thronsaal', 'CARD', 'BASE', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (10011, 'Umbau', 'CARD', 'BASE', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (10012, 'Bibliothek', 'CARD', 'BASE', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (10013, 'Hexe', 'CARD', 'BASE', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (10014, 'Jahrmarkt', 'CARD', 'BASE', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (10015, 'Laboratorium', 'CARD', 'BASE', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (10016, 'Markt', 'CARD', 'BASE', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (10017, 'Mine', 'CARD', 'BASE', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (10018, 'Ratsversammlung', 'CARD', 'BASE', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (10019, 'Gärten', 'CARD', 'BASE', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (10020, 'Fluch', 'EXTRA_CARD', 'BASE', 0, false, null);
 
 -- Tabelle: CARD_PROPERTIES                                                                                                                                       +Act  +2Act  +Buy  +2Draw  Trash  Curse
 INSERT INTO card_properties (resource_id, has_plus_action, has_plus_multiple_actions, has_plus_buy, has_plus_multiple_draws, has_trash, has_curse) VALUES (10001, false, false, false, true, false, false);
@@ -82,12 +82,12 @@ INSERT INTO card_dependencies (resource_id, dependency_id) VALUES (10013, 10020)
 -- BASISSPIEL 1.EDITION
 
 -- Tabelle: RESOURCES
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (11001, 'Holzfäller', 'CARD', 'BASE', 'FIRST', 3, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (11002, 'Kanzler', 'CARD', 'BASE', 'FIRST', 3, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (11003, 'Festmahl', 'CARD', 'BASE', 'FIRST', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (11004, 'Dieb', 'CARD', 'BASE', 'FIRST', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (11005, 'Spion', 'CARD', 'BASE', 'FIRST', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (11006, 'Abenteurer', 'CARD', 'BASE', 'FIRST', 6, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (11001, 'Holzfäller', 'CARD', 'BASE_1ST', 3, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (11002, 'Kanzler', 'CARD', 'BASE_1ST', 3, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (11003, 'Festmahl', 'CARD', 'BASE_1ST', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (11004, 'Dieb', 'CARD', 'BASE_1ST', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (11005, 'Spion', 'CARD', 'BASE_1ST', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (11006, 'Abenteurer', 'CARD', 'BASE_1ST', 6, false, null);
 
 -- Tabelle: CARD_PROPERTIES                                                                                                                                       +Act  +2Act  +Buy  +2Draw  Trash  Curse
 INSERT INTO card_properties (resource_id, has_plus_action, has_plus_multiple_actions, has_plus_buy, has_plus_multiple_draws, has_trash, has_curse) VALUES (11001, false, false, true, false, false, false);
@@ -115,13 +115,13 @@ INSERT INTO card_types (resource_id, card_type) VALUES (11006, 'ACTION');
 -- BASISSPIEL 2.EDITION
 
 -- Tabelle: RESOURCES
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (12001, 'Händlerin', 'CARD', 'BASE', 'SECOND', 3, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (12002, 'Vasall', 'CARD', 'BASE', 'SECOND', 3, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (12003, 'Vorbotin', 'CARD', 'BASE', 'SECOND', 3, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (12004, 'Wilddiebin', 'CARD', 'BASE', 'SECOND', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (12005, 'Torwächterin', 'CARD', 'BASE', 'SECOND', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (12006, 'Banditin', 'CARD', 'BASE', 'SECOND', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (12007, 'Töpferei', 'CARD', 'BASE', 'SECOND', 6, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (12001, 'Händlerin', 'CARD', 'BASE_2ND', 3, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (12002, 'Vasall', 'CARD', 'BASE_2ND', 3, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (12003, 'Vorbotin', 'CARD', 'BASE_2ND', 3, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (12004, 'Wilddiebin', 'CARD', 'BASE_2ND', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (12005, 'Torwächterin', 'CARD', 'BASE_2ND', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (12006, 'Banditin', 'CARD', 'BASE_2ND', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (12007, 'Töpferei', 'CARD', 'BASE_2ND', 6, false, null);
 
 -- Tabelle: CARD_PROPERTIES                                                                                                                                       +Act  +2Act  +Buy  +2Draw  Trash  Curse
 INSERT INTO card_properties (resource_id, has_plus_action, has_plus_multiple_actions, has_plus_buy, has_plus_multiple_draws, has_trash, has_curse) VALUES (12001, true, false, false, false, false, false);
@@ -153,25 +153,25 @@ INSERT INTO card_types (resource_id, card_type) VALUES (12007, 'ACTION');
 -- BLÜTEZEIT
 
 -- Tabelle: RESOURCES
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (20001, 'Arbeiterdorf', 'CARD', 'PROSPERITY', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (20002, 'Bischof', 'CARD', 'PROSPERITY', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (20003, 'Denkmal', 'CARD', 'PROSPERITY', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (20004, 'Gewölbe', 'CARD', 'PROSPERITY', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (20005, 'Münzer', 'CARD', 'PROSPERITY', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (20006, 'Stadt', 'CARD', 'PROSPERITY', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (20007, 'Großer Markt', 'CARD', 'PROSPERITY', 'EVERY', 6, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (20008, 'Ausbau', 'CARD', 'PROSPERITY', 'EVERY', 7, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (20009, 'Königshof', 'CARD', 'PROSPERITY', 'EVERY', 7, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (20010, 'Kunstschmiede', 'CARD', 'PROSPERITY', 'EVERY', 7, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (20011, 'Hausierer', 'CARD', 'PROSPERITY', 'EVERY', 8, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (20012, 'Wachturm', 'CARD', 'PROSPERITY', 'EVERY', 3, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (20013, 'Gesindel', 'CARD', 'PROSPERITY', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (20014, 'Bank', 'CARD', 'PROSPERITY', 'EVERY', 7, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (20015, 'Hort', 'CARD', 'PROSPERITY', 'EVERY', 6, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (20016, 'Steinbruch', 'CARD', 'PROSPERITY', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (20017, 'Platin', 'EXTRA_CARD', 'PROSPERITY', 'EVERY', 9, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (20018, 'Koloinie', 'EXTRA_CARD', 'PROSPERITY', 'EVERY', 11, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (20019, 'Punktemarker', 'GAMEPART', 'PROSPERITY', 'EVERY', null, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20001, 'Arbeiterdorf', 'CARD', 'PROSPERITY', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20002, 'Bischof', 'CARD', 'PROSPERITY', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20003, 'Denkmal', 'CARD', 'PROSPERITY', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20004, 'Gewölbe', 'CARD', 'PROSPERITY', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20005, 'Münzer', 'CARD', 'PROSPERITY', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20006, 'Stadt', 'CARD', 'PROSPERITY', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20007, 'Großer Markt', 'CARD', 'PROSPERITY', 6, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20008, 'Ausbau', 'CARD', 'PROSPERITY', 7, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20009, 'Königshof', 'CARD', 'PROSPERITY', 7, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20010, 'Kunstschmiede', 'CARD', 'PROSPERITY', 7, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20011, 'Hausierer', 'CARD', 'PROSPERITY', 8, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20012, 'Wachturm', 'CARD', 'PROSPERITY', 3, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20013, 'Gesindel', 'CARD', 'PROSPERITY', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20014, 'Bank', 'CARD', 'PROSPERITY', 7, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20015, 'Hort', 'CARD', 'PROSPERITY', 6, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20016, 'Steinbruch', 'CARD', 'PROSPERITY', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20017, 'Platin', 'EXTRA_CARD', 'PROSPERITY', 9, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20018, 'Koloinie', 'EXTRA_CARD', 'PROSPERITY', 11, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20019, 'Punktemarker', 'GAMEPART', 'PROSPERITY', null, false, null);
 
 
 -- Tabelle: CARD_PROPERTIES                                                                                                                                       +Act  +2Act  +Buy  +2Draw  Trash  Curse
@@ -255,17 +255,17 @@ INSERT INTO card_dependencies (resource_id, dependency_id) VALUES (20016, 20018)
 -- BLÜTEZEIT 1.EDITION
 
 -- Tabelle: RESOURCES
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (21001, 'Handelsroute', 'CARD', 'PROSPERITY', 'FIRST', 3, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (21002, 'Lohn', 'CARD', 'PROSPERITY', 'FIRST', 3, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (21003, 'Talisman', 'CARD', 'PROSPERITY', 'FIRST', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (21004, 'Abenteuer', 'CARD', 'PROSPERITY', 'FIRST', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (21005, 'Königliches Siegel', 'CARD', 'PROSPERITY', 'FIRST', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (21006, 'Leihaus', 'CARD', 'PROSPERITY', 'FIRST', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (21007, 'Quacksalber', 'CARD', 'PROSPERITY', 'FIRST', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (21008, 'Schmugglerware', 'CARD', 'PROSPERITY', 'FIRST', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (21009, 'Halsabschneider', 'CARD', 'PROSPERITY', 'FIRST', 6, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (21010, 'Handelrouten-Tableau', 'GAMEPART', 'PROSPERITY', 'FIRST', null, true, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (21011, 'Geldmarker', 'GAMEPART', 'PROSPERITY', 'FIRST', null, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (21001, 'Handelsroute', 'CARD', 'PROSPERITY_1ST', 3, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (21002, 'Lohn', 'CARD', 'PROSPERITY_1ST', 3, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (21003, 'Talisman', 'CARD', 'PROSPERITY_1ST', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (21004, 'Abenteuer', 'CARD', 'PROSPERITY_1ST', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (21005, 'Königliches Siegel', 'CARD', 'PROSPERITY_1ST', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (21006, 'Leihaus', 'CARD', 'PROSPERITY_1ST', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (21007, 'Quacksalber', 'CARD', 'PROSPERITY_1ST', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (21008, 'Schmugglerware', 'CARD', 'PROSPERITY_1ST', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (21009, 'Halsabschneider', 'CARD', 'PROSPERITY_1ST', 6, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (21010, 'Handelrouten-Tableau', 'GAMEPART', 'PROSPERITY_1ST', null, true, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (21011, 'Geldmarker', 'GAMEPART', 'PROSPERITY_1ST', null, false, null);
 
 -- Tabelle: CARD_PROPERTIES                                                                                                                                       +Act  +2Act  +Buy  +2Draw  Trash  Curse
 INSERT INTO card_properties (resource_id, has_plus_action, has_plus_multiple_actions, has_plus_buy, has_plus_multiple_draws, has_trash, has_curse) VALUES (21001, false, false, true, false, true, false);
@@ -321,15 +321,15 @@ INSERT INTO card_dependencies (resource_id, dependency_id) VALUES (21009, 20018)
 -- BLÜTEZEIT 2.EDITION
 
 -- Tabelle: RESOURCES
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (22001, 'Amboss', 'CARD', 'PROSPERITY', 'SECOND', 3, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (22002, 'Brautkrone', 'CARD', 'PROSPERITY', 'SECOND', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (22003, 'Buchhalterin', 'CARD', 'PROSPERITY', 'SECOND', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (22004, 'Geldanlage', 'CARD', 'PROSPERITY', 'SECOND', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (22005, 'Kristallkugel', 'CARD', 'PROSPERITY', 'SECOND', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (22006, 'Magnatin', 'CARD', 'PROSPERITY', 'SECOND', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (22007, 'Sammelsurium', 'CARD', 'PROSPERITY', 'SECOND', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (22008, 'Waffenkiste', 'CARD', 'PROSPERITY', 'SECOND', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (22009, 'Wunderheilerin', 'CARD', 'PROSPERITY', 'SECOND', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (22001, 'Amboss', 'CARD', 'PROSPERITY_2ND', 3, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (22002, 'Brautkrone', 'CARD', 'PROSPERITY_2ND', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (22003, 'Buchhalterin', 'CARD', 'PROSPERITY_2ND', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (22004, 'Geldanlage', 'CARD', 'PROSPERITY_2ND', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (22005, 'Kristallkugel', 'CARD', 'PROSPERITY_2ND', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (22006, 'Magnatin', 'CARD', 'PROSPERITY_2ND', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (22007, 'Sammelsurium', 'CARD', 'PROSPERITY_2ND', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (22008, 'Waffenkiste', 'CARD', 'PROSPERITY_2ND', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (22009, 'Wunderheilerin', 'CARD', 'PROSPERITY_2ND', 5, false, null);
 
 
 -- Tabelle: CARD_PROPERTIES                                                                                                                                       +Act  +2Act  +Buy  +2Draw  Trash  Curse
@@ -389,26 +389,26 @@ INSERT INTO card_dependencies (resource_id, dependency_id) VALUES (22009, 20018)
 -- SEASIDE 
 
 -- Tabelle: RESOURCES
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (30001, 'Eingeborenendorf', 'CARD', 'SEASIDE', 'EVERY', 2, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (30002, 'Ausguck', 'CARD', 'SEASIDE', 'EVERY', 3, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (30003, 'Lagerhaus', 'CARD', 'SEASIDE', 'EVERY', 3, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (30004, 'Schmuggler', 'CARD', 'SEASIDE', 'EVERY', 3, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (30005, 'Beutelschneider', 'CARD', 'SEASIDE', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (30006, 'Müllverwerter', 'CARD', 'SEASIDE', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (30007, 'Schatzkarte', 'CARD', 'SEASIDE', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (30008, 'Bazar', 'CARD', 'SEASIDE', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (30009, 'Schatzkammer', 'CARD', 'SEASIDE', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (30010, 'Hafen', 'CARD', 'SEASIDE', 'EVERY', 2, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (30011, 'Leuchtturm', 'CARD', 'SEASIDE', 'EVERY', 2, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (30012, 'Fischerdorf', 'CARD', 'SEASIDE', 'EVERY', 3, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (30013, 'Karawane', 'CARD', 'SEASIDE', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (30014, 'Aussenposten', 'CARD', 'SEASIDE', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (30015, 'Handelsschiff', 'CARD', 'SEASIDE', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (30016, 'Taktiker', 'CARD', 'SEASIDE', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (30017, 'Werft', 'CARD', 'SEASIDE', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (30018, 'Insel', 'CARD', 'SEASIDE', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (30019, 'Insel-Tableau', 'GAMEPART', 'SEASIDE', 'EVERY', null, true, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (30020, 'Eingeborenendorf-Tableau', 'GAMEPART', 'SEASIDE', 'EVERY', null, true, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30001, 'Eingeborenendorf', 'CARD', 'SEASIDE', 2, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30002, 'Ausguck', 'CARD', 'SEASIDE', 3, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30003, 'Lagerhaus', 'CARD', 'SEASIDE', 3, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30004, 'Schmuggler', 'CARD', 'SEASIDE', 3, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30005, 'Beutelschneider', 'CARD', 'SEASIDE', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30006, 'Müllverwerter', 'CARD', 'SEASIDE', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30007, 'Schatzkarte', 'CARD', 'SEASIDE', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30008, 'Bazar', 'CARD', 'SEASIDE', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30009, 'Schatzkammer', 'CARD', 'SEASIDE', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30010, 'Hafen', 'CARD', 'SEASIDE', 2, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30011, 'Leuchtturm', 'CARD', 'SEASIDE', 2, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30012, 'Fischerdorf', 'CARD', 'SEASIDE', 3, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30013, 'Karawane', 'CARD', 'SEASIDE', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30014, 'Aussenposten', 'CARD', 'SEASIDE', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30015, 'Handelsschiff', 'CARD', 'SEASIDE', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30016, 'Taktiker', 'CARD', 'SEASIDE', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30017, 'Werft', 'CARD', 'SEASIDE', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30018, 'Insel', 'CARD', 'SEASIDE', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30019, 'Insel-Tableau', 'GAMEPART', 'SEASIDE', null, true, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30020, 'Eingeborenendorf-Tableau', 'GAMEPART', 'SEASIDE', null, true, null);
 
 
 -- Tabelle: CARD_PROPERTIES                                                                                                                                       +Act  +2Act  +Buy  +2Draw  Trash  Curse
@@ -469,16 +469,16 @@ INSERT INTO card_dependencies (resource_id, dependency_id) VALUES (30018, 30019)
 -- SEASIDE 1.EDITION 
 
 -- Tabelle: RESOURCES
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (31001, 'Botschafter', 'CARD', 'SEASIDE', 'FIRST', 3, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (31002, 'Embargo', 'CARD', 'SEASIDE', 'FIRST', 2, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (31003, 'Entdecker', 'CARD', 'SEASIDE', 'FIRST', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (31004, 'Geisterschiff', 'CARD', 'SEASIDE', 'FIRST', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (31005, 'Navigator', 'CARD', 'SEASIDE', 'FIRST', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (31006, 'Perlentaucher', 'CARD', 'SEASIDE', 'FIRST', 2, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (31007, 'Piratenschiff', 'CARD', 'SEASIDE', 'FIRST', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (31008, 'Seehexe', 'CARD', 'SEASIDE', 'FIRST', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (31009, 'Embargomarker', 'GAMEPART', 'SEASIDE', 'FIRST', null, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (31010, 'Piratenschiff-Tableau', 'GAMEPART', 'SEASIDE', 'FIRST', null, true, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (31001, 'Botschafter', 'CARD', 'SEASIDE_1ST', 3, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (31002, 'Embargo', 'CARD', 'SEASIDE_1ST', 2, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (31003, 'Entdecker', 'CARD', 'SEASIDE_1ST', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (31004, 'Geisterschiff', 'CARD', 'SEASIDE_1ST', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (31005, 'Navigator', 'CARD', 'SEASIDE_1ST', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (31006, 'Perlentaucher', 'CARD', 'SEASIDE_1ST', 2, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (31007, 'Piratenschiff', 'CARD', 'SEASIDE_1ST', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (31008, 'Seehexe', 'CARD', 'SEASIDE_1ST', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (31009, 'Embargomarker', 'GAMEPART', 'SEASIDE_1ST', null, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (31010, 'Piratenschiff-Tableau', 'GAMEPART', 'SEASIDE_1ST', null, true, null);
 
 
 -- Tabelle: CARD_PROPERTIES                                                                                                                                       +Act  +2Act  +Buy  +2Draw  Trash  Curse
@@ -518,15 +518,15 @@ INSERT INTO card_dependencies (resource_id, dependency_id) VALUES (31008, 10020)
 -- SEASIDE 2.EDITION 
 
 -- Tabelle: RESOURCES
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (32001, 'Seekarte', 'CARD', 'SEASIDE', 'SECOND', 3, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (32002, 'Affe', 'CARD', 'SEASIDE', 'SECOND', 3, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (32003, 'Blockade', 'CARD', 'SEASIDE', 'SECOND', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (32004, 'Gezeitenbecken', 'CARD', 'SEASIDE', 'SECOND', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (32005, 'Seefahrerin', 'CARD', 'SEASIDE', 'SECOND', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (32006, 'Korsarenschiff', 'CARD', 'SEASIDE', 'SECOND', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (32007, 'Meerhexe', 'CARD', 'SEASIDE', 'SECOND', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (32008, 'Astrolabium', 'CARD', 'SEASIDE', 'SECOND', 3, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (32009, 'Piratin', 'CARD', 'SEASIDE', 'SECOND', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (32001, 'Seekarte', 'CARD', 'SEASIDE_2ND', 3, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (32002, 'Affe', 'CARD', 'SEASIDE_2ND', 3, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (32003, 'Blockade', 'CARD', 'SEASIDE_2ND', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (32004, 'Gezeitenbecken', 'CARD', 'SEASIDE_2ND', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (32005, 'Seefahrerin', 'CARD', 'SEASIDE_2ND', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (32006, 'Korsarenschiff', 'CARD', 'SEASIDE_2ND', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (32007, 'Meerhexe', 'CARD', 'SEASIDE_2ND', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (32008, 'Astrolabium', 'CARD', 'SEASIDE_2ND', 3, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (32009, 'Piratin', 'CARD', 'SEASIDE_2ND', 5, false, null);
 
 
 -- Tabelle: CARD_PROPERTIES                                                                                                                                       +Act  +2Act  +Buy  +2Draw  Trash  Curse
@@ -578,81 +578,81 @@ INSERT INTO card_dependencies (resource_id, dependency_id) VALUES (32007, 10020)
 -- PLUNDER 
 
 -- Tabelle: RESOURCES
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40001, 'Grotte', 'CARD', 'PLUNDER', 'EVERY', 2, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40002, 'Schamanin', 'CARD', 'PLUNDER', 'EVERY', 2, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40003, 'Suche', 'CARD', 'PLUNDER', 'EVERY', 2, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40004, 'Blinder Passagier', 'CARD', 'PLUNDER', 'EVERY', 3, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40005, 'Einsamer Schrein', 'CARD', 'PLUNDER', 'EVERY', 3, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40006, 'Sirene', 'CARD', 'PLUNDER', 'EVERY', 3, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40007, 'Vorarbeiter', 'CARD', 'PLUNDER', 'EVERY', 3, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40008, 'Abenteurerin', 'CARD', 'PLUNDER', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40009, 'Ausgesetzter', 'CARD', 'PLUNDER', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40010, 'Flaggschiff', 'CARD', 'PLUNDER', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40011, 'Hafendorf', 'CARD', 'PLUNDER', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40012, 'Kartenzeichnerin', 'CARD', 'PLUNDER', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40013, 'Landungstrupp', 'CARD', 'PLUNDER', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40014, 'Schiffsjunge', 'CARD', 'PLUNDER', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40015, 'Sumpfhütten', 'CARD', 'PLUNDER', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40016, 'Bergbaustrasse', 'CARD', 'PLUNDER', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40017, 'Erste Maatin', 'CARD', 'PLUNDER', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40018, 'Fregatte', 'CARD', 'PLUNDER', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40019, 'Gauner', 'CARD', 'PLUNDER', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40020, 'Langschiff', 'CARD', 'PLUNDER', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40021, 'Mannschaft', 'CARD', 'PLUNDER', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40022, 'Meuchlerin', 'CARD', 'PLUNDER', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40023, 'Pilger', 'CARD', 'PLUNDER', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40024, 'Quartiermeister', 'CARD', 'PLUNDER', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40025, 'Vergrösserung', 'CARD', 'PLUNDER', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40026, 'Wohlhabendes Dorf', 'CARD', 'PLUNDER', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40027, 'Juwelen-Ei', 'CARD', 'PLUNDER', 'EVERY', 2, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40028, 'Käfig', 'CARD', 'PLUNDER', 'EVERY', 2, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40029, 'Gondel', 'CARD', 'PLUNDER', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40030, 'Schmelztiegel', 'CARD', 'PLUNDER', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40031, 'Seil', 'CARD', 'PLUNDER', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40032, 'Überfluss', 'CARD', 'PLUNDER', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40033, 'Werkzeug', 'CARD', 'PLUNDER', 'EVERY', 4, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40034, 'Anhänger', 'CARD', 'PLUNDER', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40035, 'Figurine', 'CARD', 'PLUNDER', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40036, 'Silbermine', 'CARD', 'PLUNDER', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40037, 'Spitzhacke', 'CARD', 'PLUNDER', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40038, 'Vergrabener Schatz', 'CARD', 'PLUNDER', 'EVERY', 5, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40039, 'Sack voll Kostbarkeiten', 'CARD', 'PLUNDER', 'EVERY', 6, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40040, 'Königstruhe', 'CARD', 'PLUNDER', 'EVERY', 7, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40041, 'Kostbarkeiten', 'EXTRA_CARD', 'PLUNDER', 'EVERY', null, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40001, 'Grotte', 'CARD', 'PLUNDER', 2, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40002, 'Schamanin', 'CARD', 'PLUNDER', 2, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40003, 'Suche', 'CARD', 'PLUNDER', 2, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40004, 'Blinder Passagier', 'CARD', 'PLUNDER', 3, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40005, 'Einsamer Schrein', 'CARD', 'PLUNDER', 3, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40006, 'Sirene', 'CARD', 'PLUNDER', 3, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40007, 'Vorarbeiter', 'CARD', 'PLUNDER', 3, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40008, 'Abenteurerin', 'CARD', 'PLUNDER', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40009, 'Ausgesetzter', 'CARD', 'PLUNDER', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40010, 'Flaggschiff', 'CARD', 'PLUNDER', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40011, 'Hafendorf', 'CARD', 'PLUNDER', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40012, 'Kartenzeichnerin', 'CARD', 'PLUNDER', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40013, 'Landungstrupp', 'CARD', 'PLUNDER', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40014, 'Schiffsjunge', 'CARD', 'PLUNDER', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40015, 'Sumpfhütten', 'CARD', 'PLUNDER', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40016, 'Bergbaustrasse', 'CARD', 'PLUNDER', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40017, 'Erste Maatin', 'CARD', 'PLUNDER', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40018, 'Fregatte', 'CARD', 'PLUNDER', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40019, 'Gauner', 'CARD', 'PLUNDER', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40020, 'Langschiff', 'CARD', 'PLUNDER', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40021, 'Mannschaft', 'CARD', 'PLUNDER', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40022, 'Meuchlerin', 'CARD', 'PLUNDER', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40023, 'Pilger', 'CARD', 'PLUNDER', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40024, 'Quartiermeister', 'CARD', 'PLUNDER', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40025, 'Vergrösserung', 'CARD', 'PLUNDER', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40026, 'Wohlhabendes Dorf', 'CARD', 'PLUNDER', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40027, 'Juwelen-Ei', 'CARD', 'PLUNDER', 2, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40028, 'Käfig', 'CARD', 'PLUNDER', 2, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40029, 'Gondel', 'CARD', 'PLUNDER', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40030, 'Schmelztiegel', 'CARD', 'PLUNDER', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40031, 'Seil', 'CARD', 'PLUNDER', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40032, 'Überfluss', 'CARD', 'PLUNDER', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40033, 'Werkzeug', 'CARD', 'PLUNDER', 4, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40034, 'Anhänger', 'CARD', 'PLUNDER', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40035, 'Figurine', 'CARD', 'PLUNDER', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40036, 'Silbermine', 'CARD', 'PLUNDER', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40037, 'Spitzhacke', 'CARD', 'PLUNDER', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40038, 'Vergrabener Schatz', 'CARD', 'PLUNDER', 5, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40039, 'Sack voll Kostb.', 'CARD', 'PLUNDER', 6, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40040, 'Königstruhe', 'CARD', 'PLUNDER', 7, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40041, 'Kostbarkeiten', 'EXTRA_CARD', 'PLUNDER', null, false, null);
     
     -- TRAITS
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40042, 'Aufdringlich', 'TRAIT', 'PLUNDER', 'EVERY', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40043, 'Benachbart', 'TRAIT', 'PLUNDER', 'EVERY', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40044, 'Billig', 'TRAIT', 'PLUNDER', 'EVERY', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40045, 'Eilig', 'TRAIT', 'PLUNDER', 'EVERY', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40046, 'Freundlich', 'TRAIT', 'PLUNDER', 'EVERY', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40047, 'Fromm', 'TRAIT', 'PLUNDER', 'EVERY', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40048, 'Geduldig', 'TRAIT', 'PLUNDER', 'EVERY', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40049, 'Geerbt', 'TRAIT', 'PLUNDER', 'EVERY', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40050, 'Inspirierend', 'TRAIT', 'PLUNDER', 'EVERY', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40051, 'Reich', 'TRAIT', 'PLUNDER', 'EVERY', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40052, 'Scheu', 'TRAIT', 'PLUNDER', 'EVERY', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40053, 'Unermüdlich', 'TRAIT', 'PLUNDER', 'EVERY', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40054, 'Verflucht', 'TRAIT', 'PLUNDER', 'EVERY', null, null, true); -- (!)Fluch
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40055, 'Vorherbestimmt', 'TRAIT', 'PLUNDER', 'EVERY', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40056, 'Waghalsig', 'TRAIT', 'PLUNDER', 'EVERY', null, null, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40042, 'Aufdringlich', 'TRAIT', 'PLUNDER', null, null, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40043, 'Benachbart', 'TRAIT', 'PLUNDER', null, null, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40044, 'Billig', 'TRAIT', 'PLUNDER', null, null, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40045, 'Eilig', 'TRAIT', 'PLUNDER', null, null, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40046, 'Freundlich', 'TRAIT', 'PLUNDER', null, null, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40047, 'Fromm', 'TRAIT', 'PLUNDER', null, null, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40048, 'Geduldig', 'TRAIT', 'PLUNDER', null, null, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40049, 'Geerbt', 'TRAIT', 'PLUNDER', null, null, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40050, 'Inspirierend', 'TRAIT', 'PLUNDER', null, null, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40051, 'Reich', 'TRAIT', 'PLUNDER', null, null, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40052, 'Scheu', 'TRAIT', 'PLUNDER', null, null, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40053, 'Unermüdlich', 'TRAIT', 'PLUNDER', null, null, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40054, 'Verflucht', 'TRAIT', 'PLUNDER', null, null, true); -- (!)Fluch
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40055, 'Vorherbestimmt', 'TRAIT', 'PLUNDER', null, null, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40056, 'Waghalsig', 'TRAIT', 'PLUNDER', null, null, false);
     
     -- EVENTS
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40057, 'Vergraben', 'EVENT', 'PLUNDER', 'EVERY', 1, true, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40058, 'Ausweichen', 'EVENT', 'PLUNDER', 'EVERY', 2, true, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40059, 'Beeilung', 'EVENT', 'PLUNDER', 'EVERY', 2, true, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40060, 'Riskieren', 'EVENT', 'PLUNDER', 'EVERY', 2, true, true);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40061, 'Zustellung', 'EVENT', 'PLUNDER', 'EVERY', 2, true, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40062, 'Brandschatzung', 'EVENT', 'PLUNDER', 'EVERY', 3, true, true);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40063, 'In See Stechen', 'EVENT', 'PLUNDER', 'EVERY', 3, true, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40064, 'Herumsuchen', 'EVENT', 'PLUNDER', 'EVERY', 3, true, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40065, 'Spiegeln', 'EVENT', 'PLUNDER', 'EVERY', 3, true, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40066, 'Vorbereitung', 'EVENT', 'PLUNDER', 'EVERY', 3, true, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40067, 'Mahlstrom', 'EVENT', 'PLUNDER', 'EVERY', 4, true, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40068, 'Reise', 'EVENT', 'PLUNDER', 'EVERY', 4, true, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40069, 'Plünderung', 'EVENT', 'PLUNDER', 'EVERY', 6, true, true);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40070, 'Aufblühen', 'EVENT', 'PLUNDER', 'EVERY', 10, true, true);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, expansion_edition, cost, has_landscape_orientation, is_linked) VALUES (40071, 'Invasion', 'EVENT', 'PLUNDER', 'EVERY', 10, true, true);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40057, 'Vergraben', 'EVENT', 'PLUNDER', 1, true, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40058, 'Ausweichen', 'EVENT', 'PLUNDER', 2, true, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40059, 'Beeilung', 'EVENT', 'PLUNDER', 2, true, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40060, 'Riskieren', 'EVENT', 'PLUNDER', 2, true, true);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40061, 'Zustellung', 'EVENT', 'PLUNDER', 2, true, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40062, 'Brandschatzung', 'EVENT', 'PLUNDER', 3, true, true);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40063, 'In See Stechen', 'EVENT', 'PLUNDER', 3, true, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40064, 'Herumsuchen', 'EVENT', 'PLUNDER', 3, true, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40065, 'Spiegeln', 'EVENT', 'PLUNDER', 3, true, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40066, 'Vorbereitung', 'EVENT', 'PLUNDER', 3, true, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40067, 'Mahlstrom', 'EVENT', 'PLUNDER', 4, true, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40068, 'Reise', 'EVENT', 'PLUNDER', 4, true, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40069, 'Plünderung', 'EVENT', 'PLUNDER', 6, true, true);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40070, 'Aufblühen', 'EVENT', 'PLUNDER', 10, true, true);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40071, 'Invasion', 'EVENT', 'PLUNDER', 10, true, true);
 
 
 -- Tabelle: CARD_PROPERTIES                                                                                                                                       +Act  +2Act  +Buy  +2Draw  Trash  Curse

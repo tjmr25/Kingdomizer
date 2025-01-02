@@ -23,39 +23,68 @@ public class KingdomService {
         this.resourceRepository = resourceRepository;
     }
 
+    /**
+     * Generates a kingdom by filtering expansions, fetching resources, and processing cards.
+     * @param expansionStates a map containing expansion names as keys and their active state as values
+     * @return a list of CardDTOs representing the selected kingdom
+     */
     public List<CardDTO> generateKingdom(Map<String, Boolean> expansionStates) {
-        // 1. Filtere die aktivierten Erweiterungen und konvertiere in Enums
-        List<Expansion> selectedExpansions = expansionStates.entrySet().stream()
-                .filter(Map.Entry::getValue) // Nur aktivierte Erweiterungen
-                .map(entry -> Expansion.valueOf(entry.getKey().toUpperCase())) // String zu Enum konvertieren
-                .collect(Collectors.toList());
-    
-        // 2. Ressourcen filtern nach Erweiterungen und ResourceCategory
-        List<Resource> filteredCards = resourceRepository.findByExpansionInAndResourceCategory(
-                selectedExpansions, 
-                ResourceCategory.CARD
-        );
-    
-        // 3. Karten mischen
-        Collections.shuffle(filteredCards);
-    
-        // 4. 10 Karten auswählen und sortieren
-        return filteredCards.stream()
-                .limit(10)
-                .sorted(Comparator.comparing(Resource::getExpansion, Comparator.naturalOrder()) // Nach natürlicher Enum-Reihenfolge von Expansion
-                                  .thenComparing(Resource::getExpansionEdition, Comparator.naturalOrder()) // Nach ExpansionEdition sortieren
-                                  .thenComparing(Resource::getCost)   // Nach Kosten sortieren
-                                  .thenComparing(Resource::getName)) // Nach Name sortieren
-                .map(resource -> new CardDTO( // Mapping zur DTO-Klasse
-                    resource.getId(),
-                    resource.getName(),
-                    resource.getExpansion(),
-                    resource.getExpansionEdition(),
-                    resource.getCost(),
-                    resource.getCardTypes().stream().toList(),
-                    resource.getDependencies().stream().toList()
-                ))
+        List<Expansion> selectedExpansions = filterExpansions(expansionStates);
+        List<Resource> filteredCards = fetchFilteredResources(selectedExpansions);
+        return processCards(filteredCards);
+    }
+
+    /**
+     * Filters the selected expansions based on the provided map of expansion states.
+     * @param expansionStates a map containing expansion names as keys and their active state as values
+     * @return a list of selected expansions as enums
+     */
+    private List<Expansion> filterExpansions(Map<String, Boolean> expansionStates) {
+        return expansionStates.entrySet().stream()
+                .filter(Map.Entry::getValue)
+                .map(entry -> Expansion.valueOf(entry.getKey().toUpperCase()))
                 .collect(Collectors.toList());
     }
-        
+
+    /**
+     * Fetches resources filtered by the selected expansions and the CARD resource category.
+     * @param selectedExpansions a list of selected expansions as enums
+     * @return a list of resources matching the criteria
+     */
+    private List<Resource> fetchFilteredResources(List<Expansion> selectedExpansions) {
+        return resourceRepository.findByExpansionInAndResourceCategory(selectedExpansions, ResourceCategory.CARD);
+    }
+
+    /**
+     * Processes the cards by shuffling, sorting, and mapping them into DTOs.
+     * @param filteredCards a list of resources to process
+     * @return a list of CardDTOs representing the processed cards
+     */
+    private List<CardDTO> processCards(List<Resource> filteredCards) {
+        Collections.shuffle(filteredCards);
+
+        return filteredCards.stream()
+                .limit(10)
+                .sorted(Comparator.comparing(Resource::getExpansion, Comparator.naturalOrder())
+                                  .thenComparing(Resource::getCost)
+                                  .thenComparing(Resource::getName))
+                .map(this::mapToDTO)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Maps a resource entity into a CardDTO.
+     * @param resource the resource entity to map
+     * @return a CardDTO containing the relevant data
+     */
+    private CardDTO mapToDTO(Resource resource) {
+        return new CardDTO(
+                resource.getId(),
+                resource.getName(),
+                resource.getExpansion(),
+                resource.getCost(),
+                resource.getCardTypes().stream().toList(),
+                resource.getDependencies().stream().toList()
+        );
+    }
 }

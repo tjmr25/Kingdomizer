@@ -22,10 +22,6 @@ public class Resource {
     @Column(name = "expansion")
     private Expansion expansion;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "expansion_edition")
-    private ExpansionEdition expansionEdition;
-
     @Column(name = "cost")
     private Integer cost;
 
@@ -77,14 +73,6 @@ public class Resource {
 
     public void setExpansion(Expansion expansion) {
         this.expansion = expansion;
-    }
-
-    public ExpansionEdition getExpansionEdition() {
-        return expansionEdition;
-    }
-
-    public void setExpansionEdition(ExpansionEdition expansionEdition) {
-        this.expansionEdition = expansionEdition;
     }
 
     public Integer getCost() {
