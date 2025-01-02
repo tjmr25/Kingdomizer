@@ -28,17 +28,17 @@ const expansionTranslations: Record<string, string> = {
 export class Card extends LitElement {
     @property() name: string = '';
     @property() cost: number = -1;
-    @property() types: string = '';
+    @property() cardTypes: string[] = [];
     @property() expansion: string = '';
     
     static styles = cardStyles;
 
     render() {
-        const typesArray = this.types ? this.types.split(", ") : [];
         const translatedExpansion = expansionTranslations[this.expansion] || this.expansion;
 
         return html`
           <div class="card">
+
             <div class="card-name">
                 <span style="font-weight: bold">${this.name}</span>
             </div>
@@ -47,10 +47,11 @@ export class Card extends LitElement {
                 ${this.cost}
             </div>
             <div class="cardtypes">
-                    ${typesArray.map(
-                        (type) => html`<span class="type ${type.toLowerCase()}">${typeTranslations[type]}</span>`
-                    )}
-            </div>
+            ${this.cardTypes.map(
+                (type) => html`<span class="type ${type.toLowerCase()}">${typeTranslations[type]}</span>`
+            )}
+            </div>          
+    
           </div>
         `;
       }

@@ -1,21 +1,12 @@
 import { html, css, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 import { contentStyles } from "./content.styles";
-
-import "../card/card";
-
-export interface Card {
-  id: string;
-  name: string;
-  cost: number;
-  expansion: string;
-  cardTypes: string[];
-}
+import { Card } from "../card/card";
 
 export const oldExpansions = ["BASE_1ST", "PROSPERITY_1ST", "SEASIDE_1ST"];
 
 export class Content extends LitElement {
-    @property({ type: Array }) cards: Card[] = [];
+    @property({ type: Array }) fetchedCards: Card[] = [];
     @property({ type: Boolean }) isAccordionOpen = false;
     @property({ type: Object }) expansionStates = {
         BASE: true,
@@ -33,8 +24,6 @@ export class Content extends LitElement {
     static styles = contentStyles;
 
     async fetchCards(): Promise<void> {
-      
-      
       try {
         const response = await fetch("http://localhost:8080/api/kingdom/generate", {
           method: "POST", 
@@ -44,9 +33,7 @@ export class Content extends LitElement {
         if (!response.ok) {
           throw new Error("Fehler beim Abrufen der Karten");
         }
-
-        this.cards = [];
-        this.cards = await response.json();
+        this.fetchedCards = await response.json();
 
       } catch (error) {
         console.error("Fehler beim Abrufen der Karten:", error);
@@ -124,12 +111,17 @@ export class Content extends LitElement {
   
             <!-- Karten in zwei Reihen -->
             <div class="cards">
-            ${this.cards.length === 0 ? Array(10)
+            ${this.fetchedCards.length === 0 ? Array(10)
                   .fill(null)
                   .map(() => html`<div class="card-placeholder"></div>`)
-              : this.cards.map(
-                  (card) => html`<app-card name="${card.name}" cost="${card.cost}" 
-                  types="${card.cardTypes.join(", ")}" expansion="${card.expansion}"></app-card>`
+              : this.fetchedCards.map(
+                  (fetchedCard) => html`
+                  <app-card 
+                    .name="${fetchedCard.name}" 
+                    .cost="${fetchedCard.cost}" 
+                    .cardTypes="${fetchedCard.cardTypes}" 
+                    .expansion="${fetchedCard.expansion}">
+                  </app-card>`
                 )}
             </div>
 
