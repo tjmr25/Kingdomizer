@@ -11,10 +11,6 @@ export const contentStyles = css`
           margin: 4rem auto 6rem auto; 
           padding: 2rem;  
         }
-
-        .kindom-display {
-          
-        }
         
         .expansion-sidebar {
           padding-left: 2rem;
@@ -90,7 +86,7 @@ export const contentStyles = css`
           margin: 2rem 0 2rem; 
         }
 
-        .cards {
+        .kingdom-space {
           display: grid;
           grid-template-columns: repeat(5, 1fr); 
           gap: 1rem; 

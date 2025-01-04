@@ -6,8 +6,9 @@ import { Card } from "../card/card";
 export const oldExpansions = ["BASE_1ST", "PROSPERITY_1ST", "SEASIDE_1ST"];
 
 export class Content extends LitElement {
-    @property({ type: Array }) fetchedCards: Card[] = [];
+    @property({ type: Array }) generatedCardIds: number[] = [];
     @property({ type: Boolean }) isAccordionOpen = false;
+    @property({ type: Boolean }) showPlaceholder = true;
     @property({ type: Object }) expansionStates = {
         BASE: true,
         BASE_1ST: false,
@@ -33,7 +34,10 @@ export class Content extends LitElement {
         if (!response.ok) {
           throw new Error("Fehler beim Abrufen der Karten");
         }
-        this.fetchedCards = await response.json();
+        this.generatedCardIds = await response.json();
+        if(this.generatedCardIds.length !== 0) {
+          this.showPlaceholder = false;
+        }
 
       } catch (error) {
         console.error("Fehler beim Abrufen der Karten:", error);
@@ -98,6 +102,7 @@ export class Content extends LitElement {
     }
     
     render() {
+      
       return html`
         <div class="main-content">
           <div class="kingdom-display">
@@ -109,21 +114,19 @@ export class Content extends LitElement {
   
             <div class="divider"></div>
   
-            <!-- Karten in zwei Reihen -->
-            <div class="cards">
-            ${this.fetchedCards.length === 0 ? Array(10)
-                  .fill(null)
-                  .map(() => html`<div class="card-placeholder"></div>`)
-              : this.fetchedCards.map(
-                  (fetchedCard) => html`
-                  <app-card 
-                    .name="${fetchedCard.name}" 
-                    .cost="${fetchedCard.cost}" 
-                    .cardTypes="${fetchedCard.cardTypes}" 
-                    .expansion="${fetchedCard.expansion}">
-                  </app-card>`
-                )}
-            </div>
+          
+            ${this.showPlaceholder
+              ? html`
+                  <div class="kingdom-space">
+                    ${Array(10).fill(null).map(() => html`
+                      <div class="card-placeholder"></div>
+                    `)}
+                  </div>
+                `
+              : html`
+                  <app-kingdom .kingdomCardIds="${this.generatedCardIds}"></app-kingdom>
+                `
+            }            
 
           </div>
           <div class="expansion-sidebar">

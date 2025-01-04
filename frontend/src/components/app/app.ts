@@ -5,6 +5,7 @@ import "../header/header";
 import "../footer/footer";
 import "../content/content";
 import "../collection/collection";
+import "../kingdom/kingdom"
 
 
 export class App extends LitElement {
