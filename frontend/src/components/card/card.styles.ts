@@ -16,13 +16,13 @@ export const cardStyles = css`
             display: flex;
             flex-direction: column;
             background-color: white;
-            color: var(--color-darker);
+            color: var(--color-dark);
             border: none;
             border-radius: 0.5rem;
             height: 150px;  
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             font-size: 1rem;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 
@@ -33,7 +33,7 @@ export const cardStyles = css`
         }
         
         .card-name {
-            margin-top: 1.5rem;
+            
         }
 
         .circle {
@@ -47,8 +47,8 @@ export const cardStyles = css`
             font-size: 1.125rem; 
             font-weight: bold; 
             color: var(--color-dark); 
-            margin-top: 0.75rem;
-            margin-bottom: 0.75rem;
+            margin-top: 1rem;
+            margin-bottom: 0rem;
             box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.3); 
         }
 
@@ -71,8 +71,8 @@ export const cardStyles = css`
             padding: 0.25rem;
             border-radius: 0.25rem;
             font-size: 0.75rem;
-            margin-bottom: 5%;
-
+            margin-top: 0.5rem;
+            transform: translateY(0.5rem);
         }
 
         .type.reaction {
@@ -86,6 +86,9 @@ export const cardStyles = css`
         }
         .type.duration {
             background-color: #ffb89c;
+        }
+        .type.curse {
+            background-color: #c8a7d7;   
         }
 
 `;

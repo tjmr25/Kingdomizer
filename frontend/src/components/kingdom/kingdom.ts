@@ -85,7 +85,36 @@ export class Kingdom extends LitElement {
                     .name="${card.name}" 
                     .cost="${card.cost}" 
                     .cardTypes="${card.cardTypes}" 
-                    expansion="${card.expansion}">
+                    .expansion="${card.expansion}">
+                  </app-card>`
+                )}
+      </div>
+      ${this.kingdomDetails?.dependencies.length! >= 1 ? html `
+              <h3>Prophezeiungen, Landmarken, Projekte, Events & Wege </h3>`: null}   
+
+      <div class="extra-cards">
+        ${this.kingdomDetails?.dependencies.map(
+                  (card: Dependency) => html`
+                  <app-card 
+                    .name="${card.name}" 
+                    .cost="${card.cost}" 
+                    .cardTypes="${card.cardTypes}" 
+                    .expansion="${card.expansion}">
+                  </app-card>`
+                )}
+      </div>
+      
+      ${this.kingdomDetails?.dependencies.length! >= 1 ? html `
+              <h3>Zusatzkarten & Spielmaterial</h3>`: null}   
+
+      <div class="extra-cards">
+        ${this.kingdomDetails?.dependencies.map(
+                  (card: Dependency) => html`
+                  <app-card 
+                    .name="${card.name}" 
+                    .cost="${card.cost}" 
+                    .cardTypes="${card.cardTypes}" 
+                    .expansion="${card.expansion}">
                   </app-card>`
                 )}
       </div>

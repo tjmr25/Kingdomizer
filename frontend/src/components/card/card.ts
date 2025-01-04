@@ -9,7 +9,8 @@ const typeTranslations: Record<string, string> = {
     ATTACK: "Angriff",
     DURATION: "Dauer",
     TREASURE: "Geld",
-    COMMAND: "Befehl"
+    COMMAND: "Befehl",
+    CURSE: "Fluch"
 };
 
 const expansionTranslations: Record<string, string> = {
@@ -43,14 +44,16 @@ export class Card extends LitElement {
                 <span style="font-weight: bold">${this.name}</span>
             </div>
             <div class="card-expansion">${translatedExpansion}</div>
-            <div class="circle">
+            
+            ${this.cost !== null ? html `<div class="circle">
                 ${this.cost}
-            </div>
-            <div class="cardtypes">
+            </div>`: null}
+
+            ${this.cardTypes.length !== 0 ? html `<div class="cardtypes">
             ${this.cardTypes.map(
                 (type) => html`<span class="type ${type.toLowerCase()}">${typeTranslations[type]}</span>`
             )}
-            </div>          
+            </div>`: null}          
     
           </div>
         `;

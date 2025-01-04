@@ -73,6 +73,8 @@ INSERT INTO card_types (resource_id, card_type) VALUES (10016, 'ACTION');
 INSERT INTO card_types (resource_id, card_type) VALUES (10017, 'ACTION');
 INSERT INTO card_types (resource_id, card_type) VALUES (10018, 'ACTION');
 INSERT INTO card_types (resource_id, card_type) VALUES (10019, 'VICTORY');
+INSERT INTO card_types (resource_id, card_type) VALUES (10020, 'CURSE');
+
 
 -- Tabelle: CARD_DEPENDENCIES
 INSERT INTO card_dependencies (resource_id, dependency_id) VALUES (10013, 10020);   -- Hexe, Fluch
@@ -170,7 +172,7 @@ INSERT INTO resources (resource_id, resource_name, resource_category, expansion,
 INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20015, 'Hort', 'CARD', 'PROSPERITY', 6, false, null);
 INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20016, 'Steinbruch', 'CARD', 'PROSPERITY', 4, false, null);
 INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20017, 'Platin', 'EXTRA_CARD', 'PROSPERITY', 9, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20018, 'Koloinie', 'EXTRA_CARD', 'PROSPERITY', 11, false, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20018, 'Kolonie', 'EXTRA_CARD', 'PROSPERITY', 11, false, null);
 INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (20019, 'Punktemarker', 'GAMEPART', 'PROSPERITY', null, false, null);
 
 
@@ -264,7 +266,7 @@ INSERT INTO resources (resource_id, resource_name, resource_category, expansion,
 INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (21007, 'Quacksalber', 'CARD', 'PROSPERITY_1ST', 5, false, null);
 INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (21008, 'Schmugglerware', 'CARD', 'PROSPERITY_1ST', 5, false, null);
 INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (21009, 'Halsabschneider', 'CARD', 'PROSPERITY_1ST', 6, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (21010, 'Handelrouten-Tableau', 'GAMEPART', 'PROSPERITY_1ST', null, true, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (21010, 'Handelsr.-Tableau', 'GAMEPART', 'PROSPERITY_1ST', null, true, null);
 INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (21011, 'Geldmarker', 'GAMEPART', 'PROSPERITY_1ST', null, false, null);
 
 -- Tabelle: CARD_PROPERTIES                                                                                                                                       +Act  +2Act  +Buy  +2Draw  Trash  Curse
@@ -408,7 +410,7 @@ INSERT INTO resources (resource_id, resource_name, resource_category, expansion,
 INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30017, 'Werft', 'CARD', 'SEASIDE', 5, false, null);
 INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30018, 'Insel', 'CARD', 'SEASIDE', 4, false, null);
 INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30019, 'Insel-Tableau', 'GAMEPART', 'SEASIDE', null, true, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30020, 'Eingeborenendorf-Tableau', 'GAMEPART', 'SEASIDE', null, true, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (30020, 'Eingeb.-Tableau', 'GAMEPART', 'SEASIDE', null, true, null);
 
 
 -- Tabelle: CARD_PROPERTIES                                                                                                                                       +Act  +2Act  +Buy  +2Draw  Trash  Curse
@@ -478,7 +480,7 @@ INSERT INTO resources (resource_id, resource_name, resource_category, expansion,
 INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (31007, 'Piratenschiff', 'CARD', 'SEASIDE_1ST', 4, false, null);
 INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (31008, 'Seehexe', 'CARD', 'SEASIDE_1ST', 4, false, null);
 INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (31009, 'Embargomarker', 'GAMEPART', 'SEASIDE_1ST', null, false, null);
-INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (31010, 'Piratenschiff-Tableau', 'GAMEPART', 'SEASIDE_1ST', null, true, null);
+INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (31010, 'Piratens.-Tableau', 'GAMEPART', 'SEASIDE_1ST', null, true, null);
 
 
 -- Tabelle: CARD_PROPERTIES                                                                                                                                       +Act  +2Act  +Buy  +2Draw  Trash  Curse
