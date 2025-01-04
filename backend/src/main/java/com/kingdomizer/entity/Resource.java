@@ -8,7 +8,7 @@ import java.util.Set;
 public class Resource {
 
     @Id
-    @Column(name = "resource_id") // Manuelle Vergabe der ID
+    @Column(name = "resource_id")
     private Long id;
 
     @Column(name = "resource_name", nullable = false, unique = true)
@@ -42,7 +42,10 @@ public class Resource {
     @Column(name = "card_type")
     private Set<CardType> cardTypes;
 
-    // Getters and Setters
+    @OneToOne(mappedBy = "resource", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private CardProperties cardProperties;
+
+    // Getter und Setter
     public Long getId() {
         return id;
     }
@@ -113,5 +116,13 @@ public class Resource {
 
     public void setCardTypes(Set<CardType> cardTypes) {
         this.cardTypes = cardTypes;
+    }
+
+    public CardProperties getCardProperties() {
+        return cardProperties;
+    }
+
+    public void setCardProperties(CardProperties cardProperties) {
+        this.cardProperties = cardProperties;
     }
 }

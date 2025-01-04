@@ -33,8 +33,7 @@ public class CardProperties {
     @Column(name = "has_curse")
     private Boolean hasCurse;
 
-
-    // Getters and Setters
+    // Getter und Setter
     public Long getId() {
         return id;
     }
@@ -98,5 +97,4 @@ public class CardProperties {
     public void setHasCurse(Boolean hasCurse) {
         this.hasCurse = hasCurse;
     }
-
 }

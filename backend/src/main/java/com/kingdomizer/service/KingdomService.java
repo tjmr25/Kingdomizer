@@ -5,40 +5,56 @@ import com.kingdomizer.entity.ResourceCategory;
 import com.kingdomizer.entity.Expansion;
 import com.kingdomizer.repository.ResourceRepository;
 import com.kingdomizer.dto.CardDTO;
+import com.kingdomizer.dto.DependencyDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.HashMap;
 
 @Service
 public class KingdomService {
 
     private final ResourceRepository resourceRepository;
 
-    // Konstruktor für Dependency Injection
     public KingdomService(ResourceRepository resourceRepository) {
         this.resourceRepository = resourceRepository;
     }
 
-    /**
-     * Generates a kingdom by filtering expansions, fetching resources, and processing cards.
-     * @param expansionStates a map containing expansion names as keys and their active state as values
-     * @return a list of CardDTOs representing the selected kingdom
-     */
-    public List<CardDTO> generateKingdom(Map<String, Boolean> expansionStates) {
+    public List<Long> generateKingdom(Map<String, Boolean> expansionStates) {
         List<Expansion> selectedExpansions = filterExpansions(expansionStates);
         List<Resource> filteredCards = fetchFilteredResources(selectedExpansions);
-        return processCards(filteredCards);
+
+        Collections.shuffle(filteredCards);
+        return filteredCards.stream()
+                .limit(10)
+                .map(Resource::getId)
+                .collect(Collectors.toList());
     }
 
-    /**
-     * Filters the selected expansions based on the provided map of expansion states.
-     * @param expansionStates a map containing expansion names as keys and their active state as values
-     * @return a list of selected expansions as enums
-     */
+    public Map<String, Object> getKingdomDetails(List<Long> cardIds) {
+        // 1. Alle Ressourcen basierend auf den IDs laden
+        List<Resource> resources = fetchResourcesByIds(cardIds);
+    
+        // 2. Sammle alle Dependency-IDs
+        List<Long> dependencyIds = resources.stream()
+                .flatMap(resource -> resource.getDependencies().stream())
+                .distinct()
+                .collect(Collectors.toList());
+    
+        // 3. Lade die Ressourcen für die Dependency-IDs
+        List<Resource> dependencies = fetchResourcesByIds(dependencyIds);
+    
+        // 4. Karten und Abhängigkeiten in DTOs umwandeln
+        List<CardDTO> cardDTOs = mapToCardDTOs(resources);
+        List<DependencyDTO> dependencyDTOs = mapToDependencyDTOs(dependencies);
+    
+        // 5. Antwortstruktur erstellen
+        return createKingdomDetailsResponse(cardDTOs, dependencyDTOs);
+    }
+    
     private List<Expansion> filterExpansions(Map<String, Boolean> expansionStates) {
         return expansionStates.entrySet().stream()
                 .filter(Map.Entry::getValue)
@@ -46,45 +62,77 @@ public class KingdomService {
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Fetches resources filtered by the selected expansions and the CARD resource category.
-     * @param selectedExpansions a list of selected expansions as enums
-     * @return a list of resources matching the criteria
-     */
     private List<Resource> fetchFilteredResources(List<Expansion> selectedExpansions) {
         return resourceRepository.findByExpansionInAndResourceCategory(selectedExpansions, ResourceCategory.CARD);
     }
 
-    /**
-     * Processes the cards by shuffling, sorting, and mapping them into DTOs.
-     * @param filteredCards a list of resources to process
-     * @return a list of CardDTOs representing the processed cards
-     */
-    private List<CardDTO> processCards(List<Resource> filteredCards) {
-        Collections.shuffle(filteredCards);
+    private List<Resource> fetchResourcesByIds(List<Long> cardIds) {
+        return resourceRepository.findAllById(cardIds);
+    }
 
-        return filteredCards.stream()
-                .limit(10)
-                .sorted(Comparator.comparing(Resource::getExpansion, Comparator.naturalOrder())
-                                  .thenComparing(Resource::getCost)
-                                  .thenComparing(Resource::getName))
-                .map(this::mapToDTO)
+    private List<Resource> filterMainCards(List<Resource> resources) {
+        return resources.stream()
+                .filter(resource -> resource.getResourceCategory() == ResourceCategory.CARD)
                 .collect(Collectors.toList());
     }
 
-    /**
-     * Maps a resource entity into a CardDTO.
-     * @param resource the resource entity to map
-     * @return a CardDTO containing the relevant data
-     */
-    private CardDTO mapToDTO(Resource resource) {
+    private List<Resource> filterDependencies(List<Resource> resources) {
+        // IDs aller Abhängigkeiten sammeln
+        List<Long> dependencyIds = resources.stream()
+                .flatMap(resource -> resource.getDependencies().stream())
+                .collect(Collectors.toList());
+    
+        // Ressourcen filtern, die in den Dependency-IDs vorkommen
+        return resources.stream()
+                .filter(resource -> dependencyIds.contains(resource.getId()))
+                .collect(Collectors.toList());
+    }
+    private List<CardDTO> mapToCardDTOs(List<Resource> resources) {
+        return resources.stream()
+                .map(this::mapToCardDTO)
+                .collect(Collectors.toList());
+    }
+
+    private List<DependencyDTO> mapToDependencyDTOs(List<Resource> resources) {
+        return resources.stream()
+                .map(this::mapToDependencyDTO)
+                .collect(Collectors.toList());
+    }
+
+    private CardDTO mapToCardDTO(Resource resource) {
         return new CardDTO(
                 resource.getId(),
                 resource.getName(),
                 resource.getExpansion(),
                 resource.getCost(),
-                resource.getCardTypes().stream().toList(),
-                resource.getDependencies().stream().toList()
+                resource.getCardTypes().stream().map(Enum::toString).toList(),
+                resource.getCardProperties() != null && resource.getCardProperties().getHasPlusAction(),
+                resource.getCardProperties() != null && resource.getCardProperties().getHasPlusMultipleActions(),
+                resource.getCardProperties() != null && resource.getCardProperties().getHasPlusBuy(),
+                resource.getCardProperties() != null && resource.getCardProperties().getHasPlusMultipleDraws(),
+                resource.getCardProperties() != null && resource.getCardProperties().getHasTrash(),
+                resource.getCardProperties() != null && resource.getCardProperties().getHasCurse()
         );
+    }
+
+    private DependencyDTO mapToDependencyDTO(Resource resource) {
+        return new DependencyDTO(
+                resource.getId(),
+                resource.getName(),
+                resource.getExpansion(),
+                resource.getCost(),
+                resource.getResourceCategory(),
+                resource.getHasLandscapeOrientation(),
+                resource.getIsLinked(),
+                resource.getCardTypes() != null ? resource.getCardTypes().stream().map(Enum::toString).toList() : null,
+                resource.getCardProperties() != null && resource.getCardProperties().getHasCurse()
+        );
+    }
+
+    private Map<String, Object> createKingdomDetailsResponse(List<CardDTO> cardDTOs, List<DependencyDTO> dependencyDTOs) {
+        Map<String, Object> result = new HashMap<>();
+        result.put("cards", cardDTOs);
+        result.put("dependencies", dependencyDTOs);
+        return result;
     }
 }
