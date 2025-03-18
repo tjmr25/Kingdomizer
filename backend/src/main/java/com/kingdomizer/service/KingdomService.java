@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 @Service
 public class KingdomService {
@@ -57,6 +58,7 @@ public class KingdomService {
     
     /**
      * Retrieves kingdom details including landscape cards.
+     * Cards are sorted by expansion, then by cost, then by name.
      * @param cardData Map containing kingdomCardIds and landscape lists
      * @return Map containing cards and dependencies information
      */
@@ -75,6 +77,7 @@ public class KingdomService {
         List<Resource> dependencies = fetchResourcesByIds(dependencyIds);
         dependencies.addAll(landscapeResources);
     
+        // Convert to DTOs and sort them
         List<CardDTO> cardDTOs = mapToCardDTOs(resources);
         List<DependencyDTO> dependencyDTOs = mapToDependencyDTOs(dependencies);
     
@@ -122,20 +125,26 @@ public class KingdomService {
     }
 
     /**
-     * Converts Resource entities to CardDTOs.
+     * Converts Resource entities to CardDTOs and sorts them by expansion, cost, and name.
      */
     private List<CardDTO> mapToCardDTOs(List<Resource> resources) {
         return resources.stream()
                 .map(this::mapToCardDTO)
+                .sorted(Comparator.comparing(CardDTO::getExpansion, Comparator.nullsLast(Comparator.naturalOrder()))
+                        .thenComparing(CardDTO::getCost, Comparator.nullsLast(Comparator.naturalOrder()))
+                        .thenComparing(CardDTO::getName, Comparator.nullsLast(Comparator.naturalOrder())))
                 .collect(Collectors.toList());
     }
 
     /**
-     * Converts Resource entities to DependencyDTOs.
+     * Converts Resource entities to DependencyDTOs and sorts them by expansion, cost, and name.
      */
     private List<DependencyDTO> mapToDependencyDTOs(List<Resource> resources) {
         return resources.stream()
                 .map(this::mapToDependencyDTO)
+                .sorted(Comparator.comparing(DependencyDTO::getExpansion, Comparator.nullsLast(Comparator.naturalOrder()))
+                        .thenComparing(DependencyDTO::getCost, Comparator.nullsLast(Comparator.naturalOrder()))
+                        .thenComparing(DependencyDTO::getName, Comparator.nullsLast(Comparator.naturalOrder())))
                 .collect(Collectors.toList());
     }
 
