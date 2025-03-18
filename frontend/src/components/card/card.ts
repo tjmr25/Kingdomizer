@@ -13,6 +13,19 @@ const typeTranslations: Record<string, string> = {
     CURSE: "Fluch"
 };
 
+// Define the display order priority for card types
+const typeOrder: Record<string, number> = {
+    ACTION: 101,
+    COMMAND: 102,
+    ATTACK: 103,
+    REACTION: 201,
+    DURATION: 202,
+    TREASURE: 203,
+    VICTORY: 204,
+    CURSE: 301
+    // Add any other card types here with their priority
+};
+
 const expansionTranslations: Record<string, string> = {
     BASE: "Basisspiel",
     BASE_1ST: "Basisspiel I",
@@ -34,8 +47,20 @@ export class Card extends LitElement {
     
     static styles = cardStyles;
 
+    /**
+     * Sorts card types according to the predetermined order
+     */
+    private sortCardTypes(types: string[]): string[] {
+        return [...types].sort((a, b) => {
+            const orderA = typeOrder[a] || 999; // Default high number for unknown types
+            const orderB = typeOrder[b] || 999;
+            return orderA - orderB;
+        });
+    }
+
     render() {
         const translatedExpansion = expansionTranslations[this.expansion] || this.expansion;
+        const sortedCardTypes = this.sortCardTypes(this.cardTypes);
 
         return html`
           <div class="card">
@@ -50,7 +75,7 @@ export class Card extends LitElement {
             </div>`: null}
 
             ${this.cardTypes.length !== 0 ? html `<div class="cardtypes">
-            ${this.cardTypes.map(
+            ${sortedCardTypes.map(
                 (type) => html`<span class="type ${type.toLowerCase()}">${typeTranslations[type]}</span>`
             )}
             </div>`: null}          
