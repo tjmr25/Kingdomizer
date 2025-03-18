@@ -14,22 +14,18 @@ public class DependencyDTO {
     private Integer cost;
     private ResourceCategory resourceCategory;
     private Boolean hasLandscapeOrientation;
-    private Boolean isLinked;
     private List<String> cardTypes; // Optional: nur für Karten
-    private Boolean hasCurse; // Nur hasCurse aus CardProperties
 
     // Konstruktor für DependencyDTO
     public DependencyDTO(Long id, String name, Expansion expansion, Integer cost, ResourceCategory resourceCategory,
-                         Boolean hasLandscapeOrientation, Boolean isLinked, List<String> cardTypes, Boolean hasCurse) {
+                         Boolean hasLandscapeOrientation, List<String> cardTypes) {
         this.id = id;
         this.name = name;
         this.expansion = expansion;
         this.cost = cost;
         this.resourceCategory = resourceCategory;
         this.hasLandscapeOrientation = hasLandscapeOrientation;
-        this.isLinked = isLinked;
         this.cardTypes = cardTypes;
-        this.hasCurse = hasCurse;
     }
 
     // Getter und Setter
@@ -81,27 +77,11 @@ public class DependencyDTO {
         this.hasLandscapeOrientation = hasLandscapeOrientation;
     }
 
-    public Boolean getIsLinked() {
-        return isLinked;
-    }
-
-    public void setIsLinked(Boolean isLinked) {
-        this.isLinked = isLinked;
-    }
-
     public List<String> getCardTypes() {
         return cardTypes;
     }
 
     public void setCardTypes(List<String> cardTypes) {
         this.cardTypes = cardTypes;
-    }
-
-    public Boolean getHasCurse() {
-        return hasCurse;
-    }
-
-    public void setHasCurse(Boolean hasCurse) {
-        this.hasCurse = hasCurse;
     }
 }

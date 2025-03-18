@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Controller for managing kingdoms and their details.
@@ -20,24 +21,34 @@ public class KingdomController {
     }
 
     /**
-     * Generates a kingdom by filtering expansions and returning only card IDs.
+     * Generates a kingdom by filtering expansions and returning card IDs.
      * @param expansionStates a map containing expansion names as keys and their active state as values
-     * @return a list of 10 randomly selected card IDs
+     * @return a map containing:
+     *         - "kingdomCardIds": a list of 10 randomly selected card IDs
+     *         - "landscape": a list of landscape IDs (may be empty)
      */
     @PostMapping("/generate")
-    public List<Long> generateKingdom(@RequestBody Map<String, Boolean> expansionStates) {
+    public Map<String, Object> generateKingdom(@RequestBody Map<String, Boolean> expansionStates) {
         return kingdomService.generateKingdom(expansionStates);
     }
 
     /**
-     * Retrieves detailed information about cards and their dependencies.
-     * @param cardIds a list of card IDs to retrieve details for
+     * Retrieves detailed information about cards, landscapes, and their dependencies.
+     * @param cardData a map containing:
+     *                - "kingdomCardIds": a list of card IDs
+     *                - "landscape": a list of landscape IDs (may be empty)
      * @return a map containing:
      *         - "cards": detailed information about the cards
-     *         - "dependencies": detailed information about the dependencies
+     *         - "dependencies": detailed information about the dependencies and landscapes
      */
     @PostMapping("/details")
-    public Map<String, Object> getKingdomDetails(@RequestBody List<Long> cardIds) {
-        return kingdomService.getKingdomDetails(cardIds);
+    public Map<String, Object> getKingdomDetails(@RequestBody Map<String, List<Long>> cardData) {
+        try {
+            return kingdomService.getKingdomDetails(cardData);
+        } catch (Exception e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("error", "An error occurred: " + e.getMessage());
+            return errorResponse;
+        }
     }
 }

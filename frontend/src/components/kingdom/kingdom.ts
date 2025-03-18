@@ -1,123 +1,125 @@
 import { html, css, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 import { kingdomStyles } from "./kingdom.styles";
-
-// Interface for Card
-interface Card {
-  id: number;
-  name: string;
-  expansion: string;
-  cost: number;
-  cardTypes: string[];
-  hasPlusAction: boolean;
-  hasPlusMultipleActions: boolean;
-  hasPlusBuy: boolean;
-  hasPlusMultipleDraws: boolean;
-  hasTrash: boolean;
-  hasCurse: boolean;
-}
-
-// Interface for Dependency
-interface Dependency {
-  id: number;
-  name: string;
-  expansion: string;
-  cost: number;
-  resourceCategory: string;
-  hasLandscapeOrientation: boolean;
-  isLinked: null | boolean;
-  cardTypes: string[];
-  hasCurse: boolean;
-}
-
-// Interface for API Response
-interface KingdomResponse {
-  cards: Card[];
-  dependencies: Dependency[];
-}
+import { 
+  ResponseCard, 
+  ResponseDependency, 
+  KingdomDetailsResponse
+} from "./kingdom.types";
 
 export class Kingdom extends LitElement {
   @property({ type: Array })
   kingdomCardIds: number[] = [];
+  
+  @property({ type: Array })
+  landscapeIds: number[] = [];
+  
   @property({ type: Object })
-  kingdomDetails: KingdomResponse | null = null;
+  kingdomDetails: KingdomDetailsResponse | null = null;
  
   static styles = kingdomStyles;
 
   updated(changedProperties: Map<string | number | symbol, unknown>) {
-    if (changedProperties.has('kingdomDetails')) {
+    if (changedProperties.has('kingdomCardIds') || changedProperties.has('landscapeIds')) {
       this.getKingdomDetails();
     }
   }
 
   async getKingdomDetails() {
-    if (!this.kingdomCardIds || this.kingdomCardIds.length === 0) {
-      console.warn('No kingdomCardIds provided!');
+    // Only proceed if we have at least one of kingdomCardIds or landscapeIds
+    if ((!this.kingdomCardIds || this.kingdomCardIds.length === 0) && 
+        (!this.landscapeIds || this.landscapeIds.length === 0)) {
+      console.warn('No cards to display!');
       return;
     }
 
     try {
+      // Always use a single endpoint with a consistent format
+      const requestData = {
+        kingdomCardIds: this.kingdomCardIds || [],
+        landscape: this.landscapeIds || []
+      };
+      
       const response = await fetch('http://localhost:8080/api/kingdom/details', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(this.kingdomCardIds),
+        body: JSON.stringify(requestData),
       });
 
       if (!response.ok) {
         throw new Error(`Failed to fetch: ${response.statusText}`);
       }
 
-      const data: KingdomResponse = await response.json();
+      const data: KingdomDetailsResponse = await response.json();
       this.kingdomDetails = data;
-      } catch (error) {
-        console.error('Error fetching kingdom cards:', error);
-      }
+    } catch (error) {
+      console.error('Error fetching kingdom cards:', error);
     }
+  }
+
+  // Helper methods to filter dependencies
+  private getGameMaterialDependencies() {
+    return this.kingdomDetails?.dependencies.filter(dep => 
+      ['KINGDOM_CARD', 'EXTRA_CARD', 'GAMEPART'].includes(dep.resourceCategory)
+    ) || [];
+  }
+
+  private getLandscapeDependencies() {
+    return this.kingdomDetails?.dependencies.filter(dep => 
+      !['KINGDOM_CARD', 'EXTRA_CARD', 'GAMEPART'].includes(dep.resourceCategory)
+    ) || [];
+  }
 
   render() {
+    const gameMaterialDeps = this.getGameMaterialDependencies();
+    const landscapeDeps = this.getLandscapeDependencies();
+
     return html`
       <div class="main-kingdom"> 
         ${this.kingdomDetails?.cards.map(
-                  (card: Card) => html`
-                  <app-card 
-                    .name="${card.name}" 
-                    .cost="${card.cost}" 
-                    .cardTypes="${card.cardTypes}" 
-                    .expansion="${card.expansion}">
-                  </app-card>`
-                )}
+          (card: ResponseCard) => html`
+          <app-card 
+            .name="${card.name}" 
+            .cost="${card.cost}" 
+            .cardTypes="${card.cardTypes}" 
+            .expansion="${card.expansion}">
+          </app-card>`
+        )}
       </div>
-      ${this.kingdomDetails?.dependencies.length! >= 1 ? html `
-              <h3>Prophezeiungen, Landmarken, Projekte, Events & Wege </h3>`: null}   
 
-      <div class="extra-cards">
-        ${this.kingdomDetails?.dependencies.map(
-                  (card: Dependency) => html`
-                  <app-card 
-                    .name="${card.name}" 
-                    .cost="${card.cost}" 
-                    .cardTypes="${card.cardTypes}" 
-                    .expansion="${card.expansion}">
-                  </app-card>`
-                )}
-      </div>
-      
-      ${this.kingdomDetails?.dependencies.length! >= 1 ? html `
-              <h3>Zusatzkarten & Spielmaterial</h3>`: null}   
+      ${landscapeDeps.length > 0 ? html`
+        <h3>Prophezeiungen, Landmarken, Projekte, Events & Wege</h3>
+        <div class="extra-cards">
+          ${landscapeDeps.map(
+            (card: ResponseDependency) => html`
+            <app-card 
+              class="${card.hasLandscapeOrientation ? 'landscape-card' : ''}"
+              .name="${card.name}" 
+              .cost="${card.cost}" 
+              .cardTypes="${card.cardTypes}" 
+              .expansion="${card.expansion}">
+            </app-card>`
+          )}
+        </div>
+      ` : null}
 
-      <div class="extra-cards">
-        ${this.kingdomDetails?.dependencies.map(
-                  (card: Dependency) => html`
-                  <app-card 
-                    .name="${card.name}" 
-                    .cost="${card.cost}" 
-                    .cardTypes="${card.cardTypes}" 
-                    .expansion="${card.expansion}">
-                  </app-card>`
-                )}
-      </div>
+      ${gameMaterialDeps.length > 0 ? html`
+        <h3>Zusatzkarten & Spielmaterial</h3>
+        <div class="extra-cards">
+          ${gameMaterialDeps.map(
+            (card: ResponseDependency) => html`
+            <app-card 
+              class="${card.hasLandscapeOrientation ? 'landscape-card' : ''}"
+              .name="${card.name}" 
+              .cost="${card.cost}" 
+              .cardTypes="${card.cardTypes}" 
+              .expansion="${card.expansion}">
+            </app-card>`
+          )}
+        </div>
+      ` : null}
     `;
   }
 }

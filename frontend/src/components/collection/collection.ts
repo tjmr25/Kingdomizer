@@ -1,13 +1,13 @@
 import { html, css, LitElement } from "lit";
 import { property } from "lit/decorators.js";
-import { Card } from "../content/content";
+import { ResponseCard } from "../kingdom/kingdom.types";
 
 import "../card/card";
 
 export interface Kingdom {
   id: number;
   createdAt: string; // ISO-String
-  cards: Card[]; // Liste der Kartenobjekte
+  cards: ResponseCard[]; // List of card objects
 }
 
 export class Collection extends LitElement {    
@@ -93,8 +93,12 @@ export class Collection extends LitElement {
                       <div class="cards-container" >
                         <!-- Iteriere über die Karten des Kingdoms -->
                         ${kingdom.cards.map(
-                          (card) => html`<app-card name="${card.name}" cost="${card.cost}" types="${card.types.join(", ")}"></app-card>`
-
+                          (card) => html`<app-card 
+                            .name="${card.name}" 
+                            .cost="${card.cost}" 
+                            .cardTypes="${card.cardTypes}"
+                            .expansion="${card.expansion}">
+                          </app-card>`
                         )}
                       </div>
                     </div>

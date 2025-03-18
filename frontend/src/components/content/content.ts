@@ -1,12 +1,14 @@
 import { html, css, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 import { contentStyles } from "./content.styles";
-import { Card } from "../card/card";
+import { Card as CardComponent } from "../card/card";
+import { GenerateKingdomResponse } from "../kingdom/kingdom.types";
 
 export const oldExpansions = ["BASE_1ST", "PROSPERITY_1ST", "SEASIDE_1ST"];
 
 export class Content extends LitElement {
     @property({ type: Array }) generatedCardIds: number[] = [];
+    @property({ type: Array }) landscapeIds: number[] = [];
     @property({ type: Boolean }) isAccordionOpen = false;
     @property({ type: Boolean }) showPlaceholder = true;
     @property({ type: Object }) expansionStates = {
@@ -34,7 +36,19 @@ export class Content extends LitElement {
         if (!response.ok) {
           throw new Error("Fehler beim Abrufen der Karten");
         }
-        this.generatedCardIds = await response.json();
+        
+        const data = await response.json();
+        
+        // Handle the response format
+        if (typeof data === 'object' && data.kingdomCardIds) {
+          this.generatedCardIds = data.kingdomCardIds;
+          this.landscapeIds = data.landscape || [];
+        } else {
+          // Handle legacy format (just an array of IDs) - for backward compatibility
+          this.generatedCardIds = data;
+          this.landscapeIds = [];
+        }
+        
         if(this.generatedCardIds.length !== 0) {
           this.showPlaceholder = false;
         }
@@ -124,7 +138,10 @@ export class Content extends LitElement {
                   </div>
                 `
               : html`
-                  <app-kingdom .kingdomCardIds="${this.generatedCardIds}"></app-kingdom>
+                  <app-kingdom 
+                    .kingdomCardIds="${this.generatedCardIds}"
+                    .landscapeIds="${this.landscapeIds}">
+                  </app-kingdom>
                 `
             }            
 
