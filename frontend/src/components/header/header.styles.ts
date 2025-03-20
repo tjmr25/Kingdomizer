@@ -23,7 +23,7 @@ export const headerStyles = css`
       height: 40px; 
       background-color: white;      
       border-radius: 50%; 
-      display: flex;
+      display: none;
       justify-content: center; 
       align-items: center; 
       font-size: 1.5rem; 

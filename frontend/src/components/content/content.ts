@@ -10,7 +10,10 @@ export class Content extends LitElement {
     @property({ type: Array }) generatedCardIds: number[] = [];
     @property({ type: Array }) landscapeIds: number[] = [];
     @property({ type: Boolean }) isAccordionOpen = false;
-    @property({ type: Boolean }) showPlaceholder = true;
+    @property({ type: Boolean }) isFilterOptionsOpen = false;
+    @property({ type: Number }) actionCards: number | null = null;
+    @property({ type: Number }) attackCards: number | null = null;
+    @property({ type: Number }) landscapeCount: number = 2;
     @property({ type: Object }) expansionStates = {
         BASE: true,
         BASE_1ST: false,
@@ -22,6 +25,23 @@ export class Content extends LitElement {
         SEASIDE_1ST: false,
         SEASIDE_2ND: true,
         PLUNDER: true
+    }
+    
+    @property({ type: Object }) filterOptions = {
+        hasMultipleActions: false,
+        hasMultipleCards: false,
+        hasBuy: false,
+        hasReaction: false,
+        hasTrash: false
+    }
+    
+    @property({ type: Object }) exclusions = {
+        curses: false,
+        victoryTokens: false,
+        tableaus: false,
+        treasures: false,
+        events: false,
+        landmarks: false
     }
 
     static styles = contentStyles;
@@ -48,10 +68,6 @@ export class Content extends LitElement {
           this.generatedCardIds = data;
           this.landscapeIds = [];
         }
-        
-        if(this.generatedCardIds.length !== 0) {
-          this.showPlaceholder = false;
-        }
 
       } catch (error) {
         console.error("Fehler beim Abrufen der Karten:", error);
@@ -61,30 +77,6 @@ export class Content extends LitElement {
     async saveKingdom() {
       alert("(Noch nicht implementiert) Königreich gespeichert!");
     }
-
-    /*
-    async saveKingdom(): Promise<void> {
-      try {
-        const cardIds = this.cards.map((card) => card.id);
-          const body = JSON.stringify({ cardIds });
-  
-        const response = await fetch("http://localhost:8080/api/kingdom/save", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body,
-        });
-        if (!response.ok) {
-          throw new Error(`Fehler: ${response.statusText}`);
-        }
-  
-        console.log("Kingdom erfolgreich gespeichert:", await response.json());
-      } catch (error) {
-        console.error("Fehler beim Speichern des Kingdoms:", error);
-      }
-    }
-    */
 
     updateExpansionState(expansion: string, checked: boolean) {
       this.expansionStates = { ...this.expansionStates, [expansion]: checked };
@@ -110,11 +102,41 @@ export class Content extends LitElement {
         this.expansionStates['PROSPERITY'] = isProsperity1stSelected || isProsperity2ndSelected;
       }
     }
+    
+    updateFilterOption(option: string, checked: boolean) {
+      this.filterOptions = { ...this.filterOptions, [option]: checked };
+    }
+
+    updateActionCards(event: Event) {
+      const value = (event.target as HTMLInputElement).value;
+      this.actionCards = value === '' ? null : Number(value);
+    }
+
+    updateAttackCards(event: Event) {
+      const value = (event.target as HTMLInputElement).value;
+      this.attackCards = value === '' ? null : Number(value);
+    }
+
+    updateLandscapeCount(event: Event) {
+      const target = event.target as HTMLInputElement;
+      this.landscapeCount = Number(target.value);
+      
+      // Update the CSS variable for the slider track
+      target.style.setProperty('--value', target.value);
+    }
 
     toggleAccordion() {
       this.isAccordionOpen = !this.isAccordionOpen;
     }
     
+    toggleFilterOptions() {
+      this.isFilterOptionsOpen = !this.isFilterOptionsOpen;
+    }
+    
+    updateExclusion(exclusion: string, checked: boolean) {
+      this.exclusions = { ...this.exclusions, [exclusion]: checked };
+    }
+
     render() {
       
       return html`
@@ -122,28 +144,211 @@ export class Content extends LitElement {
           <div class="kingdom-display">
 
             <div class="button-container">
-              <button @click="${this.fetchCards}">Neues Königreich</button>
-              <button class="save-button" @click="${this.saveKingdom}">Speichern</button> 
+              <div class="left-buttons">
+                <button @click="${this.fetchCards}">Neues Königreich</button>
+                <button class="save-button" @click="${this.saveKingdom}">Speichern</button>
+              </div>
+              <div class="right-buttons">
+                <button class="filter-button" @click="${this.toggleFilterOptions}">
+                  Filteroptionen
+                  ${this.isFilterOptionsOpen 
+                    ? html`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="icon">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
+                        </svg>`
+                    : html`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="icon">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>`}
+                </button>
+              </div>
             </div>
-  
+            
+            <div class="filter-options ${this.isFilterOptionsOpen ? 'open' : ''}">
+              <h3 class="panel-heading">Mindestanforderungen</h3>
+              <ul class="filter-options-list">
+                <li class="filter-option">
+                  <input 
+                    type="checkbox" 
+                    class="checkbox" 
+                    id="hasMultipleActions" 
+                    ?checked="${this.filterOptions.hasMultipleActions}"
+                    @change="${(e: Event) => this.updateFilterOption('hasMultipleActions', (e.target as HTMLInputElement).checked)}"
+                  />
+                  <label for="hasMultipleActions" class="filter-option-label">+2 Aktionen</label>
+                </li>
+                <li class="filter-option">
+                  <input 
+                    type="checkbox" 
+                    class="checkbox" 
+                    id="hasMultipleCards" 
+                    ?checked="${this.filterOptions.hasMultipleCards}"
+                    @change="${(e: Event) => this.updateFilterOption('hasMultipleCards', (e.target as HTMLInputElement).checked)}"
+                  />
+                  <label for="hasMultipleCards" class="filter-option-label">+2 Karten</label>
+                </li>
+                <li class="filter-option">
+                  <input 
+                    type="checkbox" 
+                    class="checkbox" 
+                    id="hasBuy" 
+                    ?checked="${this.filterOptions.hasBuy}"
+                    @change="${(e: Event) => this.updateFilterOption('hasBuy', (e.target as HTMLInputElement).checked)}"
+                  />
+                  <label for="hasBuy" class="filter-option-label">+1 Kauf</label>
+                </li>
+                <li class="filter-option">
+                  <input 
+                    type="checkbox" 
+                    class="checkbox" 
+                    id="hasReaction" 
+                    ?checked="${this.filterOptions.hasReaction}"
+                    @change="${(e: Event) => this.updateFilterOption('hasReaction', (e.target as HTMLInputElement).checked)}"
+                  />
+                  <label for="hasReaction" class="filter-option-label">Reaktion</label>
+                </li>
+                <li class="filter-option">
+                  <input 
+                    type="checkbox" 
+                    class="checkbox" 
+                    id="hasTrash" 
+                    ?checked="${this.filterOptions.hasTrash}"
+                    @change="${(e: Event) => this.updateFilterOption('hasTrash', (e.target as HTMLInputElement).checked)}"
+                  />
+                  <label for="hasTrash" class="filter-option-label">Entsorgen</label>
+                </li>
+              </ul>
+            </div>
+            
+            <div class="exclusions-panel ${this.isFilterOptionsOpen ? 'open' : ''}">
+              <h3 class="panel-heading">Ausschlüsse</h3>
+              <ul class="filter-options-list">
+                <li class="filter-option">
+                  <input 
+                    type="checkbox" 
+                    class="checkbox" 
+                    id="excludeCurses" 
+                    ?checked="${this.exclusions.curses}"
+                    @change="${(e: Event) => this.updateExclusion('curses', (e.target as HTMLInputElement).checked)}"
+                  />
+                  <label for="excludeCurses" class="filter-option-label">Flüche</label>
+                </li>
+                <li class="filter-option">
+                  <input 
+                    type="checkbox" 
+                    class="checkbox" 
+                    id="excludeVictoryTokens" 
+                    ?checked="${this.exclusions.victoryTokens}"
+                    @change="${(e: Event) => this.updateExclusion('victoryTokens', (e.target as HTMLInputElement).checked)}"
+                  />
+                  <label for="excludeVictoryTokens" class="filter-option-label">Punktemarker</label>
+                </li>
+                <li class="filter-option">
+                  <input 
+                    type="checkbox" 
+                    class="checkbox" 
+                    id="excludeTableaus" 
+                    ?checked="${this.exclusions.tableaus}"
+                    @change="${(e: Event) => this.updateExclusion('tableaus', (e.target as HTMLInputElement).checked)}"
+                  />
+                  <label for="excludeTableaus" class="filter-option-label">Tableaus</label>
+                </li>
+                <li class="filter-option">
+                  <input 
+                    type="checkbox" 
+                    class="checkbox" 
+                    id="excludeTreasures" 
+                    ?checked="${this.exclusions.treasures}"
+                    @change="${(e: Event) => this.updateExclusion('treasures', (e.target as HTMLInputElement).checked)}"
+                  />
+                  <label for="excludeTreasures" class="filter-option-label">Kostbarkeiten</label>
+                </li>
+              </ul>
+              
+              <div class="exclusions-divider"></div>
+              
+              <ul class="filter-options-list">
+                <li class="filter-option">
+                  <input 
+                    type="checkbox" 
+                    class="checkbox" 
+                    id="excludeEvents" 
+                    ?checked="${this.exclusions.events}"
+                    @change="${(e: Event) => this.updateExclusion('events', (e.target as HTMLInputElement).checked)}"
+                  />
+                  <label for="excludeEvents" class="filter-option-label">Events</label>
+                </li>
+                <li class="filter-option">
+                  <input 
+                    type="checkbox" 
+                    class="checkbox" 
+                    id="excludeLandmarks" 
+                    ?checked="${this.exclusions.landmarks}"
+                    @change="${(e: Event) => this.updateExclusion('landmarks', (e.target as HTMLInputElement).checked)}"
+                  />
+                  <label for="excludeLandmarks" class="filter-option-label">Merkmale</label>
+                </li>
+              </ul>
+            </div>
+            
+            <div class="filter-panels-row ${this.isFilterOptionsOpen ? 'open' : ''}">
+              <div class="left-panel">
+                <h3 class="panel-heading">Kartenanzahl</h3>
+                <div class="inputs-row">
+                  <div class="input-group">
+                    <label for="actionCards" class="input-label">+1 Aktion</label>
+                    <input 
+                      type="number" 
+                      id="actionCards" 
+                      class="number-input" 
+                      min="0" 
+                      max="10" 
+                      placeholder="0-10"
+                      .value="${this.actionCards === null ? '' : this.actionCards}"
+                      @input="${this.updateActionCards}"
+                    />
+                  </div>
+                  <div class="input-group">
+                    <label for="attackCards" class="input-label">Angriffe</label>
+                    <input 
+                      type="number" 
+                      id="attackCards" 
+                      class="number-input" 
+                      min="0" 
+                      max="10"
+                      placeholder="0-10" 
+                      .value="${this.attackCards === null ? '' : this.attackCards}"
+                      @input="${this.updateAttackCards}"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div class="right-panel">
+                <h3 class="panel-heading">Querkarten</h3>
+                <div class="inputs-row slider-row">
+                  <div class="slider-group">
+                    <label for="landscapeCount" class="input-label">Anzahl: <span class="value-display">${this.landscapeCount}</span></label>
+                    <input 
+                      type="range" 
+                      id="landscapeCount" 
+                      class="slider-input" 
+                      min="0" 
+                      max="6" 
+                      step="1" 
+                      .value="${this.landscapeCount}"
+                      style="--value: ${this.landscapeCount}"
+                      @input="${this.updateLandscapeCount}"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            
             <div class="divider"></div>
   
-          
-            ${this.showPlaceholder
-              ? html`
-                  <div class="kingdom-space">
-                    ${Array(10).fill(null).map(() => html`
-                      <div class="card-placeholder"></div>
-                    `)}
-                  </div>
-                `
-              : html`
-                  <app-kingdom 
-                    .kingdomCardIds="${this.generatedCardIds}"
-                    .landscapeIds="${this.landscapeIds}">
-                  </app-kingdom>
-                `
-            }            
+            <app-kingdom 
+              .kingdomCardIds="${this.generatedCardIds}"
+              .landscapeIds="${this.landscapeIds}"
+              .landscapeCount="${this.landscapeCount}">
+            </app-kingdom>
 
           </div>
           <div class="expansion-sidebar">
@@ -196,12 +401,13 @@ export class Content extends LitElement {
               
               <div class="accordion">
 
-                <div class="accordion-header" @click="${this.toggleAccordion}">
+                <div class="accordion-header filter-button" @click="${this.toggleAccordion}">
+                  Frühere Editionen
                   ${this.isAccordionOpen 
-                    ? html`Frühere Editionen<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="icon">
+                    ? html`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="icon">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
                         </svg>`
-                    : html`Frühere Editionen<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="icon">
+                    : html`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="icon">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>`}
                 </div>

@@ -1,32 +1,44 @@
 import { css } from "lit";
 
 export const kingdomStyles = css`
-    .main-kingdom, .extra-cards {
+    .main-kingdom {
           display: grid;
           grid-template-columns: repeat(5, 1fr); 
-          gap: 1rem; 
+          gap: 1rem;
+          min-height: 320px; /* Set fixed height to prevent jumping */
     }
 
-    /* Style for landscape-oriented cards */
-    .landscape-card {
-          grid-column: span 2; /* Make landscape cards span 2 columns */
-    }
-
-    /* When a landscape card is at the end of a row, we need to handle wrapping */
     .extra-cards {
           display: grid;
-          grid-template-columns: repeat(10, 1fr); /* Use 10 columns for more flexibility */
+          grid-template-columns: repeat(20, 1fr); /* Use 20 columns for finer control */
           gap: 1rem;
     }
 
-    /* Normal cards take up 2 of the 10 columns */
-    .extra-cards app-card {
-          grid-column: span 2;
+    /* Normal app-card and placeholders take up 1 column in main kingdom */
+    .main-kingdom app-card,
+    .main-kingdom .card-placeholder {
+          grid-column: span 1;
+          height: 150px;
+          margin: 0;
+          padding: 0;
     }
 
-    /* Landscape cards take up 3 of the 10 columns (1.5x wider) */
-    .extra-cards app-card.landscape-card {
-          grid-column: span 3;
+    /* Normal cards take up 4 of the 20 columns (equivalent to 2 of 10) */
+    .extra-cards app-card,
+    .extra-cards .card-placeholder {
+          grid-column: span 4;
+          margin: 0;
+          padding: 0;
+          height: 150px;
+    }
+
+    /* Landscape cards take up 5 of the 20 columns (2.5 of 10) */
+    .extra-cards app-card.landscape-card,
+    .extra-cards .card-placeholder.landscape-card {
+          grid-column: span 5;
+          height: 150px;
+          margin: 0;
+          padding: 0;
     }
 
     h3 {
@@ -35,5 +47,24 @@ export const kingdomStyles = css`
           margin-bottom: 1rem;
           margin-left: 0rem;
           padding: 0;
+    }
+
+    .card-placeholder {
+          background-color: var(--color-light);
+          border: 1px solid var(--color-lighter);
+          border-radius: 0.5rem;
+          height: 150px;
+          box-shadow: inset 0 0 8px var(--color-lighter-bluegrey, rgba(0, 0, 0, 0.3));
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--color-lighter-bluegrey);
+          font-size: 1rem;
+          text-transform: uppercase;
+          box-sizing: border-box;
+    }
+
+    .card-placeholder.landscape-card {
+          height: 120px;
     }
 `;

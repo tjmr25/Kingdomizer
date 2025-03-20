@@ -15,13 +15,14 @@ export const appStyles = css`
       --color-lighter: #ccc;   /* Etwas dunkler als light */
       --color-light: #eee;     /* Hellste Farbe */
 
-      --color-blue: #475c6c;
+      --color-main-bluegrey: #475c6c;
+      --color-lighter-bluegrey: #92a6b5;
+      --color-very-light-bluegrey: #f5f8fb;
+      --color-very-light-bluegrey-border: #e0e6ec;
       --color-grey: #8a8583;
-      --color-brown: #cd8b62;
-      --color-lightbeige: #f7efd3;
-      --color-darkbeige: #eed7a1;
       --color-gold: #cfa959;
     }
+
       
     main {
       flex: 1;
@@ -31,7 +32,7 @@ export const appStyles = css`
       display: flex;
       justify-content: center;
       aling-items: center;
-      background-color: var(--color-blue);
+      background-color: var(--color-main-bluegrey);
 
     }
 `;

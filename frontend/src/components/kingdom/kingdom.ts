@@ -14,14 +14,28 @@ export class Kingdom extends LitElement {
   @property({ type: Array })
   landscapeIds: number[] = [];
   
+  @property({ type: Number })
+  landscapeCount: number = 2;
+  
   @property({ type: Object })
   kingdomDetails: KingdomDetailsResponse | null = null;
+  
+  @property({ type: Boolean })
+  isLoading: boolean = false;
+  
+  @property({ type: Boolean })
+  hasShownKingdom: boolean = false;
  
   static styles = kingdomStyles;
 
   updated(changedProperties: Map<string | number | symbol, unknown>) {
     if (changedProperties.has('kingdomCardIds') || changedProperties.has('landscapeIds')) {
       this.getKingdomDetails();
+    }
+    
+    // Set hasShownKingdom to true once we've successfully displayed cards
+    if (this.kingdomDetails && this.kingdomDetails.cards && this.kingdomDetails.cards.length > 0) {
+      this.hasShownKingdom = true;
     }
   }
 
@@ -34,6 +48,8 @@ export class Kingdom extends LitElement {
     }
 
     try {
+      this.isLoading = true;
+      
       // Always use a single endpoint with a consistent format
       const requestData = {
         kingdomCardIds: this.kingdomCardIds || [],
@@ -54,8 +70,10 @@ export class Kingdom extends LitElement {
 
       const data: KingdomDetailsResponse = await response.json();
       this.kingdomDetails = data;
+      this.isLoading = false;
     } catch (error) {
       console.error('Error fetching kingdom cards:', error);
+      this.isLoading = false;
     }
   }
 
@@ -72,40 +90,77 @@ export class Kingdom extends LitElement {
     ) || [];
   }
 
+  private shouldShowPlaceholders() {
+    // Only show placeholders if we've never shown a kingdom before OR 
+    // we're loading for the first time (no previous kingdom)
+    return (!this.hasShownKingdom && !this.kingdomDetails) || 
+           (!this.hasShownKingdom && (!this.kingdomCardIds || this.kingdomCardIds.length === 0));
+  }
+
+  private shouldShowLandscapePlaceholders() {
+    return this.shouldShowPlaceholders() && this.landscapeCount > 0;
+  }
+
   render() {
+    const showPlaceholders = this.shouldShowPlaceholders();
+    const showLandscapePlaceholders = this.shouldShowLandscapePlaceholders();
     const gameMaterialDeps = this.getGameMaterialDependencies();
     const landscapeDeps = this.getLandscapeDependencies();
+    const hasLandscapeCards = !showPlaceholders && landscapeDeps.length > 0;
+    const showLandscapeSection = showLandscapePlaceholders || hasLandscapeCards;
+    const showGameMaterialSection = !showPlaceholders && gameMaterialDeps.length > 0;
+
+    // Create an array of 10 placeholders for the main kingdom
+    const kingdomPlaceholders = Array(10).fill(null).map(() => html`
+      <div class="card-placeholder"></div>
+    `);
+
+    // Create an array of landscape placeholders based on the count
+    const landscapePlaceholders = Array(this.landscapeCount).fill(null).map(() => html`
+      <div class="card-placeholder landscape-card"></div>
+    `);
 
     return html`
-      <div class="main-kingdom"> 
-        ${this.kingdomDetails?.cards.map(
-          (card: ResponseCard) => html`
-          <app-card 
-            .name="${card.name}" 
-            .cost="${card.cost}" 
-            .cardTypes="${card.cardTypes}" 
-            .expansion="${card.expansion}">
-          </app-card>`
-        )}
+      <div class="main-kingdom">
+        ${showPlaceholders 
+          ? kingdomPlaceholders
+          : html`
+              ${this.kingdomDetails?.cards.map(
+                (card: ResponseCard) => html`
+                <app-card 
+                  .name="${card.name}" 
+                  .cost="${card.cost}" 
+                  .cardTypes="${card.cardTypes}" 
+                  .expansion="${card.expansion}">
+                </app-card>`
+              )}
+            `
+        }
       </div>
 
-      ${landscapeDeps.length > 0 ? html`
-        <h3>Prophezeiungen, Landmarken, Projekte, Events & Wege</h3>
+      ${showLandscapeSection ? html`
+        <h3>Prophezeiungen, Landmarken, Projekte, Ereignisse & Wege</h3>
+        
         <div class="extra-cards">
-          ${landscapeDeps.map(
-            (card: ResponseDependency) => html`
-            <app-card 
-              class="${card.hasLandscapeOrientation ? 'landscape-card' : ''}"
-              .name="${card.name}" 
-              .cost="${card.cost}" 
-              .cardTypes="${card.cardTypes}" 
-              .expansion="${card.expansion}">
-            </app-card>`
-          )}
+          ${showLandscapePlaceholders 
+            ? landscapePlaceholders
+            : html`
+                ${landscapeDeps.map(
+                  (card: ResponseDependency) => html`
+                  <app-card 
+                    class="${card.hasLandscapeOrientation ? 'landscape-card' : ''}"
+                    .name="${card.name}" 
+                    .cost="${card.cost}" 
+                    .cardTypes="${card.cardTypes}" 
+                    .expansion="${card.expansion}">
+                  </app-card>`
+                )}
+              `
+          }
         </div>
       ` : null}
 
-      ${gameMaterialDeps.length > 0 ? html`
+      ${showGameMaterialSection ? html`
         <h3>Zusatzkarten & Spielmaterial</h3>
         <div class="extra-cards">
           ${gameMaterialDeps.map(

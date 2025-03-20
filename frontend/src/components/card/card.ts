@@ -10,7 +10,7 @@ const typeTranslations: Record<string, string> = {
     DURATION: "Dauer",
     TREASURE: "Geld",
     COMMAND: "Befehl",
-    CURSE: "Fluch"
+    CURSE: "Fluch",
 };
 
 // Define the display order priority for card types
