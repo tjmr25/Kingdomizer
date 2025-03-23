@@ -9,6 +9,11 @@ import {
   CardTypeExclusions,
   oldExpansionIdentifiers
 } from "../../types";
+import { 
+  ExpansionFeature, 
+  expansionFeatures, 
+  featureTypes 
+} from "./feature-config";
 
 /**
  * Content component - Main interface for Dominion kingdom generation
@@ -175,6 +180,29 @@ export class Content extends LitElement {
       this.isFilterOptionsOpen = !this.isFilterOptionsOpen;
     }
     
+    /**
+     * Checks if any selected expansion has a specific feature
+     */
+    hasFeature(feature: ExpansionFeature): boolean {
+      return Object.entries(this.expansionSelections)
+        .some(([exp, isSelected]) => 
+          isSelected && 
+          expansionFeatures[exp as keyof typeof expansionFeatures]?.features.includes(feature)
+        );
+    }
+    
+    /**
+     * Checks if any selected expansion has any landscape cards
+     */
+    hasLandscapeCards(): boolean {
+      return Object.entries(this.expansionSelections)
+        .some(([exp, isSelected]) => 
+          isSelected && 
+          expansionFeatures[exp as keyof typeof expansionFeatures]?.features.some((feature: ExpansionFeature) => 
+            featureTypes.landscapeCards.includes(feature)
+          )
+        );
+    }
 
     render() {
       return html`
@@ -259,6 +287,7 @@ export class Content extends LitElement {
             <div class="exclusions-panel ${this.isFilterOptionsOpen ? 'open' : ''}">
               <h3 class="panel-heading">Ausschlüsse</h3>
               <ul class="filter-options-list">
+                ${this.hasFeature('CURSE') ? html`
                 <li class="filter-option">
                   <input 
                     type="checkbox" 
@@ -269,6 +298,8 @@ export class Content extends LitElement {
                   />
                   <label for="excludeCurses" class="filter-option-label">Flüche</label>
                 </li>
+                ` : ''}
+                ${this.hasFeature('TOKENS') ? html`
                 <li class="filter-option">
                   <input 
                     type="checkbox" 
@@ -277,8 +308,10 @@ export class Content extends LitElement {
                     ?checked="${this.cardTypeExclusions.victoryTokens}"
                     @change="${(e: Event) => this.updateCardTypeExclusion('victoryTokens', (e.target as HTMLInputElement).checked)}"
                   />
-                  <label for="excludeVictoryTokens" class="filter-option-label">Punktemarker</label>
+                  <label for="excludeVictoryTokens" class="filter-option-label">Marker</label>
                 </li>
+                ` : ''}
+                ${this.hasFeature('TABLEAUS') ? html`
                 <li class="filter-option">
                   <input 
                     type="checkbox" 
@@ -289,6 +322,8 @@ export class Content extends LitElement {
                   />
                   <label for="excludeTableaus" class="filter-option-label">Tableaus</label>
                 </li>
+                ` : ''}
+                ${this.hasFeature('LOOT') ? html`
                 <li class="filter-option">
                   <input 
                     type="checkbox" 
@@ -299,11 +334,14 @@ export class Content extends LitElement {
                   />
                   <label for="excludeTreasures" class="filter-option-label">Kostbarkeiten</label>
                 </li>
+                ` : ''}
               </ul>
               
+              ${this.hasLandscapeCards() ? html`
               <div class="exclusions-divider"></div>
               
               <ul class="filter-options-list">
+                ${this.hasFeature('EVENTS') ? html`
                 <li class="filter-option">
                   <input 
                     type="checkbox" 
@@ -312,8 +350,10 @@ export class Content extends LitElement {
                     ?checked="${this.cardTypeExclusions.events}"
                     @change="${(e: Event) => this.updateCardTypeExclusion('events', (e.target as HTMLInputElement).checked)}"
                   />
-                  <label for="excludeEvents" class="filter-option-label">Events</label>
+                  <label for="excludeEvents" class="filter-option-label">Ereignisse</label>
                 </li>
+                ` : ''}
+                ${this.hasFeature('TRAITS') ? html`
                 <li class="filter-option">
                   <input 
                     type="checkbox" 
@@ -324,7 +364,9 @@ export class Content extends LitElement {
                   />
                   <label for="excludeLandmarks" class="filter-option-label">Merkmale</label>
                 </li>
+                ` : ''}
               </ul>
+              ` : ''}
             </div>
             
             <div class="filter-panels-row ${this.isFilterOptionsOpen ? 'open' : ''}">
@@ -387,12 +429,12 @@ export class Content extends LitElement {
               .landscapeIds="${this.landscapeCardIds}"
               .landscapeCount="${this.landscapeCount}">
             </app-kingdom>
-
           </div>
+          
           <div class="expansion-sidebar">
               <div class="expansion">
                 <label class="expansion-label">
-                  Basisspiel (2.Edition)
+                  Basisspiel II
                   <input class="checkbox" type="checkbox" checked @change="${(e: Event) =>
                     this.updateExpansionSelection(
                       'BASE_2ND',
@@ -404,7 +446,7 @@ export class Content extends LitElement {
               
               <div class="expansion">
                 <label class="expansion-label">
-                  Blütezeit (2.Edition)
+                  Blütezeit II
                   <input class="checkbox" type="checkbox" checked @change="${(e: Event) =>
                     this.updateExpansionSelection(
                       'PROSPERITY_2ND',
@@ -416,7 +458,7 @@ export class Content extends LitElement {
               
               <div class="expansion">
                 <label class="expansion-label">
-                  Seaside (2.Edition)
+                  Seaside II
                   <input class="checkbox" type="checkbox" checked @change="${(e: Event) =>
                     this.updateExpansionSelection(
                       'SEASIDE_2ND',
@@ -456,7 +498,7 @@ export class Content extends LitElement {
                   
                   <div class="expansion old">
                     <label class="expansion-label">
-                      Basisspiel (1.Edition)
+                      Basisspiel I
                       <input class="checkbox" type="checkbox" unchecked @change="${(e: Event) =>
                         this.updateExpansionSelection(
                           'BASE_1ST',
@@ -467,7 +509,7 @@ export class Content extends LitElement {
 
                   <div class="expansion old">
                     <label class="expansion-label">
-                      Blütezeit (1.Edition)
+                      Blütezeit I
                       <input class="checkbox" type="checkbox" unchecked @change="${(e: Event) =>
                         this.updateExpansionSelection(
                           'PROSPERITY_1ST',
@@ -478,7 +520,7 @@ export class Content extends LitElement {
                   
                   <div class="expansion old">
                     <label class="expansion-label">
-                      Seaside (1.Edition)
+                      Seaside I
                       <input class="checkbox" type="checkbox" unchecked @change="${(e: Event) =>
                         this.updateExpansionSelection(
                           'SEASIDE_1ST',
@@ -490,7 +532,8 @@ export class Content extends LitElement {
                 </div>
               </div>
             </div>
-            `;
+        </div>
+      `;
     }
     
   }
