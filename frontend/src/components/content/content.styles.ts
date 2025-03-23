@@ -1,6 +1,7 @@
 import { css } from "lit";
 
 export const contentStyles = css`
+  /* ===== Layout & Structure ===== */
   .main-content {
     flex: 1;
     display: grid;
@@ -19,31 +20,25 @@ export const contentStyles = css`
     gap: 0.5rem;
   }
 
-  .expansion {
-    background-color: transparent;
-    border-radius: 8px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: transform 0.2s ease-in-out;
-    color: var(--color-main-bluegrey);
-    border: 1px solid var(--color-lighter-bluegrey);
+  .kingdom-space {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
   }
 
-  .expansion:active {
-    transform: scale(0.95);
+  .divider {
+    border-top: 1px solid var(--color-medium);
+    margin: 2rem 0;
   }
 
-  .expansion-label {
-    display: flex;
-    padding: 0.75rem 0.75rem;
-    justify-content: space-between;
-    align-items: center;
+  .exclusions-divider {
+    height: 1px;
+    background-color: #e0e6ec;
+    margin: 1rem 0;
     width: 100%;
-    cursor: pointer;
-    font-size: 0.875rem;
   }
 
+  /* ===== Buttons ===== */
   .button-container {
     display: flex;
     justify-content: space-between;
@@ -67,6 +62,14 @@ export const contentStyles = css`
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
+  }
+
+  button:hover {
+    background-color: var(--color-lighter-bluegrey);
+  }
+
+  button:active {
+    transform: scale(0.95);
   }
 
   .save-button {
@@ -93,14 +96,33 @@ export const contentStyles = css`
     background-color: transparent;
   }
 
-  button:hover {
-    background-color: var(--color-lighter-bluegrey);
+  /* ===== Expansion Items ===== */
+  .expansion {
+    background-color: transparent;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s ease-in-out;
+    color: var(--color-main-bluegrey);
+    border: 1px solid var(--color-lighter-bluegrey);
   }
 
-  button:active {
+  .expansion:active {
     transform: scale(0.95);
   }
 
+  .expansion-label {
+    display: flex;
+    padding: 0.75rem 0.75rem;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    cursor: pointer;
+    font-size: 0.875rem;
+  }
+
+  /* ===== Panels ===== */
   .panel-heading {
     margin: 0 0 0.75rem 0;
     font-size: 1rem;
@@ -108,19 +130,56 @@ export const contentStyles = css`
     color: var(--color-main-bluegrey);
   }
 
-  .filter-options {
+  /* Base panel styles */
+  .filter-options,
+  .exclusions-panel,
+  .left-panel,
+  .right-panel {
     background-color: var(--color-very-light-bluegrey);
     border-radius: 8px;
     border: 1px solid var(--color-very-light-bluegrey-border);
     padding: 1.25rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+
+  .filter-options,
+  .exclusions-panel {
     margin-top: 1rem;
     margin-bottom: 1rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     display: none;
   }
 
-  .filter-options.open {
+  .filter-options.open,
+  .exclusions-panel.open {
     display: block;
+  }
+
+  .filter-options p {
+    margin: 0;
+    color: var(--color-dark);
+    font-size: 0.9rem;
+  }
+
+  /* Filter panel rows and options */
+  .filter-panels-row {
+    display: none;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+
+  .filter-panels-row.open {
+    display: flex;
+  }
+
+  .left-panel {
+    flex: 0 0 40%;
+  }
+
+  .right-panel {
+    flex: 1;
   }
 
   .filter-options-list {
@@ -145,61 +204,7 @@ export const contentStyles = css`
     cursor: pointer;
   }
 
-  .filter-panels-row {
-    display: none;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    width: 100%;
-  }
-
-  .filter-panels-row.open {
-    display: flex;
-  }
-
-  .left-panel, .right-panel {
-    background-color: var(--color-very-light-bluegrey);
-    border-radius: 8px;
-    border: 1px solid var(--color-very-light-bluegrey-border);
-    padding: 1.25rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    box-sizing: border-box;
-  }
-
-  .left-panel {
-    flex: 0 0 40%;
-  }
-
-  .right-panel {
-    flex: 1;
-  }
-
-  .filter-options p {
-    margin: 0;
-    color: var(--color-dark);
-    font-size: 0.9rem;
-  }
-
-  .divider {
-    border-top: 1px solid var(--color-medium);
-    margin: 2rem 0 2rem;
-  }
-
-  .kingdom-space {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 1rem;
-  }
-
-  .checkbox {
-    accent-color: var(--color-main-bluegrey);
-  }
-
-  .checkbox:hover {
-    cursor: pointer;
-  }
-
+  /* ===== Accordion ===== */
   .accordion {
     background-color: transparent;
     margin-top: 1rem;
@@ -237,12 +242,17 @@ export const contentStyles = css`
     gap: 0.5rem;
   }
 
-  .icon {
-    width: 1.25rem;
-    height: 1.25rem;
-    margin-left: 0.5rem;
+  /* ===== Form Elements ===== */
+  /* Checkbox */
+  .checkbox {
+    accent-color: var(--color-main-bluegrey);
   }
 
+  .checkbox:hover {
+    cursor: pointer;
+  }
+
+  /* Input groups */
   .inputs-row {
     display: flex;
     gap: 1.25rem;
@@ -253,7 +263,8 @@ export const contentStyles = css`
     justify-content: flex-start;
   }
 
-  .input-group, .slider-group {
+  .input-group, 
+  .slider-group {
     margin-bottom: 0;
     display: flex;
     flex-direction: column;
@@ -279,6 +290,13 @@ export const contentStyles = css`
     align-items: center;
   }
 
+  .value-display {
+    font-weight: 600;
+    color: var(--color-main-bluegrey);
+    margin-left: 0.25rem;
+  }
+
+  /* Number input */
   .number-input {
     width: 100%;
     padding: 0.625rem 0.75rem;
@@ -297,6 +315,7 @@ export const contentStyles = css`
     box-shadow: 0 0 0 3px rgba(var(--color-main-bluegrey-rgb, 100, 130, 150), 0.1);
   }
 
+  /* Slider input */
   .slider-input {
     width: 100%;
     padding: 0.75rem 0;
@@ -358,31 +377,10 @@ export const contentStyles = css`
     opacity: 0.9;
   }
 
-  .value-display {
-    font-weight: 600;
-    color: var(--color-main-bluegrey);
-    margin-left: 0.25rem;
-  }
-
-  .exclusions-panel {
-    background-color: var(--color-very-light-bluegrey);
-    border-radius: 8px;
-    border: 1px solid var(--color-very-light-bluegrey-border);
-    padding: 1.25rem;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-    display: none;
-  }
-
-  .exclusions-panel.open {
-    display: block;
-  }
-
-  .exclusions-divider {
-    height: 1px;
-    background-color: #e0e6ec;
-    margin: 1rem 0;
-    width: 100%;
+  /* ===== Icons ===== */
+  .icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-left: 0.5rem;
   }
 `;

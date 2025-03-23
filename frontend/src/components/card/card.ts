@@ -2,6 +2,9 @@ import { html, css, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 import { cardStyles } from "./card.styles";
 
+/**
+ * Mapping of card type identifiers to their German translations
+ */
 const typeTranslations: Record<string, string> = {
     ACTION: "Aktion",
     REACTION: "Reaktion",
@@ -13,8 +16,11 @@ const typeTranslations: Record<string, string> = {
     CURSE: "Fluch",
 };
 
-// Define the display order priority for card types
-const typeOrder: Record<string, number> = {
+/**
+ * Display priority order for card types
+ * Lower numbers appear first when multiple types are present
+ */
+const typeDisplayOrder: Record<string, number> = {
     ACTION: 101,
     COMMAND: 102,
     ATTACK: 103,
@@ -23,9 +29,11 @@ const typeOrder: Record<string, number> = {
     TREASURE: 203,
     VICTORY: 204,
     CURSE: 301
-    // Add any other card types here with their priority
 };
 
+/**
+ * Mapping of expansion identifiers to their German translations
+ */
 const expansionTranslations: Record<string, string> = {
     BASE: "Basisspiel",
     BASE_1ST: "Basisspiel I",
@@ -39,50 +47,66 @@ const expansionTranslations: Record<string, string> = {
     PLUNDER: "Plünderer"
 };
 
+/**
+ * Card component for displaying Dominion cards
+ * 
+ * Displays a card with name, expansion, cost, and card types
+ */
 export class Card extends LitElement {
+    /** Name of the card */
     @property() name: string = '';
+    
+    /** Cost of the card in coins */
     @property() cost: number = -1;
+    
+    /** Types of the card (ACTION, REACTION, etc.) */
     @property() cardTypes: string[] = [];
+    
+    /** Expansion the card belongs to */
     @property() expansion: string = '';
     
     static styles = cardStyles;
 
     /**
-     * Sorts card types according to the predetermined order
+     * Sorts card types according to the predetermined display order
+     * @param types - Array of card types to sort
+     * @returns Sorted array of card types
      */
-    private sortCardTypes(types: string[]): string[] {
+    private getOrderedCardTypes(types: string[]): string[] {
         return [...types].sort((a, b) => {
-            const orderA = typeOrder[a] || 999; // Default high number for unknown types
-            const orderB = typeOrder[b] || 999;
+            const orderA = typeDisplayOrder[a] || 999; // Default high number for unknown types
+            const orderB = typeDisplayOrder[b] || 999;
             return orderA - orderB;
         });
     }
 
     render() {
-        const translatedExpansion = expansionTranslations[this.expansion] || this.expansion;
-        const sortedCardTypes = this.sortCardTypes(this.cardTypes);
+        const localizedExpansion = expansionTranslations[this.expansion] || this.expansion;
+        const orderedCardTypes = this.getOrderedCardTypes(this.cardTypes);
 
         return html`
           <div class="card">
-
             <div class="card-name">
-                <span style="font-weight: bold">${this.name}</span>
+                <span class="card-title">${this.name}</span>
             </div>
-            <div class="card-expansion">${translatedExpansion}</div>
+            <div class="card-expansion">${localizedExpansion}</div>
             
-            ${this.cost !== null ? html `<div class="circle">
-                ${this.cost}
-            </div>`: null}
+            ${this.cost !== null && this.cost >= 0 ? html`
+                <div class="cost-circle">
+                    ${this.cost}
+                </div>
+            `: null}
 
-            ${this.cardTypes.length !== 0 ? html `<div class="cardtypes">
-            ${sortedCardTypes.map(
-                (type) => html`<span class="type ${type.toLowerCase()}">${typeTranslations[type]}</span>`
-            )}
-            </div>`: null}          
-    
+            ${this.cardTypes.length > 0 ? html`
+                <div class="card-types">
+                    ${orderedCardTypes.map(
+                        (type) => html`<span class="type ${type.toLowerCase()}">${typeTranslations[type]}</span>`
+                    )}
+                </div>
+            `: null}          
           </div>
         `;
-      }
+    }
 }
 
 customElements.define("app-card", Card);

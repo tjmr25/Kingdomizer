@@ -2,45 +2,62 @@ import { html, css, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 import { kingdomStyles } from "./kingdom.styles";
 import { 
-  ResponseCard, 
-  ResponseDependency, 
-  KingdomDetailsResponse
-} from "./kingdom.types";
+  CardResponse, 
+  DependencyResponse, 
+  KingdomDetailsResponse,
+  KingdomDetailsRequest,
+  CardResourceCategory
+} from "../../types";
 
+/**
+ * Kingdom component displays a Dominion kingdom setup.
+ * Handles displaying the 10 supply pile cards, landscape cards (events, 
+ * projects, etc.), and additional game materials.
+ */
 export class Kingdom extends LitElement {
-  @property({ type: Array })
-  kingdomCardIds: number[] = [];
+  @property({ type: String })
+  id: string = crypto.randomUUID(); // Unique identifier for this kingdom
   
   @property({ type: Array })
-  landscapeIds: number[] = [];
+  kingdomCardIds: number[] = []; // Supply pile card IDs (10 cards)
+  
+  @property({ type: Array })
+  landscapeIds: number[] = []; // Landscape card IDs (events, ways, projects)
   
   @property({ type: Number })
-  landscapeCount: number = 2;
+  landscapeCount: number = 2; // Number of landscape cards to show in placeholders
   
   @property({ type: Object })
-  kingdomDetails: KingdomDetailsResponse | null = null;
+  kingdomDetails: KingdomDetailsResponse | null = null; // Full card data from API
   
   @property({ type: Boolean })
-  isLoading: boolean = false;
+  isLoading: boolean = false; // Tracks API request loading state
   
   @property({ type: Boolean })
-  hasShownKingdom: boolean = false;
+  hasShownKingdom: boolean = false; // Tracks if kingdom has been displayed before
  
   static styles = kingdomStyles;
 
+  /**
+   * Lifecycle method that triggers when properties change
+   */
   updated(changedProperties: Map<string | number | symbol, unknown>) {
+    // Fetch card details when IDs change
     if (changedProperties.has('kingdomCardIds') || changedProperties.has('landscapeIds')) {
-      this.getKingdomDetails();
+      this.fetchKingdomDetails();
     }
     
-    // Set hasShownKingdom to true once we've successfully displayed cards
+    // Mark that we've shown a kingdom once cards are loaded
     if (this.kingdomDetails && this.kingdomDetails.cards && this.kingdomDetails.cards.length > 0) {
       this.hasShownKingdom = true;
     }
   }
 
-  async getKingdomDetails() {
-    // Only proceed if we have at least one of kingdomCardIds or landscapeIds
+  /**
+   * Fetches detailed card information from API
+   */
+  async fetchKingdomDetails() {
+    // Only proceed if we have at least one card to display
     if ((!this.kingdomCardIds || this.kingdomCardIds.length === 0) && 
         (!this.landscapeIds || this.landscapeIds.length === 0)) {
       console.warn('No cards to display!');
@@ -50,12 +67,13 @@ export class Kingdom extends LitElement {
     try {
       this.isLoading = true;
       
-      // Always use a single endpoint with a consistent format
-      const requestData = {
+      // Prepare request data
+      const requestData: KingdomDetailsRequest = {
         kingdomCardIds: this.kingdomCardIds || [],
         landscape: this.landscapeIds || []
       };
       
+      // Fetch card details from API
       const response = await fetch('http://localhost:8080/api/kingdom/details', {
         method: 'POST',
         headers: {
@@ -77,56 +95,68 @@ export class Kingdom extends LitElement {
     }
   }
 
-  // Helper methods to filter dependencies
-  private getGameMaterialDependencies() {
-    return this.kingdomDetails?.dependencies.filter(dep => 
-      ['KINGDOM_CARD', 'EXTRA_CARD', 'GAMEPART'].includes(dep.resourceCategory)
+  /**
+   * Filters and returns additional game materials (non-landscape dependencies)
+   */
+  private filterGameMaterials() {
+    return this.kingdomDetails?.dependencies.filter(dependency => 
+      ['KINGDOM_CARD', 'EXTRA_CARD', 'GAMEPART'].includes(dependency.resourceCategory)
     ) || [];
   }
 
-  private getLandscapeDependencies() {
-    return this.kingdomDetails?.dependencies.filter(dep => 
-      !['KINGDOM_CARD', 'EXTRA_CARD', 'GAMEPART'].includes(dep.resourceCategory)
+  /**
+   * Filters and returns landscape cards (events, projects, etc)
+   */
+  private filterLandscapeCards() {
+    return this.kingdomDetails?.dependencies.filter(dependency => 
+      !['KINGDOM_CARD', 'EXTRA_CARD', 'GAMEPART'].includes(dependency.resourceCategory)
     ) || [];
   }
 
+  /**
+   * Determines whether to show placeholders instead of actual cards
+   */
   private shouldShowPlaceholders() {
-    // Only show placeholders if we've never shown a kingdom before OR 
-    // we're loading for the first time (no previous kingdom)
+    // Only show placeholders if we've never shown a kingdom before
     return (!this.hasShownKingdom && !this.kingdomDetails) || 
            (!this.hasShownKingdom && (!this.kingdomCardIds || this.kingdomCardIds.length === 0));
   }
 
+  /**
+   * Determines whether to show landscape placeholders, only if landscape cards are selected
+   */
   private shouldShowLandscapePlaceholders() {
     return this.shouldShowPlaceholders() && this.landscapeCount > 0;
   }
 
   render() {
+    // Determine what sections to show
     const showPlaceholders = this.shouldShowPlaceholders();
     const showLandscapePlaceholders = this.shouldShowLandscapePlaceholders();
-    const gameMaterialDeps = this.getGameMaterialDependencies();
-    const landscapeDeps = this.getLandscapeDependencies();
-    const hasLandscapeCards = !showPlaceholders && landscapeDeps.length > 0;
+    const gameMaterials = this.filterGameMaterials();
+    const landscapeCards = this.filterLandscapeCards();
+    const hasLandscapeCards = !showPlaceholders && landscapeCards.length > 0;
     const showLandscapeSection = showLandscapePlaceholders || hasLandscapeCards;
-    const showGameMaterialSection = !showPlaceholders && gameMaterialDeps.length > 0;
+    const showGameMaterialSection = !showPlaceholders && gameMaterials.length > 0;
 
-    // Create an array of 10 placeholders for the main kingdom
+    // Create 10 kingdom card placeholders for initial loading state
     const kingdomPlaceholders = Array(10).fill(null).map(() => html`
       <div class="card-placeholder"></div>
     `);
 
-    // Create an array of landscape placeholders based on the count
+    // Create landscape card placeholders, amount depends on landscapeCount
     const landscapePlaceholders = Array(this.landscapeCount).fill(null).map(() => html`
       <div class="card-placeholder landscape-card"></div>
     `);
 
     return html`
+      <!-- Main Kingdom Cards (10 supply piles) -->
       <div class="main-kingdom">
         ${showPlaceholders 
           ? kingdomPlaceholders
           : html`
               ${this.kingdomDetails?.cards.map(
-                (card: ResponseCard) => html`
+                (card: CardResponse) => html`
                 <app-card 
                   .name="${card.name}" 
                   .cost="${card.cost}" 
@@ -138,6 +168,7 @@ export class Kingdom extends LitElement {
         }
       </div>
 
+      <!-- Landscape Cards Section (Events, Projects, etc) -->
       ${showLandscapeSection ? html`
         <h3>Prophezeiungen, Landmarken, Projekte, Ereignisse & Wege</h3>
         
@@ -145,8 +176,8 @@ export class Kingdom extends LitElement {
           ${showLandscapePlaceholders 
             ? landscapePlaceholders
             : html`
-                ${landscapeDeps.map(
-                  (card: ResponseDependency) => html`
+                ${landscapeCards.map(
+                  (card: DependencyResponse) => html`
                   <app-card 
                     class="${card.hasLandscapeOrientation ? 'landscape-card' : ''}"
                     .name="${card.name}" 
@@ -160,11 +191,12 @@ export class Kingdom extends LitElement {
         </div>
       ` : null}
 
+      <!-- Game Materials Section (Additional Cards & Materials) -->
       ${showGameMaterialSection ? html`
         <h3>Zusatzkarten & Spielmaterial</h3>
         <div class="extra-cards">
-          ${gameMaterialDeps.map(
-            (card: ResponseDependency) => html`
+          ${gameMaterials.map(
+            (card: DependencyResponse) => html`
             <app-card 
               class="${card.hasLandscapeOrientation ? 'landscape-card' : ''}"
               .name="${card.name}" 

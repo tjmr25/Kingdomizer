@@ -1,11 +1,12 @@
 /**
- * Types related to Kingdom component and API responses
+ * Card type definitions
+ * Contains types for cards, landscapes, and related entities
  */
 
 /**
  * Represents a kingdom card in the API response
  */
-export interface ResponseCard {
+export interface CardResponse {
   id: number;
   name: string;
   expansion: string;
@@ -22,7 +23,7 @@ export interface ResponseCard {
 /**
  * Represents a dependency or landscape card in the API response
  */
-export interface ResponseDependency {
+export interface DependencyResponse {
   id: number;
   name: string;
   expansion: string;
@@ -35,17 +36,25 @@ export interface ResponseDependency {
 }
 
 /**
- * Complete kingdom details returned by the API from the /details endpoint
+ * Base card properties shared across all card types
  */
-export interface KingdomDetailsResponse {
-  cards: ResponseCard[];
-  dependencies: ResponseDependency[];
+export interface BaseCard {
+  id: number;
+  name: string;
+  expansion: string;
+  cost: number;
+  cardTypes: string[];
 }
 
 /**
- * Structure returned by the kingdom generation endpoint
+ * Card resource categories
  */
-export interface GenerateKingdomResponse {
-  kingdomCardIds: number[];
-  landscape?: number[];
-} 
+export type CardResourceCategory = 
+  | 'KINGDOM_CARD' 
+  | 'EXTRA_CARD' 
+  | 'GAMEPART' 
+  | 'LANDSCAPE' 
+  | 'EVENT' 
+  | 'PROJECT' 
+  | 'WAY' 
+  | 'LANDMARK'; 

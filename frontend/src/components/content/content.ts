@@ -2,19 +2,34 @@ import { html, css, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 import { contentStyles } from "./content.styles";
 import { Card as CardComponent } from "../card/card";
-import { GenerateKingdomResponse } from "../kingdom/kingdom.types";
+import { 
+  GenerateKingdomResponse, 
+  ExpansionSelections, 
+  CardFeatureFilters, 
+  CardTypeExclusions,
+  oldExpansionIdentifiers
+} from "../../types";
 
-export const oldExpansions = ["BASE_1ST", "PROSPERITY_1ST", "SEASIDE_1ST"];
-
+/**
+ * Content component - Main interface for Dominion kingdom generation
+ * Handles expansion selection, filtering options, and kingdom display
+ */
 export class Content extends LitElement {
-    @property({ type: Array }) generatedCardIds: number[] = [];
-    @property({ type: Array }) landscapeIds: number[] = [];
+    // Kingdom data properties
+    @property({ type: Array }) kingdomCardIds: number[] = [];
+    @property({ type: Array }) landscapeCardIds: number[] = [];
+    @property({ type: Number }) landscapeCount: number = 2;
+    
+    // UI state properties
     @property({ type: Boolean }) isAccordionOpen = false;
     @property({ type: Boolean }) isFilterOptionsOpen = false;
-    @property({ type: Number }) actionCards: number | null = null;
-    @property({ type: Number }) attackCards: number | null = null;
-    @property({ type: Number }) landscapeCount: number = 2;
-    @property({ type: Object }) expansionStates = {
+    
+    // Card filter properties
+    @property({ type: Number }) actionCardsCount: number | null = null;
+    @property({ type: Number }) attackCardsCount: number | null = null;
+    
+    // Expansion selection states
+    @property({ type: Object }) expansionSelections: ExpansionSelections = {
         BASE: true,
         BASE_1ST: false,
         BASE_2ND: true,
@@ -27,7 +42,8 @@ export class Content extends LitElement {
         PLUNDER: true
     }
     
-    @property({ type: Object }) filterOptions = {
+    // Card feature filter options
+    @property({ type: Object }) cardFeatureFilters: CardFeatureFilters = {
         hasMultipleActions: false,
         hasMultipleCards: false,
         hasBuy: false,
@@ -35,7 +51,8 @@ export class Content extends LitElement {
         hasTrash: false
     }
     
-    @property({ type: Object }) exclusions = {
+    // Card type exclusion options
+    @property({ type: Object }) cardTypeExclusions: CardTypeExclusions = {
         curses: false,
         victoryTokens: false,
         tableaus: false,
@@ -46,110 +63,131 @@ export class Content extends LitElement {
 
     static styles = contentStyles;
 
-    async fetchCards(): Promise<void> {
+    /**
+     * Fetches a new kingdom from the API based on current settings
+     * Request body format: { BASE: boolean, BASE_1ST: boolean, BASE_2ND: boolean, ... }
+     * Contains boolean flags for each expansion to include in kingdom generation
+     * Response format: { kingdomCardIds: number[], landscape: number[] }
+     */
+    async generateNewKingdom(): Promise<void> {
       try {
         const response = await fetch("http://localhost:8080/api/kingdom/generate", {
           method: "POST", 
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(this.expansionStates),
+          body: JSON.stringify(this.expansionSelections),
         });
+        
         if (!response.ok) {
-          throw new Error("Fehler beim Abrufen der Karten");
+          throw new Error("Error fetching kingdom data");
         }
         
         const data = await response.json();
-        
-        // Handle the response format
-        if (typeof data === 'object' && data.kingdomCardIds) {
-          this.generatedCardIds = data.kingdomCardIds;
-          this.landscapeIds = data.landscape || [];
-        } else {
-          // Handle legacy format (just an array of IDs) - for backward compatibility
-          this.generatedCardIds = data;
-          this.landscapeIds = [];
-        }
+        this.kingdomCardIds = data.kingdomCardIds;
+        this.landscapeCardIds = data.landscape || [];
 
       } catch (error) {
-        console.error("Fehler beim Abrufen der Karten:", error);
+        console.error("Error generating kingdom:", error);
       }
     }
 
-    async saveKingdom() {
-      alert("(Noch nicht implementiert) Königreich gespeichert!");
+    /**
+     * Saves current kingdom (placeholder for future implementation)
+     */
+    saveCurrentKingdom() {
+      alert("(Not yet implemented) Kingdom saved!");
     }
 
-    updateExpansionState(expansion: string, checked: boolean) {
-      this.expansionStates = { ...this.expansionStates, [expansion]: checked };
+    /**
+     * Updates expansion selection state and handles parent expansion states
+     */
+    updateExpansionSelection(expansion: string, isSelected: boolean) {
+      this.expansionSelections = { ...this.expansionSelections, [expansion]: isSelected };
     
+      // Update parent expansion states based on child selections
       if (expansion === 'BASE_1ST' || expansion === 'BASE_2ND') {
-        const isBase1stSelected = this.expansionStates['BASE_1ST'];
-        const isBase2ndSelected = this.expansionStates['BASE_2ND'];
-    
-        this.expansionStates['BASE'] = isBase1stSelected || isBase2ndSelected;
+        this.expansionSelections['BASE'] = 
+          this.expansionSelections['BASE_1ST'] || this.expansionSelections['BASE_2ND'];
       }
     
       if (expansion === 'SEASIDE_1ST' || expansion === 'SEASIDE_2ND') {
-        const isSeaside1stSelected = this.expansionStates['SEASIDE_1ST'];
-        const isSeaside2ndSelected = this.expansionStates['SEASIDE_2ND'];
-    
-        this.expansionStates['SEASIDE'] = isSeaside1stSelected || isSeaside2ndSelected;
+        this.expansionSelections['SEASIDE'] = 
+          this.expansionSelections['SEASIDE_1ST'] || this.expansionSelections['SEASIDE_2ND'];
       }
     
       if (expansion === 'PROSPERITY_1ST' || expansion === 'PROSPERITY_2ND') {
-        const isProsperity1stSelected = this.expansionStates['PROSPERITY_1ST'];
-        const isProsperity2ndSelected = this.expansionStates['PROSPERITY_2ND'];
-    
-        this.expansionStates['PROSPERITY'] = isProsperity1stSelected || isProsperity2ndSelected;
+        this.expansionSelections['PROSPERITY'] = 
+          this.expansionSelections['PROSPERITY_1ST'] || this.expansionSelections['PROSPERITY_2ND'];
       }
     }
     
-    updateFilterOption(option: string, checked: boolean) {
-      this.filterOptions = { ...this.filterOptions, [option]: checked };
+    /**
+     * Updates card feature filter options
+     */
+    updateCardFeatureFilter(filterName: string, isEnabled: boolean) {
+      this.cardFeatureFilters = { ...this.cardFeatureFilters, [filterName]: isEnabled };
     }
 
-    updateActionCards(event: Event) {
+    /**
+     * Updates card type exclusion settings
+     */
+    updateCardTypeExclusion(exclusionType: string, isExcluded: boolean) {
+      this.cardTypeExclusions = { ...this.cardTypeExclusions, [exclusionType]: isExcluded };
+    }
+
+    /**
+     * Updates action cards count filter
+     */
+    updateActionCardsCount(event: Event) {
       const value = (event.target as HTMLInputElement).value;
-      this.actionCards = value === '' ? null : Number(value);
+      this.actionCardsCount = value === '' ? null : Number(value);
     }
 
-    updateAttackCards(event: Event) {
+    /**
+     * Updates attack cards count filter
+     */
+    updateAttackCardsCount(event: Event) {
       const value = (event.target as HTMLInputElement).value;
-      this.attackCards = value === '' ? null : Number(value);
+      this.attackCardsCount = value === '' ? null : Number(value);
     }
 
+    /**
+     * Updates landscape cards count and slider display
+     */
     updateLandscapeCount(event: Event) {
       const target = event.target as HTMLInputElement;
       this.landscapeCount = Number(target.value);
       
-      // Update the CSS variable for the slider track
+      // Update the CSS variable for slider track display
       target.style.setProperty('--value', target.value);
     }
-
-    toggleAccordion() {
+    
+    /**
+     * Toggles old expansions accordion visibility
+     */
+    toggleExpansionsAccordion() {
       this.isAccordionOpen = !this.isAccordionOpen;
     }
     
-    toggleFilterOptions() {
+    /**
+     * Toggles filter options panel visibility
+     */
+    toggleFilterOptionsPanel() {
       this.isFilterOptionsOpen = !this.isFilterOptionsOpen;
     }
     
-    updateExclusion(exclusion: string, checked: boolean) {
-      this.exclusions = { ...this.exclusions, [exclusion]: checked };
-    }
 
     render() {
-      
       return html`
         <div class="main-content">
           <div class="kingdom-display">
 
             <div class="button-container">
               <div class="left-buttons">
-                <button @click="${this.fetchCards}">Neues Königreich</button>
-                <button class="save-button" @click="${this.saveKingdom}">Speichern</button>
+                <button @click="${this.generateNewKingdom}">Neues Königreich</button>
+                <button class="save-button" @click="${this.saveCurrentKingdom}">Speichern</button>
               </div>
               <div class="right-buttons">
-                <button class="filter-button" @click="${this.toggleFilterOptions}">
+                <button class="filter-button" @click="${this.toggleFilterOptionsPanel}">
                   Filteroptionen
                   ${this.isFilterOptionsOpen 
                     ? html`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="icon">
@@ -170,8 +208,8 @@ export class Content extends LitElement {
                     type="checkbox" 
                     class="checkbox" 
                     id="hasMultipleActions" 
-                    ?checked="${this.filterOptions.hasMultipleActions}"
-                    @change="${(e: Event) => this.updateFilterOption('hasMultipleActions', (e.target as HTMLInputElement).checked)}"
+                    ?checked="${this.cardFeatureFilters.hasMultipleActions}"
+                    @change="${(e: Event) => this.updateCardFeatureFilter('hasMultipleActions', (e.target as HTMLInputElement).checked)}"
                   />
                   <label for="hasMultipleActions" class="filter-option-label">+2 Aktionen</label>
                 </li>
@@ -180,8 +218,8 @@ export class Content extends LitElement {
                     type="checkbox" 
                     class="checkbox" 
                     id="hasMultipleCards" 
-                    ?checked="${this.filterOptions.hasMultipleCards}"
-                    @change="${(e: Event) => this.updateFilterOption('hasMultipleCards', (e.target as HTMLInputElement).checked)}"
+                    ?checked="${this.cardFeatureFilters.hasMultipleCards}"
+                    @change="${(e: Event) => this.updateCardFeatureFilter('hasMultipleCards', (e.target as HTMLInputElement).checked)}"
                   />
                   <label for="hasMultipleCards" class="filter-option-label">+2 Karten</label>
                 </li>
@@ -190,8 +228,8 @@ export class Content extends LitElement {
                     type="checkbox" 
                     class="checkbox" 
                     id="hasBuy" 
-                    ?checked="${this.filterOptions.hasBuy}"
-                    @change="${(e: Event) => this.updateFilterOption('hasBuy', (e.target as HTMLInputElement).checked)}"
+                    ?checked="${this.cardFeatureFilters.hasBuy}"
+                    @change="${(e: Event) => this.updateCardFeatureFilter('hasBuy', (e.target as HTMLInputElement).checked)}"
                   />
                   <label for="hasBuy" class="filter-option-label">+1 Kauf</label>
                 </li>
@@ -200,8 +238,8 @@ export class Content extends LitElement {
                     type="checkbox" 
                     class="checkbox" 
                     id="hasReaction" 
-                    ?checked="${this.filterOptions.hasReaction}"
-                    @change="${(e: Event) => this.updateFilterOption('hasReaction', (e.target as HTMLInputElement).checked)}"
+                    ?checked="${this.cardFeatureFilters.hasReaction}"
+                    @change="${(e: Event) => this.updateCardFeatureFilter('hasReaction', (e.target as HTMLInputElement).checked)}"
                   />
                   <label for="hasReaction" class="filter-option-label">Reaktion</label>
                 </li>
@@ -210,8 +248,8 @@ export class Content extends LitElement {
                     type="checkbox" 
                     class="checkbox" 
                     id="hasTrash" 
-                    ?checked="${this.filterOptions.hasTrash}"
-                    @change="${(e: Event) => this.updateFilterOption('hasTrash', (e.target as HTMLInputElement).checked)}"
+                    ?checked="${this.cardFeatureFilters.hasTrash}"
+                    @change="${(e: Event) => this.updateCardFeatureFilter('hasTrash', (e.target as HTMLInputElement).checked)}"
                   />
                   <label for="hasTrash" class="filter-option-label">Entsorgen</label>
                 </li>
@@ -226,8 +264,8 @@ export class Content extends LitElement {
                     type="checkbox" 
                     class="checkbox" 
                     id="excludeCurses" 
-                    ?checked="${this.exclusions.curses}"
-                    @change="${(e: Event) => this.updateExclusion('curses', (e.target as HTMLInputElement).checked)}"
+                    ?checked="${this.cardTypeExclusions.curses}"
+                    @change="${(e: Event) => this.updateCardTypeExclusion('curses', (e.target as HTMLInputElement).checked)}"
                   />
                   <label for="excludeCurses" class="filter-option-label">Flüche</label>
                 </li>
@@ -236,8 +274,8 @@ export class Content extends LitElement {
                     type="checkbox" 
                     class="checkbox" 
                     id="excludeVictoryTokens" 
-                    ?checked="${this.exclusions.victoryTokens}"
-                    @change="${(e: Event) => this.updateExclusion('victoryTokens', (e.target as HTMLInputElement).checked)}"
+                    ?checked="${this.cardTypeExclusions.victoryTokens}"
+                    @change="${(e: Event) => this.updateCardTypeExclusion('victoryTokens', (e.target as HTMLInputElement).checked)}"
                   />
                   <label for="excludeVictoryTokens" class="filter-option-label">Punktemarker</label>
                 </li>
@@ -246,8 +284,8 @@ export class Content extends LitElement {
                     type="checkbox" 
                     class="checkbox" 
                     id="excludeTableaus" 
-                    ?checked="${this.exclusions.tableaus}"
-                    @change="${(e: Event) => this.updateExclusion('tableaus', (e.target as HTMLInputElement).checked)}"
+                    ?checked="${this.cardTypeExclusions.tableaus}"
+                    @change="${(e: Event) => this.updateCardTypeExclusion('tableaus', (e.target as HTMLInputElement).checked)}"
                   />
                   <label for="excludeTableaus" class="filter-option-label">Tableaus</label>
                 </li>
@@ -256,8 +294,8 @@ export class Content extends LitElement {
                     type="checkbox" 
                     class="checkbox" 
                     id="excludeTreasures" 
-                    ?checked="${this.exclusions.treasures}"
-                    @change="${(e: Event) => this.updateExclusion('treasures', (e.target as HTMLInputElement).checked)}"
+                    ?checked="${this.cardTypeExclusions.treasures}"
+                    @change="${(e: Event) => this.updateCardTypeExclusion('treasures', (e.target as HTMLInputElement).checked)}"
                   />
                   <label for="excludeTreasures" class="filter-option-label">Kostbarkeiten</label>
                 </li>
@@ -271,8 +309,8 @@ export class Content extends LitElement {
                     type="checkbox" 
                     class="checkbox" 
                     id="excludeEvents" 
-                    ?checked="${this.exclusions.events}"
-                    @change="${(e: Event) => this.updateExclusion('events', (e.target as HTMLInputElement).checked)}"
+                    ?checked="${this.cardTypeExclusions.events}"
+                    @change="${(e: Event) => this.updateCardTypeExclusion('events', (e.target as HTMLInputElement).checked)}"
                   />
                   <label for="excludeEvents" class="filter-option-label">Events</label>
                 </li>
@@ -281,8 +319,8 @@ export class Content extends LitElement {
                     type="checkbox" 
                     class="checkbox" 
                     id="excludeLandmarks" 
-                    ?checked="${this.exclusions.landmarks}"
-                    @change="${(e: Event) => this.updateExclusion('landmarks', (e.target as HTMLInputElement).checked)}"
+                    ?checked="${this.cardTypeExclusions.landmarks}"
+                    @change="${(e: Event) => this.updateCardTypeExclusion('landmarks', (e.target as HTMLInputElement).checked)}"
                   />
                   <label for="excludeLandmarks" class="filter-option-label">Merkmale</label>
                 </li>
@@ -302,8 +340,8 @@ export class Content extends LitElement {
                       min="0" 
                       max="10" 
                       placeholder="0-10"
-                      .value="${this.actionCards === null ? '' : this.actionCards}"
-                      @input="${this.updateActionCards}"
+                      .value="${this.actionCardsCount === null ? '' : this.actionCardsCount}"
+                      @input="${this.updateActionCardsCount}"
                     />
                   </div>
                   <div class="input-group">
@@ -315,8 +353,8 @@ export class Content extends LitElement {
                       min="0" 
                       max="10"
                       placeholder="0-10" 
-                      .value="${this.attackCards === null ? '' : this.attackCards}"
-                      @input="${this.updateAttackCards}"
+                      .value="${this.attackCardsCount === null ? '' : this.attackCardsCount}"
+                      @input="${this.updateAttackCardsCount}"
                     />
                   </div>
                 </div>
@@ -345,8 +383,8 @@ export class Content extends LitElement {
             <div class="divider"></div>
   
             <app-kingdom 
-              .kingdomCardIds="${this.generatedCardIds}"
-              .landscapeIds="${this.landscapeIds}"
+              .kingdomCardIds="${this.kingdomCardIds}"
+              .landscapeIds="${this.landscapeCardIds}"
               .landscapeCount="${this.landscapeCount}">
             </app-kingdom>
 
@@ -356,7 +394,7 @@ export class Content extends LitElement {
                 <label class="expansion-label">
                   Basisspiel (2.Edition)
                   <input class="checkbox" type="checkbox" checked @change="${(e: Event) =>
-                    this.updateExpansionState(
+                    this.updateExpansionSelection(
                       'BASE_2ND',
                       (e.target as HTMLInputElement).checked
                   )}"/>
@@ -368,7 +406,7 @@ export class Content extends LitElement {
                 <label class="expansion-label">
                   Blütezeit (2.Edition)
                   <input class="checkbox" type="checkbox" checked @change="${(e: Event) =>
-                    this.updateExpansionState(
+                    this.updateExpansionSelection(
                       'PROSPERITY_2ND',
                       (e.target as HTMLInputElement).checked
                     )}"/>
@@ -380,7 +418,7 @@ export class Content extends LitElement {
                 <label class="expansion-label">
                   Seaside (2.Edition)
                   <input class="checkbox" type="checkbox" checked @change="${(e: Event) =>
-                    this.updateExpansionState(
+                    this.updateExpansionSelection(
                       'SEASIDE_2ND',
                       (e.target as HTMLInputElement).checked
                     )}"/>
@@ -392,7 +430,7 @@ export class Content extends LitElement {
                 <label class="expansion-label">
                   Plünderer
                   <input class="checkbox" type="checkbox" checked @change="${(e: Event) =>
-                    this.updateExpansionState(
+                    this.updateExpansionSelection(
                       'PLUNDER',
                       (e.target as HTMLInputElement).checked
                     )}"/>
@@ -401,7 +439,7 @@ export class Content extends LitElement {
               
               <div class="accordion">
 
-                <div class="accordion-header filter-button" @click="${this.toggleAccordion}">
+                <div class="accordion-header filter-button" @click="${this.toggleExpansionsAccordion}">
                   Frühere Editionen
                   ${this.isAccordionOpen 
                     ? html`<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="icon">
@@ -420,7 +458,7 @@ export class Content extends LitElement {
                     <label class="expansion-label">
                       Basisspiel (1.Edition)
                       <input class="checkbox" type="checkbox" unchecked @change="${(e: Event) =>
-                        this.updateExpansionState(
+                        this.updateExpansionSelection(
                           'BASE_1ST',
                           (e.target as HTMLInputElement).checked
                       )}"/>
@@ -431,7 +469,7 @@ export class Content extends LitElement {
                     <label class="expansion-label">
                       Blütezeit (1.Edition)
                       <input class="checkbox" type="checkbox" unchecked @change="${(e: Event) =>
-                        this.updateExpansionState(
+                        this.updateExpansionSelection(
                           'PROSPERITY_1ST',
                           (e.target as HTMLInputElement).checked
                       )}"/>
@@ -442,7 +480,7 @@ export class Content extends LitElement {
                     <label class="expansion-label">
                       Seaside (1.Edition)
                       <input class="checkbox" type="checkbox" unchecked @change="${(e: Event) =>
-                        this.updateExpansionState(
+                        this.updateExpansionSelection(
                           'SEASIDE_1ST',
                           (e.target as HTMLInputElement).checked
                         )}"/>

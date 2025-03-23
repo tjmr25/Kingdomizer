@@ -1,13 +1,13 @@
 import { html, css, LitElement } from "lit";
 import { property } from "lit/decorators.js";
-import { ResponseCard } from "../kingdom/kingdom.types";
+import { CardResponse } from "../../types";
 
 import "../card/card";
 
 export interface Kingdom {
   id: number;
   createdAt: string; // ISO-String
-  cards: ResponseCard[]; // List of card objects
+  cards: CardResponse[]; // List of card objects
 }
 
 export class Collection extends LitElement {    
