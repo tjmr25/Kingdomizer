@@ -1,5 +1,6 @@
 package com.kingdomizer.controller;
 
+import com.kingdomizer.filter.KingdomFilter;
 import com.kingdomizer.service.KingdomService;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,15 +22,16 @@ public class KingdomController {
     }
 
     /**
-     * Generates a kingdom by filtering expansions and returning card IDs.
-     * @param expansionStates a map containing expansion names as keys and their active state as values
+     * Generates a kingdom based on filter criteria.
+     * @param filter comprehensive filter object containing expansion selections, 
+     *               card feature requirements, exclusions, and other settings
      * @return a map containing:
      *         - "kingdomCardIds": a list of 10 randomly selected card IDs
      *         - "landscape": a list of landscape IDs (may be empty)
      */
     @PostMapping("/generate")
-    public Map<String, Object> generateKingdom(@RequestBody Map<String, Boolean> expansionStates) {
-        return kingdomService.generateKingdom(expansionStates);
+    public Map<String, Object> generateKingdom(@RequestBody KingdomFilter filter) {
+        return kingdomService.generateKingdom(filter);
     }
 
     /**

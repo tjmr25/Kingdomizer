@@ -1,19 +1,13 @@
 /**
- * Kingdom component-specific type definitions
- * Contains types that are only used within the Kingdom component
+ * Component-specific type definitions
+ * Contains types that are only used within specific components
  */
 
 /**
- * Configuration for placeholders in the kingdom display
+ * Kingdom component types
  */
-export interface PlaceholderConfig {
-  count: number;
-  showLandscape: boolean;
-}
 
-/**
- * Kingdom view state
- */
+// Kingdom view state - tracks UI display states
 export interface KingdomViewState {
   isLoading: boolean;
   hasShownKingdom: boolean;
@@ -22,9 +16,7 @@ export interface KingdomViewState {
   showGameMaterialSection: boolean;
 }
 
-/**
- * Configuration for a saved kingdom
- */
+// Configuration for a saved kingdom
 export interface SavedKingdomConfig {
   id: string;
   name?: string;

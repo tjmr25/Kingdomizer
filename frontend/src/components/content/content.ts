@@ -1,19 +1,26 @@
 import { html, css, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 import { contentStyles } from "./content.styles";
-import { Card as CardComponent } from "../card/card";
 import { 
   GenerateKingdomResponse, 
   ExpansionSelections, 
   CardFeatureFilters, 
   CardTypeExclusions,
-  oldExpansionIdentifiers
+  oldExpansionIdentifiers,
+  ExpansionFeature,
+  expansionFeatures,
+  featureTypes
 } from "../../types";
-import { 
-  ExpansionFeature, 
-  expansionFeatures, 
-  featureTypes 
-} from "./feature-config";
+
+// Define kingdom filter type locally
+interface KingdomFilter {
+  expansions: ExpansionSelections;
+  cardFeatures: CardFeatureFilters;
+  exclusions: CardTypeExclusions;
+  minActionCards: number | null;
+  minAttackCards: number | null;
+  landscapeCount: number;
+}
 
 /**
  * Content component - Main interface for Dominion kingdom generation
@@ -23,13 +30,13 @@ export class Content extends LitElement {
     // Kingdom data properties
     @property({ type: Array }) kingdomCardIds: number[] = [];
     @property({ type: Array }) landscapeCardIds: number[] = [];
-    @property({ type: Number }) landscapeCount: number = 2;
     
     // UI state properties
     @property({ type: Boolean }) isAccordionOpen = false;
     @property({ type: Boolean }) isFilterOptionsOpen = false;
     
     // Card filter properties
+    @property({ type: Number }) landscapeCount: number = 2;
     @property({ type: Number }) actionCardsCount: number | null = null;
     @property({ type: Number }) attackCardsCount: number | null = null;
     
@@ -70,16 +77,25 @@ export class Content extends LitElement {
 
     /**
      * Fetches a new kingdom from the API based on current settings
-     * Request body format: { BASE: boolean, BASE_1ST: boolean, BASE_2ND: boolean, ... }
-     * Contains boolean flags for each expansion to include in kingdom generation
-     * Response format: { kingdomCardIds: number[], landscape: number[] }
+     * Sends a complete filter object with all selection and filter criteria
      */
     async generateNewKingdom(): Promise<void> {
       try {
+        // Create the comprehensive filter object
+        const filter: KingdomFilter = {
+          expansions: this.expansionSelections,
+          cardFeatures: this.cardFeatureFilters,
+          exclusions: this.cardTypeExclusions,
+          minActionCards: this.actionCardsCount,
+          minAttackCards: this.attackCardsCount,
+          landscapeCount: this.landscapeCount
+        };
+        
+        // Send the full filter object to the API
         const response = await fetch("http://localhost:8080/api/kingdom/generate", {
           method: "POST", 
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(this.expansionSelections),
+          body: JSON.stringify(filter),
         });
         
         if (!response.ok) {
@@ -93,13 +109,6 @@ export class Content extends LitElement {
       } catch (error) {
         console.error("Error generating kingdom:", error);
       }
-    }
-
-    /**
-     * Saves current kingdom (placeholder for future implementation)
-     */
-    saveCurrentKingdom() {
-      alert("(Not yet implemented) Kingdom saved!");
     }
 
     /**
@@ -212,7 +221,6 @@ export class Content extends LitElement {
             <div class="button-container">
               <div class="left-buttons">
                 <button @click="${this.generateNewKingdom}">Neues Königreich</button>
-                <button class="save-button" @click="${this.saveCurrentKingdom}">Speichern</button>
               </div>
               <div class="right-buttons">
                 <button class="filter-button" @click="${this.toggleFilterOptionsPanel}">
@@ -424,11 +432,11 @@ export class Content extends LitElement {
             
             <div class="divider"></div>
   
-            <app-kingdom 
+            <app-kingdom
               .kingdomCardIds="${this.kingdomCardIds}"
-              .landscapeIds="${this.landscapeCardIds}"
-              .landscapeCount="${this.landscapeCount}">
-            </app-kingdom>
+              .landscapeCardIds="${this.landscapeCardIds}"
+              .landscapeCount="${this.landscapeCount}"
+            ></app-kingdom>
           </div>
           
           <div class="expansion-sidebar">

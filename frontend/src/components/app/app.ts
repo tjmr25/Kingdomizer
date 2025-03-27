@@ -4,7 +4,6 @@ import { appStyles } from "./app.styles";
 import "../header/header";
 import "../footer/footer";
 import "../content/content";
-import "../collection/collection";
 import "../kingdom/kingdom"
 
 
@@ -18,7 +17,6 @@ export class App extends LitElement {
 
     router.setRoutes([
       { path: "/", component: "app-content" }, // Route für die Startseite
-      { path: "/collection", component: "app-collection" }, // Route für die Sammlung
     ]);
   }
   

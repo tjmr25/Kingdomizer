@@ -58,7 +58,7 @@ export const kingdomStyles = css`
     }
 
     .card-placeholder.landscape-card {
-          height: 120px;
+          height: 150px;
     }
 
     /* ===== Typography ===== */

@@ -19,13 +19,14 @@ export const cardStyles = css`
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        height: 150px;
+        width: 100%;
         
         /* Appearance */
         background-color: white;
         color: var(--color-dark);
         border-radius: 0.5rem;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        height: 150px;
         font-size: 1rem;
         
         /* Animation */
@@ -33,6 +34,45 @@ export const cardStyles = css`
         transform: translate(20px);
         transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
         animation: fadeIn 0.5s ease-out forwards;
+    }
+    
+    /* Landscape card layout with resource type */
+    .card.landscape {
+        display: grid;
+        grid-template-columns: 10% 80% 10%;
+    }
+    
+    /* Main content container */
+    .card-content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Grid column positioning for landscape cards */
+    .landscape .card-content {
+        grid-column: 2;
+    }
+    
+    /* Resource type vertical label */
+    .resource-type-vertical {
+        grid-column: 1;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        writing-mode: vertical-rl;
+        transform: rotate(180deg);
+        font-size: 0.75rem;
+        font-weight: bold;
+        color: var(--color-dark);
+        background-color: var(--color-light);
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        border-radius: 0 0.5rem 0.5rem 0;
     }
 
     .card-title {

@@ -1,13 +1,13 @@
 import { html, css, LitElement } from "lit";
 import { property } from "lit/decorators.js";
 import { kingdomStyles } from "./kingdom.styles";
-import { 
-  CardResponse, 
-  DependencyResponse, 
+import {
+  CardResponse,
+  DependencyResponse,
   KingdomDetailsResponse,
-  KingdomDetailsRequest,
-  CardResourceCategory
+  KingdomDetailsRequest
 } from "../../types";
+import "../card/card"; // Import the card component
 
 /**
  * Kingdom component displays a Dominion kingdom setup.
@@ -22,7 +22,7 @@ export class Kingdom extends LitElement {
   kingdomCardIds: number[] = []; // Supply pile card IDs (10 cards)
   
   @property({ type: Array })
-  landscapeIds: number[] = []; // Landscape card IDs (events, ways, projects)
+  landscapeCardIds: number[] = []; // Landscape card IDs (events, ways, projects)
   
   @property({ type: Number })
   landscapeCount: number = 2; // Number of landscape cards to show in placeholders
@@ -43,7 +43,7 @@ export class Kingdom extends LitElement {
    */
   updated(changedProperties: Map<string | number | symbol, unknown>) {
     // Fetch card details when IDs change
-    if (changedProperties.has('kingdomCardIds') || changedProperties.has('landscapeIds')) {
+    if (changedProperties.has('kingdomCardIds') || changedProperties.has('landscapeCardIds')) {
       this.fetchKingdomDetails();
     }
     
@@ -59,8 +59,7 @@ export class Kingdom extends LitElement {
   async fetchKingdomDetails() {
     // Only proceed if we have at least one card to display
     if ((!this.kingdomCardIds || this.kingdomCardIds.length === 0) && 
-        (!this.landscapeIds || this.landscapeIds.length === 0)) {
-      console.warn('No cards to display!');
+        (!this.landscapeCardIds || this.landscapeCardIds.length === 0)) {
       return;
     }
 
@@ -70,7 +69,7 @@ export class Kingdom extends LitElement {
       // Prepare request data
       const requestData: KingdomDetailsRequest = {
         kingdomCardIds: this.kingdomCardIds || [],
-        landscape: this.landscapeIds || []
+        landscape: this.landscapeCardIds || []
       };
       
       // Fetch card details from API
@@ -83,10 +82,17 @@ export class Kingdom extends LitElement {
       });
 
       if (!response.ok) {
+        const errorText = await response.text();
         throw new Error(`Failed to fetch: ${response.statusText}`);
       }
 
       const data: KingdomDetailsResponse = await response.json();
+      
+      // Check if data has the expected structure
+      if (!data || !data.cards || !Array.isArray(data.cards)) {
+        throw new Error('API returned invalid data format');
+      }
+      
       this.kingdomDetails = data;
       this.isLoading = false;
     } catch (error) {
@@ -99,7 +105,7 @@ export class Kingdom extends LitElement {
    * Filters and returns additional game materials (non-landscape dependencies)
    */
   private filterGameMaterials() {
-    return this.kingdomDetails?.dependencies.filter(dependency => 
+    return this.kingdomDetails?.dependencies.filter((dependency: DependencyResponse) => 
       ['KINGDOM_CARD', 'EXTRA_CARD', 'GAMEPART'].includes(dependency.resourceCategory)
     ) || [];
   }
@@ -108,7 +114,7 @@ export class Kingdom extends LitElement {
    * Filters and returns landscape cards (events, projects, etc)
    */
   private filterLandscapeCards() {
-    return this.kingdomDetails?.dependencies.filter(dependency => 
+    return this.kingdomDetails?.dependencies.filter((dependency: DependencyResponse) => 
       !['KINGDOM_CARD', 'EXTRA_CARD', 'GAMEPART'].includes(dependency.resourceCategory)
     ) || [];
   }
@@ -183,7 +189,9 @@ export class Kingdom extends LitElement {
                     .name="${card.name}" 
                     .cost="${card.cost}" 
                     .cardTypes="${card.cardTypes}" 
-                    .expansion="${card.expansion}">
+                    .expansion="${card.expansion}"
+                    .resourceCategory="${card.resourceCategory}"
+                    .hasLandscapeOrientation="${card.hasLandscapeOrientation}">
                   </app-card>`
                 )}
               `
@@ -202,7 +210,9 @@ export class Kingdom extends LitElement {
               .name="${card.name}" 
               .cost="${card.cost}" 
               .cardTypes="${card.cardTypes}" 
-              .expansion="${card.expansion}">
+              .expansion="${card.expansion}"
+              .resourceCategory="${card.resourceCategory}"
+              .hasLandscapeOrientation="${card.hasLandscapeOrientation}">
             </app-card>`
           )}
         </div>

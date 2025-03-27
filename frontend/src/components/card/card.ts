@@ -48,6 +48,21 @@ const expansionTranslations: Record<string, string> = {
 };
 
 /**
+ * Mapping of resource category identifiers to their German translations
+ */
+const resourceCategoryTranslations: Record<string, string> = {
+    EVENT: "Ereignis",
+    TRAIT: "Eigenschaft",
+    WAY: "Weg",
+    PROJECT: "Projekt",
+    ALLY: "Verbündeter",
+    LANDMARK: "Landmarke",
+    BOON: "Segen",
+    FATE: "Schicksal",
+    STATE: "Status"
+};
+
+/**
  * Card component for displaying Dominion cards
  * 
  * Displays a card with name, expansion, cost, and card types
@@ -64,6 +79,12 @@ export class Card extends LitElement {
     
     /** Expansion the card belongs to */
     @property() expansion: string = '';
+    
+    /** Resource category (EVENT, TRAIT, etc.) for landscape cards */
+    @property() resourceCategory: string = '';
+    
+    /** Whether the card has landscape orientation */
+    @property({ type: Boolean }) hasLandscapeOrientation: boolean = false;
     
     static styles = cardStyles;
 
@@ -83,27 +104,39 @@ export class Card extends LitElement {
     render() {
         const localizedExpansion = expansionTranslations[this.expansion] || this.expansion;
         const orderedCardTypes = this.getOrderedCardTypes(this.cardTypes);
+        const showResourceCategory = this.hasLandscapeOrientation && 
+                                     this.resourceCategory && 
+                                     this.resourceCategory !== 'GAMEPART';
+        const localizedResourceCategory = resourceCategoryTranslations[this.resourceCategory] || this.resourceCategory;
 
         return html`
-          <div class="card">
-            <div class="card-name">
-                <span class="card-title">${this.name}</span>
-            </div>
-            <div class="card-expansion">${localizedExpansion}</div>
+          <div class="card ${showResourceCategory ? 'landscape' : ''}">
+            ${showResourceCategory ? html`
+                <div class="resource-type-vertical">${localizedResourceCategory}</div>
+            ` : null}
             
-            ${this.cost !== null && this.cost >= 0 ? html`
-                <div class="cost-circle">
-                    ${this.cost}
-                </div>
-            `: null}
+            <div class="card-content">
+              <div class="card-name">
+                  <span class="card-title">${this.name}</span>
+              </div>
+              <div class="card-expansion">${localizedExpansion}</div>
+              
+              ${this.cost !== null && this.cost >= 0 ? html`
+                  <div class="cost-circle">
+                      ${this.cost}
+                  </div>
+              `: null}
 
-            ${this.cardTypes.length > 0 ? html`
-                <div class="card-types">
-                    ${orderedCardTypes.map(
-                        (type) => html`<span class="type ${type.toLowerCase()}">${typeTranslations[type]}</span>`
-                    )}
-                </div>
-            `: null}          
+              ${this.cardTypes.length > 0 ? html`
+                  <div class="card-types">
+                      ${orderedCardTypes.map(
+                          (type) => html`<span class="type ${type.toLowerCase()}">${typeTranslations[type]}</span>`
+                      )}
+                  </div>
+              `: null}
+            </div>
+            
+            ${showResourceCategory ? html`<div></div>` : null}
           </div>
         `;
     }

@@ -14,7 +14,7 @@ export class Header extends LitElement {
       <header>
         <div class="spacer"></div>
         <h1 @click="${() => this.navigateTo('/')}">Kingdomizer</h1>
-        <div class="floppy-disk" @click="${() => this.navigateTo('/collection')}">💾</div>
+        <div class="floppy-disk" @click="${() => this.navigateTo('/')}">💾</div>
       </header>
     `;
   }

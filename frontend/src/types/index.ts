@@ -15,4 +15,7 @@ export * from './expansions';
 // Filter types
 export * from './filters';
 
+// Feature types
+export * from './features';
+
 // Add any additional type modules here as they are created 

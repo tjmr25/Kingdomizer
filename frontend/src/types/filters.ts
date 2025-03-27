@@ -3,6 +3,8 @@
  * Contains types for filtering options in kingdom generation
  */
 
+import { ExpansionSelections } from './expansions';
+
 /**
  * Card feature filters for kingdom generation
  */
@@ -27,12 +29,22 @@ export interface CardTypeExclusions {
 }
 
 /**
- * Kingdom generation filter parameters
+ * Complete filter configuration for kingdom generation
  */
-export interface KingdomFilters {
+export interface KingdomFilter {
+  // Selected expansions
+  expansions: ExpansionSelections;
+  
+  // Min card requirements
   cardFeatures: CardFeatureFilters;
+  
+  // Card exclusion options
   exclusions: CardTypeExclusions;
-  actionCardsCount: number | null;
-  attackCardsCount: number | null;
+  
+  // Card count filters
+  minActionCards: number | null;
+  minAttackCards: number | null;
+  
+  // Landscape settings
   landscapeCount: number;
 } 
