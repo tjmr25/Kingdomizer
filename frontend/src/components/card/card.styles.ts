@@ -74,9 +74,19 @@ export const cardStyles = css`
         text-transform: uppercase;
         border-radius: 0 0.5rem 0.5rem 0;
     }
+    
+    /* Resource-specific colors for the vertical label */
+    .card[resourcecategory="TRAIT"] .resource-type-vertical {
+        background-color: var(--color-trait-purple); /* Light purple for traits */
+    }
 
     .card-title {
         font-weight: bold;
+    }
+    
+    /* Purple styling for cards with traits */
+    .card-title.has-trait {
+        color: #cebfd8;
     }
 
     .card-expansion {
@@ -101,6 +111,27 @@ export const cardStyles = css`
         color: var(--color-dark); 
         
         margin-top: 1rem;
+    }
+    
+    /* ===== Connected Card Label ===== */
+    .connected-card {
+        font-size: 0.75rem;
+        margin-top: 1rem;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        color: var(--color-trait-darker-purple);
+        max-width: 90%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+        padding: 0 8px;
+        background-color: #f9f5fc;
+        border-radius: 0.5rem;
+        box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.2);
     }
 
     /* ===== Card Types ===== */
@@ -139,6 +170,6 @@ export const cardStyles = css`
     }
     
     .type.curse {
-        background-color: #c8a7d7;   
+        background-color: var(--color-trait-purple);   
     }
 `;

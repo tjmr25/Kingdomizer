@@ -65,7 +65,7 @@ export const contentStyles = css`
   }
 
   button:hover {
-    background-color: var(--color-lighter-bluegrey);
+  /* background-color: var(--color-lighter-bluegrey); */
   }
 
   button:active {
@@ -120,6 +120,7 @@ export const contentStyles = css`
     width: 100%;
     cursor: pointer;
     font-size: 0.875rem;
+    color: var(--color-dark);
   }
 
   /* ===== Panels ===== */

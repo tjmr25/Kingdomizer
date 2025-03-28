@@ -19,6 +19,10 @@ export const appStyles = css`
       --color-lighter-bluegrey: #92a6b5;
       --color-very-light-bluegrey: #f5f8fb;
       --color-very-light-bluegrey-border: #e0e6ec;
+
+      --color-trait-purple: #e5d5f0;
+      --color-trait-darker-purple: #a095a8;
+
       --color-grey: #8a8583;
       --color-gold: #cfa959;
     }

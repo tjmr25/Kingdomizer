@@ -623,21 +623,21 @@ INSERT INTO resources (resource_id, resource_name, resource_category, expansion,
 INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40041, 'Kostbarkeiten', 'EXTRA_CARD', 'PLUNDER', null, false, null);
     
     -- TRAITS
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40042, 'Aufdringlich', 'TRAIT', 'PLUNDER', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40043, 'Benachbart', 'TRAIT', 'PLUNDER', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40044, 'Billig', 'TRAIT', 'PLUNDER', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40045, 'Eilig', 'TRAIT', 'PLUNDER', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40046, 'Freundlich', 'TRAIT', 'PLUNDER', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40047, 'Fromm', 'TRAIT', 'PLUNDER', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40048, 'Geduldig', 'TRAIT', 'PLUNDER', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40049, 'Geerbt', 'TRAIT', 'PLUNDER', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40050, 'Inspirierend', 'TRAIT', 'PLUNDER', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40051, 'Reich', 'TRAIT', 'PLUNDER', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40052, 'Scheu', 'TRAIT', 'PLUNDER', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40053, 'Unermüdlich', 'TRAIT', 'PLUNDER', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40054, 'Verflucht', 'TRAIT', 'PLUNDER', null, null, true); -- (!)Fluch
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40055, 'Vorherbestimmt', 'TRAIT', 'PLUNDER', null, null, false);
-    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40056, 'Waghalsig', 'TRAIT', 'PLUNDER', null, null, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40042, 'Aufdringlich', 'TRAIT', 'PLUNDER', null, true, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40043, 'Benachbart', 'TRAIT', 'PLUNDER', null, true, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40044, 'Billig', 'TRAIT', 'PLUNDER', null, true, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40045, 'Eilig', 'TRAIT', 'PLUNDER', null, true, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40046, 'Freundlich', 'TRAIT', 'PLUNDER', null, true, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40047, 'Fromm', 'TRAIT', 'PLUNDER', null, true, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40048, 'Geduldig', 'TRAIT', 'PLUNDER', null, true, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40049, 'Geerbt', 'TRAIT', 'PLUNDER', null, true, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40050, 'Inspirierend', 'TRAIT', 'PLUNDER', null, true, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40051, 'Reich', 'TRAIT', 'PLUNDER', null, true, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40052, 'Scheu', 'TRAIT', 'PLUNDER', null, true, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40053, 'Unermüdlich', 'TRAIT', 'PLUNDER', null, true, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40054, 'Verflucht', 'TRAIT', 'PLUNDER', null, true, true); -- (!)Fluch
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40055, 'Vorherbestimmt', 'TRAIT', 'PLUNDER', null, true, false);
+    INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40056, 'Waghalsig', 'TRAIT', 'PLUNDER', null, true, false);
     
     -- EVENTS
     INSERT INTO resources (resource_id, resource_name, resource_category, expansion, cost, has_landscape_orientation, is_linked) VALUES (40057, 'Vergraben', 'EVENT', 'PLUNDER', 1, true, false);

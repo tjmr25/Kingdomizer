@@ -103,6 +103,13 @@ export class Content extends LitElement {
         }
         
         const data = await response.json();
+        
+        // Update landscape count first (won't cause kingdom refreshes)
+        if (this.landscapeCount !== data.landscape?.length) {
+          this.landscapeCount = data.landscape?.length || 0;
+        }
+        
+        // Set both IDs at once to avoid multiple renders
         this.kingdomCardIds = data.kingdomCardIds;
         this.landscapeCardIds = data.landscape || [];
 

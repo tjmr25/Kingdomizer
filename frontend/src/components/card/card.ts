@@ -52,14 +52,12 @@ const expansionTranslations: Record<string, string> = {
  */
 const resourceCategoryTranslations: Record<string, string> = {
     EVENT: "Ereignis",
-    TRAIT: "Eigenschaft",
+    TRAIT: "Merkmal",
     WAY: "Weg",
     PROJECT: "Projekt",
     ALLY: "Verbündeter",
     LANDMARK: "Landmarke",
-    BOON: "Segen",
-    FATE: "Schicksal",
-    STATE: "Status"
+    BOON: "Segen"
 };
 
 /**
@@ -86,6 +84,12 @@ export class Card extends LitElement {
     /** Whether the card has landscape orientation */
     @property({ type: Boolean }) hasLandscapeOrientation: boolean = false;
     
+    /** The trait assigned to this card (if any) */
+    @property() assignedTrait: string = '';
+    
+    /** For traits: the name of the connected kingdom card */
+    @property() connectedCardName: string = '';
+    
     static styles = cardStyles;
 
     /**
@@ -108,20 +112,29 @@ export class Card extends LitElement {
                                      this.resourceCategory && 
                                      this.resourceCategory !== 'GAMEPART';
         const localizedResourceCategory = resourceCategoryTranslations[this.resourceCategory] || this.resourceCategory;
+        const hasTrait = !!this.assignedTrait;
+        const isTrait = this.resourceCategory === 'TRAIT';
+        const showConnectedCard = isTrait && this.connectedCardName;
 
         return html`
-          <div class="card ${showResourceCategory ? 'landscape' : ''}">
+          <div class="card ${showResourceCategory ? 'landscape' : ''} ${hasTrait ? 'has-trait' : ''}" 
+               resourcecategory="${this.resourceCategory}"
+               title="${hasTrait ? `Merkmal: ${this.assignedTrait}` : ''}">
             ${showResourceCategory ? html`
                 <div class="resource-type-vertical">${localizedResourceCategory}</div>
             ` : null}
             
             <div class="card-content">
               <div class="card-name">
-                  <span class="card-title">${this.name}</span>
+                  <span class="card-title ${hasTrait ? 'has-trait' : ''}">${this.name}</span>
               </div>
               <div class="card-expansion">${localizedExpansion}</div>
               
-              ${this.cost !== null && this.cost >= 0 ? html`
+              ${showConnectedCard ? html`
+                  <div class="connected-card">
+                    ${this.connectedCardName}
+                  </div>
+              ` : this.cost !== null && this.cost >= 0 ? html`
                   <div class="cost-circle">
                       ${this.cost}
                   </div>

@@ -93,16 +93,27 @@ public class FilterService {
     /**
      * Retrieves all landscape cards from the database based on selected expansions.
      * Only returns cards with landscape orientation that are NOT in the GAMEPART category.
-     * These cards form the complete pool of potential landscape cards.
+     * Also includes all TRAIT resources from the selected expansions.
      *
      * @param selectedExpansions List of expansions to include in the retrieval
      * @return Complete list of landscape cards from the selected expansions
      */
     private List<Resource> retrieveAllLandscapeCardsByExpansions(List<Expansion> selectedExpansions) {
-        return resourceRepository.findByExpansionInAndHasLandscapeOrientationAndResourceCategoryNot(
+        // Get landscape-oriented resources that aren't GAMEPART
+        List<Resource> landscapeCards = resourceRepository.findByExpansionInAndHasLandscapeOrientationAndResourceCategoryNot(
             selectedExpansions, 
             true, 
             ResourceCategory.GAMEPART
         );
+        
+        // Also get all TRAIT resources regardless of orientation
+        List<Resource> traitResources = resourceRepository.findByExpansionInAndResourceCategory(
+            selectedExpansions,
+            ResourceCategory.TRAIT
+        );
+        
+        // Combine both lists
+        landscapeCards.addAll(traitResources);
+        return landscapeCards;
     }
 } 
