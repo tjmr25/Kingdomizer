@@ -73,6 +73,9 @@ export class Content extends LitElement {
         landmarks: false
     }
 
+    @property({ type: Boolean })
+    isLoading: boolean = false;
+
     static styles = contentStyles;
 
     /**
@@ -81,6 +84,9 @@ export class Content extends LitElement {
      */
     async generateNewKingdom(): Promise<void> {
       try {
+        // Set loading state to true
+        this.isLoading = true;
+        
         // Create the comprehensive filter object
         const filter: KingdomFilter = {
           expansions: this.expansionSelections,
@@ -104,17 +110,19 @@ export class Content extends LitElement {
         
         const data = await response.json();
         
-        // Update landscape count first (won't cause kingdom refreshes)
-        if (this.landscapeCount !== data.landscape?.length) {
-          this.landscapeCount = data.landscape?.length || 0;
-        }
+        // Add artificial delay
+        await new Promise(resolve => setTimeout(resolve, 800));
         
-        // Set both IDs at once to avoid multiple renders
+        // Set the new kingdom data all at once
         this.kingdomCardIds = data.kingdomCardIds;
         this.landscapeCardIds = data.landscape || [];
+        
+        // Set loading state to false
+        this.isLoading = false;
 
       } catch (error) {
         console.error("Error generating kingdom:", error);
+        this.isLoading = false;
       }
     }
 
@@ -227,7 +235,9 @@ export class Content extends LitElement {
 
             <div class="button-container">
               <div class="left-buttons">
-                <button @click="${this.generateNewKingdom}">Neues Königreich</button>
+                <button @click="${this.generateNewKingdom}" ?disabled="${this.isLoading}">
+                  Neues Königreich
+                </button>
               </div>
               <div class="right-buttons">
                 <button class="filter-button" @click="${this.toggleFilterOptionsPanel}">
@@ -443,6 +453,7 @@ export class Content extends LitElement {
               .kingdomCardIds="${this.kingdomCardIds}"
               .landscapeCardIds="${this.landscapeCardIds}"
               .landscapeCount="${this.landscapeCount}"
+              .isLoading="${this.isLoading}"
             ></app-kingdom>
           </div>
           

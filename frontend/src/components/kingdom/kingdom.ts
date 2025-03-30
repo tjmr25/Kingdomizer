@@ -35,17 +35,12 @@ export class Kingdom extends LitElement {
   
   @property({ type: Boolean })
   hasShownKingdom: boolean = false; // Tracks if kingdom has been displayed before
-  
+
   @property({ type: Boolean })
-  showLoadingAnimation: boolean = false; // Controls loading animation visibility
+  hasShownGameMaterials: boolean = false; // Tracks if game materials have been displayed before
   
-  @property({ type: Boolean })
-  showWhiteTransition: boolean = false; // Controls white transition between loading and cards
-  
-  // Persistently store trait assignments
-  private kingdomToTrait = new Map<number, string>();
-  private traitToKingdom = new Map<number, string>();
-  private hasAssignedTraits = false;
+  @property({ type: Number })
+  previousGameMaterialsCount: number = 0; // Tracks the number of game materials in the previous kingdom
  
   static styles = kingdomStyles;
 
@@ -55,25 +50,23 @@ export class Kingdom extends LitElement {
   updated(changedProperties: Map<string | number | symbol, unknown>) {
     // Fetch card details when IDs change
     if (changedProperties.has('kingdomCardIds') || changedProperties.has('landscapeCardIds')) {
-      // Reset trait assignments when kingdom changes
-      this.hasAssignedTraits = false;
-      this.kingdomToTrait.clear();
-      this.traitToKingdom.clear();
-      
-      // Only show loading animation if we've already shown a kingdom before
-      if (this.hasShownKingdom) {
-        this.showLoadingAnimation = true;
-        // Don't clear kingdomDetails to avoid flash of empty state
-        this.fetchKingdomDetails();
-      } else {
-        // For first load, just fetch the data without animation
-        this.fetchKingdomDetails();
-      }
+      this.fetchKingdomDetails();
     }
     
     // Mark that we've shown a kingdom once cards are loaded
     if (this.kingdomDetails && this.kingdomDetails.cards && this.kingdomDetails.cards.length > 0) {
       this.hasShownKingdom = true;
+    }
+
+    // Track game materials display and count
+    if (this.kingdomDetails && this.kingdomDetails.dependencies) {
+      const gameMaterials = this.kingdomDetails.dependencies.filter(dep => 
+        ['KINGDOM_CARD', 'EXTRA_CARD', 'GAMEPART'].includes(dep.resourceCategory));
+      
+      if (gameMaterials.length > 0) {
+        this.hasShownGameMaterials = true;
+        this.previousGameMaterialsCount = gameMaterials.length;
+      }
     }
   }
 
@@ -117,69 +110,12 @@ export class Kingdom extends LitElement {
         throw new Error('API returned invalid data format');
       }
       
-      // If we're showing loading animation, handle transitions
-      if (this.showLoadingAnimation) {
-        // Show loading cards for exactly 800ms
-        setTimeout(() => {
-          // Switch to white transition
-          this.performBatchUpdate(() => {
-            this.showLoadingAnimation = false;
-            this.showWhiteTransition = true;
-          });
-          
-          // Show white cards for exactly 150ms
-          setTimeout(() => {
-            // Switch to actual cards
-            this.performBatchUpdate(() => {
-              this.kingdomDetails = data;
-              this.isLoading = false;
-              this.showWhiteTransition = false;
-            });
-          }, 150); // White cards visible duration
-        }, 800); // Show loading cards duration
-      } else if (!this.hasShownKingdom) {
-        // For first kingdom generation, show white transition after placeholders
-        this.performBatchUpdate(() => {
-          this.showWhiteTransition = true;
-        });
-        
-        // Show white cards for exactly 150ms
-        setTimeout(() => {
-          // Switch to actual cards
-          this.performBatchUpdate(() => {
-            this.kingdomDetails = data;
-            this.isLoading = false;
-            this.showWhiteTransition = false;
-          });
-        }, 150); // White cards visible duration
-      } else {
-        this.kingdomDetails = data;
-        this.isLoading = false;
-      }
+      this.kingdomDetails = data;
+      this.isLoading = false;
     } catch (error) {
       console.error('Error fetching kingdom cards:', error);
-      this.performBatchUpdate(() => {
-        this.isLoading = false;
-        this.showLoadingAnimation = false;
-        this.showWhiteTransition = false;
-      });
+      this.isLoading = false;
     }
-  }
-  
-  /**
-   * Helper method to perform batched property updates
-   * This ensures all property changes happen in a single update
-   * to prevent any transition effects between updates
-   */
-  private performBatchUpdate(updateFn: () => void) {
-    // Disable automatic property reflection temporarily
-    this.hasUpdated = false;
-    
-    // Perform all updates
-    updateFn();
-    
-    // Force a single update
-    this.requestUpdate();
   }
 
   /**
@@ -212,38 +148,29 @@ export class Kingdom extends LitElement {
   /**
    * Maps traits to randomly selected kingdom cards
    * For each trait, assigns it to a random kingdom card
-   * Only assigns traits once per kingdom to keep assignments stable
+   * Returns a map of card IDs to their assigned trait names
    */
   private assignTraitsToKingdomCards() {
-    // If we've already assigned traits for this kingdom, return the existing maps
-    if (this.hasAssignedTraits) {
-      return {
-        kingdomToTrait: this.kingdomToTrait,
-        traitToKingdom: this.traitToKingdom
-      };
-    }
-    
     const traitCards = this.filterTraitCards();
     const kingdomCards = this.kingdomDetails?.cards || [];
     
-    // If we have no traits or no kingdom cards, return empty maps
+    // If we have no traits or no kingdom cards, return empty map
     if (traitCards.length === 0 || kingdomCards.length === 0) {
       return {
-        kingdomToTrait: this.kingdomToTrait,
-        traitToKingdom: this.traitToKingdom
+        kingdomToTrait: new Map<number, string>(),
+        traitToKingdom: new Map<number, string>()
       };
     }
     
-    // Clear existing assignments
-    this.kingdomToTrait.clear();
-    this.traitToKingdom.clear();
+    const kingdomToTrait = new Map<number, string>();
+    const traitToKingdom = new Map<number, string>();
     
     // For each trait, randomly select a kingdom card
     traitCards.forEach(trait => {
       // Get available kingdom cards (those that don't already have a trait)
       const availableCardIndices = kingdomCards
         .map((card, index) => index)
-        .filter(index => !this.kingdomToTrait.has(kingdomCards[index].id));
+        .filter(index => !kingdomToTrait.has(kingdomCards[index].id));
       
       // If no cards are available, we can't assign this trait
       if (availableCardIndices.length === 0) {
@@ -256,25 +183,21 @@ export class Kingdom extends LitElement {
       const selectedCard = kingdomCards[selectedCardIndex];
       
       // Assign the trait to the card
-      this.kingdomToTrait.set(selectedCard.id, trait.name);
-      this.traitToKingdom.set(trait.id, selectedCard.name);
+      kingdomToTrait.set(selectedCard.id, trait.name);
+      traitToKingdom.set(trait.id, selectedCard.name);
     });
     
-    // Mark that we've assigned traits for this kingdom
-    this.hasAssignedTraits = true;
-    
-    return {
-      kingdomToTrait: this.kingdomToTrait,
-      traitToKingdom: this.traitToKingdom
-    };
+    return { kingdomToTrait, traitToKingdom };
   }
 
   /**
    * Determines whether to show placeholders instead of actual cards
    */
   private shouldShowPlaceholders() {
-    // Only show placeholders if we've never shown a kingdom before and not in white transition
-    return !this.hasShownKingdom && !this.showWhiteTransition && !this.kingdomDetails;
+    // Show placeholders if we've never shown a kingdom before or if we are loading
+    return (!this.hasShownKingdom && !this.kingdomDetails) || 
+           (!this.hasShownKingdom && (!this.kingdomCardIds || this.kingdomCardIds.length === 0)) ||
+           this.isLoading;
   }
 
   /**
@@ -283,30 +206,6 @@ export class Kingdom extends LitElement {
   private shouldShowLandscapePlaceholders() {
     return this.shouldShowPlaceholders() && this.landscapeCount > 0;
   }
-  
-  /**
-   * Creates loading cards that display a pulsing "K"
-   * @param count Number of loading cards to create
-   * @param isLandscape Whether the cards should use landscape styling
-   */
-  private createLoadingCards(count: number, isLandscape: boolean = false) {
-    return Array(count).fill(null).map(() => html`
-      <div class="loading-card ${isLandscape ? 'landscape-card' : ''}">
-        <div class="loading-letter">K</div>
-      </div>
-    `);
-  }
-  
-  /**
-   * Creates white transition cards to show between loading and actual cards
-   * @param count Number of white cards to create
-   * @param isLandscape Whether the cards should use landscape styling
-   */
-  private createWhiteCards(count: number, isLandscape: boolean = false) {
-    return Array(count).fill(null).map(() => html`
-      <div class="white-card ${isLandscape ? 'landscape-card' : ''}"></div>
-    `);
-  }
 
   render() {
     // Determine what sections to show
@@ -314,7 +213,7 @@ export class Kingdom extends LitElement {
     const showLandscapePlaceholders = this.shouldShowLandscapePlaceholders();
     
     // Only process if we have details
-    const hasDetails = !!this.kingdomDetails;
+    const hasDetails = !!this.kingdomDetails && !this.isLoading;
     
     // Only process these if we actually have details
     const gameMaterials = hasDetails ? this.filterGameMaterials() : [];
@@ -323,43 +222,40 @@ export class Kingdom extends LitElement {
     const showLandscapeSection = showLandscapePlaceholders || hasLandscapeCards;
     const showGameMaterialSection = hasDetails && gameMaterials.length > 0;
     
-    // Assign traits to kingdom cards (only done once per kingdom)
-    const { kingdomToTrait, traitToKingdom } = hasDetails ? this.assignTraitsToKingdomCards() : { 
-      kingdomToTrait: this.kingdomToTrait,
-      traitToKingdom: this.traitToKingdom 
-    };
+    // Assign traits to kingdom cards
+    const { kingdomToTrait, traitToKingdom } = hasDetails ? this.assignTraitsToKingdomCards() : { kingdomToTrait: new Map(), traitToKingdom: new Map() };
 
-    // Create 10 kingdom card placeholders for initial loading state
+    // Create 10 kingdom card placeholders with loading animation
     const kingdomPlaceholders = Array(10).fill(null).map(() => html`
-      <div class="card-placeholder"></div>
+      <div class="card-placeholder ${this.isLoading ? 'loading' : ''}">
+        ${this.isLoading ? html`<div class="card-loading-spinner"></div>` : ''}
+      </div>
     `);
 
-    // Create landscape card placeholders, amount depends on landscapeCount
+    // Create landscape card placeholders with loading animation
     const landscapePlaceholders = Array(this.landscapeCount).fill(null).map(() => html`
-      <div class="card-placeholder landscape-card"></div>
+      <div class="card-placeholder landscape-card ${this.isLoading ? 'loading' : ''}">
+        ${this.isLoading ? html`<div class="card-loading-spinner"></div>` : ''}
+      </div>
     `);
 
     return html`
       <!-- Main Kingdom Cards (10 supply piles) -->
       <div class="main-kingdom">
-        ${this.showLoadingAnimation 
-          ? this.createLoadingCards(10)
-          : this.showWhiteTransition
-            ? this.createWhiteCards(10)
-            : showPlaceholders 
-              ? kingdomPlaceholders
-              : html`
-                  ${this.kingdomDetails?.cards.map(
-                    (card: CardResponse) => html`
-                    <app-card 
-                      .name="${card.name}" 
-                      .cost="${card.cost}" 
-                      .cardTypes="${card.cardTypes}" 
-                      .expansion="${card.expansion}"
-                      .assignedTrait="${kingdomToTrait.get(card.id) || ''}">
-                    </app-card>`
-                  )}
-                `
+        ${showPlaceholders 
+          ? kingdomPlaceholders
+          : html`
+              ${this.kingdomDetails?.cards.map(
+                (card: CardResponse) => html`
+                <app-card 
+                  .name="${card.name}" 
+                  .cost="${card.cost}" 
+                  .cardTypes="${card.cardTypes}" 
+                  .expansion="${card.expansion}"
+                  .assignedTrait="${kingdomToTrait.get(card.id) || ''}">
+                </app-card>`
+              )}
+            `
         }
       </div>
 
@@ -368,27 +264,23 @@ export class Kingdom extends LitElement {
         <h3>Prophezeiungen, Landmarken, Projekte, Ereignisse & Wege</h3>
         
         <div class="extra-cards">
-          ${this.showLoadingAnimation && landscapeCards.length > 0
-            ? this.createLoadingCards(landscapeCards.length, true)
-            : this.showWhiteTransition && landscapeCards.length > 0
-              ? this.createWhiteCards(landscapeCards.length, true)
-              : showLandscapePlaceholders 
-                ? landscapePlaceholders
-                : html`
-                    ${landscapeCards.map(
-                      (card: DependencyResponse) => html`
-                      <app-card 
-                        class="${card.hasLandscapeOrientation ? 'landscape-card' : ''}"
-                        .name="${card.name}" 
-                        .cost="${card.cost}" 
-                        .cardTypes="${card.cardTypes}" 
-                        .expansion="${card.expansion}"
-                        .resourceCategory="${card.resourceCategory}"
-                        .hasLandscapeOrientation="${card.hasLandscapeOrientation}"
-                        .connectedCardName="${card.resourceCategory === 'TRAIT' ? traitToKingdom.get(card.id) || '' : ''}">
-                      </app-card>`
-                    )}
-                  `
+          ${showLandscapePlaceholders 
+            ? landscapePlaceholders
+            : html`
+                ${landscapeCards.map(
+                  (card: DependencyResponse) => html`
+                  <app-card 
+                    class="${card.hasLandscapeOrientation ? 'landscape-card' : ''}"
+                    .name="${card.name}" 
+                    .cost="${card.cost}" 
+                    .cardTypes="${card.cardTypes}" 
+                    .expansion="${card.expansion}"
+                    .resourceCategory="${card.resourceCategory}"
+                    .hasLandscapeOrientation="${card.hasLandscapeOrientation}"
+                    .connectedCardName="${card.resourceCategory === 'TRAIT' ? traitToKingdom.get(card.id) || '' : ''}">
+                  </app-card>`
+                )}
+              `
           }
         </div>
       ` : null}
@@ -397,25 +289,28 @@ export class Kingdom extends LitElement {
       ${showGameMaterialSection ? html`
         <h3>Zusatzkarten & Spielmaterial</h3>
         <div class="extra-cards">
-          ${this.showLoadingAnimation
-            ? this.createLoadingCards(gameMaterials.length, gameMaterials.some(card => card.hasLandscapeOrientation))
-            : this.showWhiteTransition
-              ? this.createWhiteCards(gameMaterials.length, gameMaterials.some(card => card.hasLandscapeOrientation))
-              : html`
-                  ${gameMaterials.map(
-                    (card: DependencyResponse) => html`
-                    <app-card 
-                      class="${card.hasLandscapeOrientation ? 'landscape-card' : ''}"
-                      .name="${card.name}" 
-                      .cost="${card.cost}" 
-                      .cardTypes="${card.cardTypes}" 
-                      .expansion="${card.expansion}"
-                      .resourceCategory="${card.resourceCategory}"
-                      .hasLandscapeOrientation="${card.hasLandscapeOrientation}">
-                    </app-card>`
-                  )}
-                `
-          }
+          ${gameMaterials.map(
+            (card: DependencyResponse) => html`
+            <app-card 
+              class="${card.hasLandscapeOrientation ? 'landscape-card' : ''}"
+              .name="${card.name}" 
+              .cost="${card.cost}" 
+              .cardTypes="${card.cardTypes}" 
+              .expansion="${card.expansion}"
+              .resourceCategory="${card.resourceCategory}"
+              .hasLandscapeOrientation="${card.hasLandscapeOrientation}">
+            </app-card>`
+          )}
+        </div>
+      ` : this.hasShownGameMaterials && this.isLoading ? html`
+        <h3>Zusatzkarten & Spielmaterial</h3>
+        <div class="extra-cards gamepart-placeholders">
+          <!-- Show placeholders for game materials only when loading AND they have been shown before -->
+          ${Array(Math.max(1, this.previousGameMaterialsCount)).fill(null).map(() => html`
+            <div class="card-placeholder loading">
+              <div class="card-loading-spinner"></div>
+            </div>
+          `)}
         </div>
       ` : null}
     `;

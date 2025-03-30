@@ -126,7 +126,7 @@ export class Card extends LitElement {
             
             <div class="card-content">
               <div class="card-name">
-                  <span class="card-title ${hasTrait ? 'has-trait' : ''}">${this.name}</span>
+                  <span class="card-title">${this.name}</span>
               </div>
               <div class="card-expansion">${localizedExpansion}</div>
               

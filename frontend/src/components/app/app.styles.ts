@@ -23,7 +23,6 @@ export const appStyles = css`
       --color-trait-purple: #e5d5f0;
       --color-trait-darker-purple: #a095a8;
 
-      --color-grey: #8a8583;
       --color-gold: #cfa959;
     }
 

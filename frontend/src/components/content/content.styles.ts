@@ -61,11 +61,7 @@ export const contentStyles = css`
     font-size: 1rem;
     font-weight: bold;
     cursor: pointer;
-    transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out;
-  }
-
-  button:hover {
-  /* background-color: var(--color-lighter-bluegrey); */
+    transition: transform 0.2s ease-in-out;
   }
 
   button:active {
@@ -383,5 +379,30 @@ export const contentStyles = css`
     width: 1.25rem;
     height: 1.25rem;
     margin-left: 0.5rem;
+  }
+
+  /* ===== Loading Spinner ===== */
+  @keyframes spinner-rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  .spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spinner-rotate 1s linear infinite;
+    margin: 0 auto;
+  }
+
+  button:disabled {
+    background-color: var(--color-lighter-bluegrey);
+    cursor: not-allowed;
   }
 `;
