@@ -41,7 +41,11 @@ export class Kingdom extends LitElement {
   
   @property({ type: Number })
   previousGameMaterialsCount: number = 0; // Tracks the number of game materials in the previous kingdom
- 
+  
+  // Store trait assignments
+  private kingdomToTraitMap: Map<number, string> = new Map();
+  private traitToKingdomMap: Map<number, string> = new Map();
+
   static styles = kingdomStyles;
 
   /**
@@ -55,6 +59,13 @@ export class Kingdom extends LitElement {
     
     // Mark that we've shown a kingdom once cards are loaded
     if (this.kingdomDetails && this.kingdomDetails.cards && this.kingdomDetails.cards.length > 0) {
+      // Only assign traits when new kingdom data is loaded
+      if (changedProperties.has('kingdomDetails')) {
+        const { kingdomToTrait, traitToKingdom } = this.assignTraitsToKingdomCards();
+        this.kingdomToTraitMap = kingdomToTrait;
+        this.traitToKingdomMap = traitToKingdom;
+      }
+      
       this.hasShownKingdom = true;
     }
 
@@ -112,10 +123,59 @@ export class Kingdom extends LitElement {
       
       this.kingdomDetails = data;
       this.isLoading = false;
+      
+      // Display card flag statistics after successful API call
+      // Use setTimeout to make it asynchronous
+      setTimeout(() => this.displayCardFlagStatistics(), 0);
     } catch (error) {
       console.error('Error fetching kingdom cards:', error);
       this.isLoading = false;
     }
+  }
+
+  /**
+   * Counts and displays card flag statistics in an alert
+   */
+  private displayCardFlagStatistics() {
+    if (!this.kingdomDetails || !this.kingdomDetails.cards || this.kingdomDetails.cards.length === 0) {
+      return;
+    }
+    
+    // Initialize counters for each flag
+    let plusActionCount = 0;
+    let plusMultipleActionsCount = 0;
+    let plusBuyCount = 0;
+    let plusMultipleDrawsCount = 0;
+    let trashCount = 0;
+    let curseCount = 0;
+    let attackCount = 0;
+    
+    // Count cards with each flag
+    this.kingdomDetails.cards.forEach(card => {
+      if (card.hasPlusAction) plusActionCount++;
+      if (card.hasPlusMultipleActions) plusMultipleActionsCount++;
+      if (card.hasPlusBuy) plusBuyCount++;
+      if (card.hasPlusMultipleDraws) plusMultipleDrawsCount++;
+      if (card.hasTrash) trashCount++;
+      if (card.hasCurse) curseCount++;
+      
+      // Check for Attack card type
+      if (card.cardTypes && card.cardTypes.includes('ATTACK')) attackCount++;
+    });
+    
+    // Create alert message
+    const message = `
++1 Aktion: ${plusActionCount}
++X Aktionen: ${plusMultipleActionsCount}
++1 Kauf: ${plusBuyCount}
++X Karten: ${plusMultipleDrawsCount}
+Entsorgen: ${trashCount}
+Flüche: ${curseCount}
+Angriffe: ${attackCount}
+    `.trim();
+    
+    // Display alert
+    setTimeout(() => alert(message), 10);
   }
 
   /**
@@ -222,9 +282,6 @@ export class Kingdom extends LitElement {
     const showLandscapeSection = showLandscapePlaceholders || hasLandscapeCards;
     const showGameMaterialSection = hasDetails && gameMaterials.length > 0;
     
-    // Assign traits to kingdom cards
-    const { kingdomToTrait, traitToKingdom } = hasDetails ? this.assignTraitsToKingdomCards() : { kingdomToTrait: new Map(), traitToKingdom: new Map() };
-
     // Create 10 kingdom card placeholders with loading animation
     const kingdomPlaceholders = Array(10).fill(null).map(() => html`
       <div class="card-placeholder ${this.isLoading ? 'loading' : ''}">
@@ -252,7 +309,7 @@ export class Kingdom extends LitElement {
                   .cost="${card.cost}" 
                   .cardTypes="${card.cardTypes}" 
                   .expansion="${card.expansion}"
-                  .assignedTrait="${kingdomToTrait.get(card.id) || ''}">
+                  .assignedTrait="${this.kingdomToTraitMap.get(card.id) || ''}">
                 </app-card>`
               )}
             `
@@ -277,7 +334,7 @@ export class Kingdom extends LitElement {
                     .expansion="${card.expansion}"
                     .resourceCategory="${card.resourceCategory}"
                     .hasLandscapeOrientation="${card.hasLandscapeOrientation}"
-                    .connectedCardName="${card.resourceCategory === 'TRAIT' ? traitToKingdom.get(card.id) || '' : ''}">
+                    .connectedCardName="${card.resourceCategory === 'TRAIT' ? this.traitToKingdomMap.get(card.id) || '' : ''}">
                   </app-card>`
                 )}
               `

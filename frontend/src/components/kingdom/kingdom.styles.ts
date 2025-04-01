@@ -44,10 +44,10 @@ export const kingdomStyles = css`
 
     /* ===== Placeholder Styles ===== */
     .card-placeholder {
-          background-color: white;
+          background-color: var(--color-light);
           border: 1px solid var(--color-lighter);
           border-radius: 0.5rem;
-          box-shadow: inset 0 0 8px var(--color-lighter-bluegrey, rgba(0, 0, 0, 0.3));
+          box-shadow: inset 0 0 8px rgba(51, 51, 51, 0.5);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -56,27 +56,6 @@ export const kingdomStyles = css`
           text-transform: uppercase;
           box-sizing: border-box;
           position: relative;
-    }
-
-    .card-placeholder::before {
-          content: "♚";
-          font-size: 3rem;
-          font-weight: normal;
-          color: var(--color-main-bluegrey, #6d8ca0);
-          text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8), 0 -1px 1px rgba(0, 0, 0, 0.2);
-          opacity: 0.15;
-    }
-    
-    .card-placeholder.landscape-card::before {
-          content: "⛨"; 
-          font-size: 2.25rem;
-          color: var(--color-main-bluegrey, #6d8ca0);
-          text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8), 0 -1px 1px rgba(0, 0, 0, 0.2);
-          opacity: 0.15;
-    }
-
-    .card-placeholder.loading::before {
-          display: none;
     }
 
     .card-placeholder.landscape-card {
@@ -96,19 +75,13 @@ export const kingdomStyles = css`
         100% { transform: rotate(360deg); }
     }
     
-    .card-placeholder.loading {
-        position: relative;
-        background-color: white;
-    }
-    
     .card-loading-spinner {
         width: 24px;
         height: 24px;
         border: 3px solid var(--color-lighter-bluegrey, #e0e6ec);
         border-radius: 50%;
-        border-top: 3px solid var(--color-main-bluegrey, #6d8ca0);
+        border-top: 3px solid var(--color-dark);
         animation: spin 1s linear infinite;
-
     }
 
     /* ===== Game Materials Placeholders ===== */
@@ -116,11 +89,5 @@ export const kingdomStyles = css`
         grid-column: span 4;
     }
     
-    .gamepart-placeholders .card-placeholder::before {
-        content: "⛨";  /* Shield symbol, same as landscape cards */
-        font-size: 2.25rem;
-        color: var(--color-main-bluegrey, #6d8ca0);
-        text-shadow: 0 1px 1px rgba(255, 255, 255, 0.8), 0 -1px 1px rgba(0, 0, 0, 0.2);
-        opacity: 0.8;
-    }
+
 `;
