@@ -34,7 +34,13 @@ public class DTOMapper {
                     resource.getName(),
                     resource.getExpansion(),
                     resource.getCost(),
-                    resource.getCardTypes().stream().map(Enum::toString).toList()
+                    resource.getCardTypes().stream().map(Enum::toString).toList(),
+                    resource.getCardProperties() != null ? resource.getCardProperties().getHasPlusAction() : null,
+                    resource.getCardProperties() != null ? resource.getCardProperties().getHasPlusMultipleActions() : null,
+                    resource.getCardProperties() != null ? resource.getCardProperties().getHasPlusBuy() : null,
+                    resource.getCardProperties() != null ? resource.getCardProperties().getHasPlusMultipleDraws() : null,
+                    resource.getCardProperties() != null ? resource.getCardProperties().getHasTrash() : null,
+                    resource.getCardProperties() != null ? resource.getCardProperties().getHasCurse() : null
                 ))
                 .sorted(Comparator.comparing(CardDTO::getExpansion, Comparator.nullsLast(Comparator.naturalOrder()))
                         .thenComparing(CardDTO::getCost, Comparator.nullsLast(Comparator.naturalOrder()))
