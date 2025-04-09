@@ -16,6 +16,8 @@ import java.util.stream.Collectors;
  */
 @Service
 public class DTOMapper {
+ 
+    /** +++++++++++*******   PUBLIC METHODS    +++++++++++++++++++++++++++++++++++++++ */
     
     /**
      * Converts a list of Resources to CardDTOs and sorts them by expansion, cost, and name.

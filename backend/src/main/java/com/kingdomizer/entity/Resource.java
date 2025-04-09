@@ -42,7 +42,7 @@ public class Resource {
     @Column(name = "card_type")
     private Set<CardType> cardTypes;
 
-    @OneToOne(mappedBy = "resource", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "resource", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private CardProperties cardProperties;
 
     // Getter und Setter

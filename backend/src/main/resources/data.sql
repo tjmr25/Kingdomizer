@@ -700,7 +700,7 @@ INSERT INTO card_properties (resource_id, has_plus_action, has_plus_multiple_act
 INSERT INTO card_properties (resource_id, has_plus_action, has_plus_multiple_actions, has_plus_buy, has_plus_multiple_draws, has_trash, has_curse) VALUES (40040, false, false, false, false, false, false);
 
     -- Zusätzliche Karten mit Flüchen
-    INSERT INTO card_properties (resource_id, has_plus_action, has_plus_multiple_actions, has_plus_buy, has_plus_multiple_draws, has_trash, has_curse) VALUES (40045, null, null, null, null, null, true); -- Merkmal "Verflucht"
+    INSERT INTO card_properties (resource_id, has_plus_action, has_plus_multiple_actions, has_plus_buy, has_plus_multiple_draws, has_trash, has_curse) VALUES (40054, null, null, null, null, null, true); -- Merkmal "Verflucht"
 
 -- Tabelle: CARD_TYPES
 INSERT INTO card_types (resource_id, card_type) VALUES (40001, 'ACTION');

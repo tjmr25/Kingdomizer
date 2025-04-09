@@ -66,11 +66,11 @@ export class Content extends LitElement {
     // Card type exclusion options
     @property({ type: Object }) cardTypeExclusions: CardTypeExclusions = {
         curses: false,
-        victoryTokens: false,
+        tokens: false,
         tableaus: false,
         treasures: false,
         events: false,
-        landmarks: false
+        traits: false
     }
 
     @property({ type: Boolean })
@@ -329,11 +329,11 @@ export class Content extends LitElement {
                   <input 
                     type="checkbox" 
                     class="checkbox" 
-                    id="excludeVictoryTokens" 
-                    ?checked="${this.cardTypeExclusions.victoryTokens}"
-                    @change="${(e: Event) => this.updateCardTypeExclusion('victoryTokens', (e.target as HTMLInputElement).checked)}"
+                    id="excludeTokens" 
+                    ?checked="${this.cardTypeExclusions.tokens}"
+                    @change="${(e: Event) => this.updateCardTypeExclusion('tokens', (e.target as HTMLInputElement).checked)}"
                   />
-                  <label for="excludeVictoryTokens" class="filter-option-label">Marker</label>
+                  <label for="excludeTokens" class="filter-option-label">Marker</label>
                 </li>
                 ` : ''}
                 ${this.hasFeature('TABLEAUS') ? html`
@@ -383,11 +383,11 @@ export class Content extends LitElement {
                   <input 
                     type="checkbox" 
                     class="checkbox" 
-                    id="excludeLandmarks" 
-                    ?checked="${this.cardTypeExclusions.landmarks}"
-                    @change="${(e: Event) => this.updateCardTypeExclusion('landmarks', (e.target as HTMLInputElement).checked)}"
+                    id="excludeTraits" 
+                    ?checked="${this.cardTypeExclusions.traits}"
+                    @change="${(e: Event) => this.updateCardTypeExclusion('traits', (e.target as HTMLInputElement).checked)}"
                   />
-                  <label for="excludeLandmarks" class="filter-option-label">Merkmale</label>
+                  <label for="excludeTraits" class="filter-option-label">Merkmale</label>
                 </li>
                 ` : ''}
               </ul>

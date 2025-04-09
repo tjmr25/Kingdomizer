@@ -25,13 +25,6 @@ public class KingdomService {
     private final FilterService filterService;
     private final DTOMapper dtoMapper;
 
-    /**
-     * Constructs a new KingdomService with required dependencies.
-     *
-     * @param resourceRepository Repository for accessing resource data
-     * @param filterService Service for filtering resources based on criteria
-     * @param dtoMapper Service for converting entities to DTOs
-     */
     public KingdomService(ResourceRepository resourceRepository, 
                          FilterService filterService,
                          DTOMapper dtoMapper) {
@@ -40,6 +33,11 @@ public class KingdomService {
         this.dtoMapper = dtoMapper;
     }
 
+
+
+
+    /** +++++++++++*******   PUBLIC METHODS    +++++++++++++++++++++++++++++++++++++++ */
+    
     /**
      * Generates a new Dominion kingdom based on the provided filter criteria.
      * This method selects 10 random kingdom cards and optionally includes landscape cards.
@@ -53,28 +51,16 @@ public class KingdomService {
      *         - "landscape": List of landscape card IDs (empty if count is 0)
      */
     public Map<String, Object> generateKingdom(KingdomFilter filter) {
-        // Get all potential kingdom cards matching the filter
-        List<Resource> potentialKingdomCards = filterService.getAllPotentialKingdomCards(filter);
-        
-        // Shuffle and select 10 cards
-        Collections.shuffle(potentialKingdomCards);
-        List<Long> kingdomCardIds = potentialKingdomCards.stream()
-                .limit(10)
-                .map(Resource::getId)
-                .collect(Collectors.toList());
-                
         Map<String, Object> result = new HashMap<>();
+
+        // Get randomly selected kingdom cards
+        List<Long> kingdomCardIds = filterService.generateKingdomCards(filter);
         result.put("kingdomCardIds", kingdomCardIds);
         
-        // Handle landscape cards
+        // Get randomly selected landscape cards
         int landscapeCount = Math.min(6, Math.max(0, filter.getLandscapeCount()));
         if (landscapeCount > 0) {
-            List<Resource> potentialLandscapeCards = filterService.getAllPotentialLandscapeCards(filter);
-            Collections.shuffle(potentialLandscapeCards);
-            List<Long> landscapeCardIds = potentialLandscapeCards.stream()
-                    .limit(landscapeCount)
-                    .map(Resource::getId)
-                    .collect(Collectors.toList());
+            List<Long> landscapeCardIds = filterService.generateLandscapeCards(filter);
             result.put("landscape", landscapeCardIds);
         } else {
             result.put("landscape", new ArrayList<Long>());

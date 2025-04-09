@@ -21,11 +21,11 @@ export interface CardFeatureFilters {
  */
 export interface CardTypeExclusions {
   curses: boolean;
-  victoryTokens: boolean;
+  tokens: boolean;
   tableaus: boolean;
   treasures: boolean;
   events: boolean;
-  landmarks: boolean;
+  traits: boolean;
 }
 
 /**
