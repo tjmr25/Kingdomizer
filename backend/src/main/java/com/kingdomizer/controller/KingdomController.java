@@ -2,11 +2,12 @@ package com.kingdomizer.controller;
 
 import com.kingdomizer.filter.KingdomFilter;
 import com.kingdomizer.service.KingdomService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 /**
  * Controller for managing kingdoms and their details.
@@ -14,6 +15,7 @@ import java.util.HashMap;
 @RestController
 @RequestMapping("/api/kingdom")
 public class KingdomController {
+    private static final Logger logger = LoggerFactory.getLogger(KingdomController.class);
 
     private final KingdomService kingdomService;
 
@@ -31,6 +33,7 @@ public class KingdomController {
      */
     @PostMapping("/generate")
     public Map<String, Object> generateKingdom(@RequestBody KingdomFilter filter) {
+        logger.info("REST request to generate a new kingdom");
         return kingdomService.generateKingdom(filter);
     }
 
@@ -45,12 +48,7 @@ public class KingdomController {
      */
     @PostMapping("/details")
     public Map<String, Object> getKingdomDetails(@RequestBody Map<String, List<Long>> cardData) {
-        try {
-            return kingdomService.getKingdomDetails(cardData);
-        } catch (Exception e) {
-            Map<String, Object> errorResponse = new HashMap<>();
-            errorResponse.put("error", "An error occurred: " + e.getMessage());
-            return errorResponse;
-        }
+        logger.info("REST request to get the kingdom details to an existing kingdom");
+        return kingdomService.getKingdomDetails(cardData);
     }
 }

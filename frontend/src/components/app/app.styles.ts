@@ -34,8 +34,14 @@ export const appStyles = css`
     app-header{
       display: flex;
       justify-content: center;
-      aling-items: center;
+      align-items: center;
       background-color: var(--color-main-bluegrey);
 
+    }
+      
+    app-footer {
+      display: block;
+      width: 100%;
+      margin-top: auto; /* Ensures footer stays at bottom when content is short */
     }
 `;

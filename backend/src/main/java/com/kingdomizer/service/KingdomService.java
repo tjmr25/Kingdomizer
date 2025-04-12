@@ -5,6 +5,9 @@ import com.kingdomizer.repository.ResourceRepository;
 import com.kingdomizer.filter.KingdomFilter;
 import com.kingdomizer.dto.CardDTO;
 import com.kingdomizer.dto.DependencyDTO;
+import com.kingdomizer.exception.ImpossibleKingdomException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -21,6 +24,8 @@ import java.util.ArrayList;
  */
 @Service
 public class KingdomService {
+    private static final Logger logger = LoggerFactory.getLogger(KingdomService.class);
+    
     private final ResourceRepository resourceRepository;
     private final FilterService filterService;
     private final DTOMapper dtoMapper;
@@ -45,25 +50,30 @@ public class KingdomService {
      * @param filter The filter object containing all selection criteria including:
      *               - Selected expansions
      *               - Landscape card count (0-6)
-     *               - Other filtering criteria (to be implemented)
+     *               - Other filtering criteria
      * @return A map containing:
      *         - "kingdomCardIds": List of 10 randomly selected card IDs
      *         - "landscape": List of landscape card IDs (empty if count is 0)
+     * @throws ImpossibleKingdomException if either kingdom cards or requested landscape cards cannot be generated
      */
     public Map<String, Object> generateKingdom(KingdomFilter filter) {
+        logger.info("Starting kingdom generation process");
         Map<String, Object> result = new HashMap<>();
 
-        // Get randomly selected kingdom cards
+        // Get randomly selected kingdom cards - this will throw ImpossibleKingdomException if criteria can't be met
         List<Long> kingdomCardIds = filterService.generateKingdomCards(filter);
         result.put("kingdomCardIds", kingdomCardIds);
         
-        // Get randomly selected landscape cards
+        // Handle landscape cards - will also throw ImpossibleKingdomException if requested count can't be fulfilled
         int landscapeCount = Math.min(6, Math.max(0, filter.getLandscapeCount()));
         if (landscapeCount > 0) {
             List<Long> landscapeCardIds = filterService.generateLandscapeCards(filter);
             result.put("landscape", landscapeCardIds);
+            logger.info("Kingdom generated with {} kingdom cards and {} landscape cards", 
+                kingdomCardIds.size(), landscapeCardIds.size());
         } else {
             result.put("landscape", new ArrayList<Long>());
+            logger.info("Kingdom generated with {} kingdom cards and no landscape cards", kingdomCardIds.size());
         }
         
         return result;
@@ -85,6 +95,9 @@ public class KingdomService {
         List<Long> cardIds = cardData.getOrDefault("kingdomCardIds", Collections.emptyList());
         List<Long> landscapeIds = cardData.getOrDefault("landscape", Collections.emptyList());
         
+        logger.info("Fetching details for kingdom with {} cards and {} landscapes", 
+            cardIds.size(), landscapeIds.size());
+        
         List<Resource> resources = resourceRepository.findAllById(cardIds);
         List<Resource> landscapeResources = resourceRepository.findAllById(landscapeIds);
     
@@ -101,6 +114,8 @@ public class KingdomService {
         List<CardDTO> cardDTOs = dtoMapper.mapToCardDTOs(resources);
         List<DependencyDTO> dependencyDTOs = dtoMapper.mapToDependencyDTOs(dependencies);
     
+        logger.debug("Found {} dependencies for the kingdom", dependencyDTOs.size());
+        
         // Create response
         Map<String, Object> result = new HashMap<>();
         result.put("cards", cardDTOs);
